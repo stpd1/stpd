@@ -139,7 +139,7 @@ const STDENV = {
 		STK.push(map1(STK.pop(), (x)=>Math.tanh(x)))},
 	// Units
 	"conv": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
-		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val)))},
+		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, mode="conv")))},
 	// Array
 	"iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK.at(-1), ">0")
 		STK.push([...Array(STK.pop()).keys()].map((x)=>x+1))},
@@ -328,7 +328,7 @@ function tokenize(s) {
 	.split(/\s+/).filter((t)=>t !== "");
 	return ts;
 }
-function parseu(us,v) {
+function parseu(us,v,mode) {
 	if (us==="K") {return +v}
 	if (us==="°C") {return +v+273.15}
 	if (us==="°F") {return (+v-32)/1.8+273.15}
@@ -354,7 +354,8 @@ function parseu(us,v) {
 			assert(UNITS[d[ei][1]] !== undefined, "unknown unit "+d[ei][1])
 			if (d[ei][2] === "") {d[ei][2] = "1"}
 			cf = cf/(UNITS[d[ei][1]]**(+d[ei][2]))}}
-	return cf*v
+	if (mode==="conv") {v/cf}
+	else {return v*cf}
 }
 function parset(t) {
 	let tl = t; t = t.split("_")
