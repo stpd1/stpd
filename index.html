@@ -301,6 +301,8 @@ function assertNum(v, cond) {
 	if (typeof v !== "number") {throw "ERROR: arg must be number"}
 	if (cond === ">0") {
 		if (!(v > 0)) {throw "ERROR: arg must be > 0"}}
+	if (cond === "int>0") {
+		if (!(v > 0)||(!Number.isInteger(v))) {throw "ERROR: arg must be > 0"}}
 	else if (cond === "<0") {
 		if (!(v < 0)) {throw "ERROR: arg must be < 0"}}
 	else if (cond === ">=0") {
