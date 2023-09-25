@@ -328,7 +328,7 @@ function tokenize(s) {
 	.split(/\s+/).filter((t)=>t !== "");
 	return ts;
 }
-function parseu(us,v,mode) {
+function parseu(us,v,mode="") {
 	if (us==="K") {return +v}
 	if (us==="°C") {return +v+273.15}
 	if (us==="°F") {return (+v-32)/1.8+273.15}
