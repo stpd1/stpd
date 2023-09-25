@@ -354,7 +354,7 @@ function parseu(us,v,mode="") {
 			assert(UNITS[d[ei][1]] !== undefined, "unknown unit "+d[ei][1])
 			if (d[ei][2] === "") {d[ei][2] = "1"}
 			cf = cf/(UNITS[d[ei][1]]**(+d[ei][2]))}}
-	if (mode==="conv") {v/cf}
+	if (mode==="conv") {return v/cf}
 	else {return v*cf}
 }
 function parset(t) {
