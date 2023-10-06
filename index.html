@@ -381,7 +381,7 @@ function parseu(us,v,mode="") {
 	else {return v*cf}
 }
 function parset(t) {
-    if (tl[0]==='"') {return t.slice(1,-1)}
+    if (t[0]==='"') {return t.slice(1,-1)}
 	let tl = t; t = t.split("_")
 	if (isFinite(t[0])) {
 		assert(t[1] !== "", "Missing unit after _")
