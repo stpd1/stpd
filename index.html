@@ -59,6 +59,8 @@ const STDENV = {
 	// Arithmetic
 	"neg": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>-x))},
+	"inv": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "not0");
+		STK.push(map1(STK.pop(), (x)=>-x))},
 	"abs": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.abs(x)))},
 	"ceil": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
