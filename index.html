@@ -372,7 +372,7 @@ function parset(t) {
 		assert(t.length<=2, "Unexpected _ in number literal")
 		return (t.length === 1) ? +t[0] : parseu(t[1],t[0])
 	} else {
-		return tl;
+		return Symbol.for(tl);
 	}
 }
 function parse(ts) {
@@ -399,7 +399,7 @@ function stringify(ex) {
 			return ""+(ex)
 		} else {
 			return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
-	if (typeof ex === "string") {return ""+ex}
+	if (typeof ex === "symbol") {return ""+ex}
 	let s = "(", se = ex.evaluate?")!": ")";
 	for (let ei in ex) {
 		if (Array.isArray(ex[ei])) {
