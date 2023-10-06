@@ -128,14 +128,16 @@ const STDENV = {
 		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
 	"in": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
-	// Boolean
+	// String
+	"strj": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK.at(-1)); assertStr(STK.at(-2))
+	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
+	// Boolean and comparison
 	"not": (STK,ENV)=> {assertStkl(1,STK);
 		STK.push(map1(STK.pop(), (x)=>x === 0?1: 0))},
 	"and": (STK,ENV)=> {assertStkl(2,STK);
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a !== 0 && b !== 0?1: 0))},
 	"or": (STK,ENV)=> {assertStkl(2,STK);
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a !== 0 || b !== 0?1: 0))},
-	// Comparison
 	"=": (STK,ENV)=> {assertStkl(2,STK);
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a === b?1: 0))},
 	">": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
@@ -324,6 +326,9 @@ function assertNum(v, cond) {
 function assertSym(v, env) {
 	if (! typeof v === "symbol") {throw "ERROR: arg must be symbol"}
 	if (env[Symbol.keyFor(v)] === undefined && STDENV[Symbol.keyFor(v)] === undefined) {throw "ERROR: unknown symbol "+v}
+}
+function assertStr(v) {
+    if (! typeof v === "string") {throw "ERROR: arg must be string"}
 }
 function assertStkl(n,STK) {
 	if (STK.length < n) {throw "ERROR: Stack length <"+n}}
