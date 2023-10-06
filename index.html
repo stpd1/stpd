@@ -419,7 +419,7 @@ function evaluate(ST, STK, ENV) {
 			STDENV[Symbol.keyFor(ST)](STK, ENV)
 		} else {
 			let ne = Object.create(ENV)
-			evaluate(ENV[ST], STK, ne)
+			evaluate(ENV[Symbol.keyFor(ST)], STK, ne)
 		}
 	} else if (Array.isArray(ST) && ST.evaluate) {
 		for (let ei in ST) {
