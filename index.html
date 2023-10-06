@@ -420,7 +420,7 @@ function stringify(ex) {
 	return s === "("?s+se: s.slice(0, -1)+se
 }
 function evaluate(ST, STK, ENV) {
-	if (typeof ST === "number") {
+	if ((typeof ST === "number") || (typeof ST === "string")) {
 		STK.push(ST)
 	} else if (typeof ST === "symbol") {
 		assertSym(ST, ENV)
