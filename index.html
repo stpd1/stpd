@@ -337,7 +337,7 @@ function tokenize(s) {
 	        .replaceAll(/(\)!)/g, ' $1 ')
 	.split(/\s+/).filter((t)=>t !== "");
 	    } else {
-	        return e
+	        return '"'+e+'"'
 	    }
 	})
 	return ts;
