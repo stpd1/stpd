@@ -129,8 +129,10 @@ const STDENV = {
 	"in": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// String
-	"strjoin": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK.at(-1)); assertStr(STK.at(-2))
+	"str_join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK.at(-1)); assertStr(STK.at(-2))
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
+	"str_slice": (STK,ENV)=>{},
+	"str_at": (STK,ENV)=>{},
 	"tostr": (STK,ENV)=>{assertStkl(1,STK);
 	    STK.push(stringify(STK.pop()))},
 	"parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK.at(-1));
@@ -231,7 +233,7 @@ const STDENV = {
 		STK.push(STK.shift())},
 	"stkl": (STK,ENV)=> {STK.push(STK.length)},
 	// Programming
-	"err": (STK,ENV)=> {throw "ERROR: Generic error"},
+	"err": (STK,ENV)=> {throw "ERROR: User error"},
 	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK.at(-1)), "Argument must be array")
 		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
 	"var": (STK, ENV)=> {assertStkl(2,STK);assert(Array.isArray(STK.at(-1)) && (STK.at(-1).length === 1) && ((typeof STK.at(-1)[0]) === "string"),
