@@ -399,7 +399,7 @@ function stringify(ex) {
 			return ""+(ex)
 		} else {
 			return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
-	if (typeof ex === "symbol") {return ""+ex}
+	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
 	let s = "(", se = ex.evaluate?")!": ")";
 	for (let ei in ex) {
 		if (Array.isArray(ex[ei])) {
