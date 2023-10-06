@@ -322,7 +322,7 @@ function assertNum(v, cond) {
 		if (!(v >= -1 && v <= 1)) {throw "ERROR: arg must be >=-1 and <=1"}}
 }
 function assertSym(v, env) {
-	if (! typeof v === "string") {throw "ERROR: arg must be symbol"}
+	if (! typeof v === "symbol") {throw "ERROR: arg must be symbol"}
 	if (env[v] === undefined && STDENV[v] === undefined) {throw "ERROR: unknown symbol "+v}
 }
 function assertStkl(n,STK) {
