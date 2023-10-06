@@ -133,6 +133,8 @@ const STDENV = {
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
 	"tostr": (STK,ENV)=>{assertStkl(1,STK);
 	    STK.push(stringify(STK.pop()))},
+	"": (STK,ENV)=>{
+	    },
 	// Boolean and comparison
 	"not": (STK,ENV)=> {assertStkl(1,STK);
 		STK.push(map1(STK.pop(), (x)=>x === 0?1: 0))},
