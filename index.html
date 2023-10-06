@@ -339,7 +339,7 @@ function tokenize(s) {
 	    } else {
 	        return '"'+e+'"'
 	    }
-	})
+	}).flat()
 	return ts;
 }
 function parseu(us,v,mode="") {
@@ -377,6 +377,8 @@ function parset(t) {
 		assert(t[1] !== "", "Missing unit after _")
 		assert(t.length<=2, "Unexpected _ in number literal")
 		return (t.length === 1) ? +t[0] : parseu(t[1],t[0])
+	} else if (t[0][0]==='"') {
+	    return t.slice(1,-1)
 	} else {
 		return Symbol.for(tl);
 	}
