@@ -330,7 +330,8 @@ function assertStkl(n,STK) {
 
 // INTERPRETER
 function tokenize(s) {
-	let ts = s.replaceAll(/\(/g, ' ( ')
+	let ts = s.split('"')
+	.replaceAll(/\(/g, ' ( ')
 	.replaceAll(/\)(?![!])/g, ' ) ')
 	.replaceAll(/(\)!)/g, ' $1 ')
 	.split(/\s+/).filter((t)=>t !== "");
