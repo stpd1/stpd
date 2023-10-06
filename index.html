@@ -413,10 +413,10 @@ function stringify(ex) {
 function evaluate(ST, STK, ENV) {
 	if (typeof ST === "number") {
 		STK.push(ST)
-	} else if (typeof ST === "string") {
+	} else if (typeof ST === "symbol") {
 		assertSym(ST, ENV)
-		if (ENV[ST] === undefined) {
-			STDENV[ST](STK, ENV)
+		if (ENV[Symbol.keyFor(ST)] === undefined) {
+			STDENV[Symbol.keyFor(ST)](STK, ENV)
 		} else {
 			let ne = Object.create(ENV)
 			evaluate(ENV[ST], STK, ne)
