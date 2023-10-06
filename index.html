@@ -330,11 +330,16 @@ function assertStkl(n,STK) {
 
 // INTERPRETER
 function tokenize(s) {
-	let ts = s.split('"')
-	.replaceAll(/\(/g, ' ( ')
-	.replaceAll(/\)(?![!])/g, ' ) ')
-	.replaceAll(/(\)!)/g, ' $1 ')
+	let ts = s.split('"').map((e,i)=>{
+	    if (i%2===0) {
+	        return e.replaceAll(/\(/g, ' ( ')
+	        .replaceAll(/\)(?![!])/g, ' ) ')
+	        .replaceAll(/(\)!)/g, ' $1 ')
 	.split(/\s+/).filter((t)=>t !== "");
+	    } else {
+	        return e
+	    }
+	})
 	return ts;
 }
 function parseu(us,v,mode="") {
