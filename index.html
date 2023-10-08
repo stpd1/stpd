@@ -126,7 +126,7 @@ const STDENV = {
 		STK.push(map1(STK.pop(), (x)=>Math.tanh(x)))},
 	// Units
 	"conv": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
-		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
+		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
 	"in": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// String
