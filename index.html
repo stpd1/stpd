@@ -493,7 +493,7 @@ function evaluate(ST, STK, ENV) {
 	return STK;
 }
 function evals(s, STK = []) {
-	let ST = parse(tokenize(s)); ST.evaluate = true
+	let ST = parse_infix(tokenize(s)); ST.evaluate = true
 	return evaluate(ST, STK, ENV)
 }
 // USER INTERFACE
