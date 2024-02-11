@@ -348,6 +348,8 @@ function tokenize(s) {
 	    if (i%2===0) {
 	        return e.replaceAll(/\(/g, ' ( ')
 	        .replaceAll(/\)(?![!])/g, ' ) ')
+	        .replaceAll(/\[(?![!])/g, ' [ ')
+	        .replaceAll(/\](?![!])/g, ' ] ')
 	        .replaceAll(/(\)!)/g, ' $1 ')
 	.split(/\s+/).filter((t)=>t !== "");
 	    } else {
