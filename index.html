@@ -419,7 +419,7 @@ function parse(ts) {
 function parse_infix(ts) {
 	let opers = {"+": 2, "-": 2, "*": 1, "/": 1, "^": 0,
     "=": 3, ">": 3, "<": 3, ">=": 3, "<=": 3 };
-    let rpnts = [], mode = [];
+    let rpnts = [], mode = [], operst = []
     for (let ti in ts) {
     	let t = ts[ti];
         if (t==="(") {
@@ -436,7 +436,11 @@ function parse_infix(ts) {
         	if (mode.at(-1) === "quote") {
         	    rpnts.push(t); 
             } else {
+            	if () {
             	
+                } else {
+                	
+                }
             }
         } else {
         	if (mode.at(-1) === "quote") {
