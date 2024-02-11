@@ -460,7 +460,7 @@ function stringify_infix(ex) {
 			return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
 	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
 	if (typeof ex === "string") {return '"'+ex+'"'}
-	let s = "(", se = ex.evaluate?")!": ")";
+	let s = "[", se = ex.evaluate?")!": "]";
 	for (let ei in ex) {
 		if (Array.isArray(ex[ei])) {
 			s += stringify(ex[ei]) + " "
@@ -468,7 +468,7 @@ function stringify_infix(ex) {
 			s += stringify(ex[ei]) + " "
 		}
 	}
-	return s === "("?s+se: s.slice(0, -1)+se
+	return s === "["?s+se: s.slice(0, -1)+se
 }
 function evaluate(ST, STK, ENV) {
 	if ((typeof ST === "number") || (typeof ST === "string")) {
