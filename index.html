@@ -463,9 +463,9 @@ function stringify_infix(ex) {
 	let s = "[", se = ex.evaluate?")!": "]";
 	for (let ei in ex) {
 		if (Array.isArray(ex[ei])) {
-			s += stringify(ex[ei]) + " "
+			s += stringify_infix(ex[ei]) + " "
 		} else {
-			s += stringify(ex[ei]) + " "
+			s += stringify_infix(ex[ei]) + " "
 		}
 	}
 	return s === "["?s+se: s.slice(0, -1)+se
