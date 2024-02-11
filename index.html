@@ -423,7 +423,7 @@ function parse_infix(ts) {
     for (let ti in ts) {
     	let t = ts[ti];
         if (t==="(") {
-        	rpnts.push(t); mode.push("eval");
+        	operst.push(t); mode.push("eval");
         } else if (t===")") {
              if (mode.at(-1)!=="eval") {throw "ERROR: Non matching )"} else {mode.pop()}; rpnts.push(t); 
         } else if (t==="[") {
