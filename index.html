@@ -427,7 +427,7 @@ function parse_infix(ts) {
         } else if (t===")") {
              if (mode.at(-1)!=="eval") {throw "ERROR: Non matching )"} else {mode.pop()}; rpnts.push(t); 
         } else if (t==="[") {
-            rpnts.push(t); mode.push("quote");
+            operst.push(t); mode.push("quote");
         } else if (t===")") {
              if (mode.at(-1)!=="quote") {throw "ERROR: Non matching ]"} else {mode.pop()}; rpnts.push(t); 
         } else if (typeof parset(t) === "number") {
