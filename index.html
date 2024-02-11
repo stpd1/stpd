@@ -426,13 +426,17 @@ function parse_infix(ts) {
         	rpnts.push(t); mode.push("eval");
         } else if (t===")") {
              if (mode.at(-1)!=="eval") {throw "ERROR: Non matching )"} else {mode.pop()}; rpnts.push(t); 
-        } else if (t==="[" || t==="]") {
+        } else if (t==="[") {
 
+        } else if (t===")") {
+             if (mode.at(-1)!=="quote") {throw "ERROR: Non matching ]"} else {mode.pop()}; rpnts.push(t); 
         } else if (typeof parset(t) === "number") {
         	rpnts.push(t);
         } else if (opers[t] !== undefined) {
         	
         } else {
+        	
+        }
     }
 	let ST = [[]];
 	for (let ti in ts) {
