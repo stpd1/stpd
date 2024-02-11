@@ -507,7 +507,7 @@ function PRINT(o, pre, post) {
 }
 function RUN() {
 	try {
-		evals(inElem.value, STK); PRINT(stringify(STK), "STACK: ", "")
+		evals(inElem.value, STK); PRINT(stringify_infix(STK), "STACK: ", "")
 	} catch (e) {
 		PRINT(e, "", "")}
 }
