@@ -419,14 +419,20 @@ function parse(ts) {
 function parse_infix(ts) {
 	let opers = {"+": 2, "-": 2, "*": 1, "/": 1, "^": 0,
     "=": 3, ">": 3, "<": 3, ">=": 3, "<=": 3 };
-    let rpnts = [];
+    let rpnts = [], mode = ["eval"];
     for (let ti in ts) {
     	let t = ts[ti];
-        if (t==="(" || t===")" || t==="[" || t==="]") {
+        if (t==="(") {
+        	rpnts.push(t); mode.push("eval");
+        } else if (t===")") {
+             if (mode.at(-1)!=="eval") {} else {mode.pop()}; rpnts.push(t); 
+        } else if (t==="[" || t==="]") {
+
+        } else if (typeof parset(t) === "number") {
         	rpnts.push(t);
-        } else if () {
-        	typeof 
-        }
+        } else if (opers[t] !== undefined) {
+        	
+        } else {
     }
 	let ST = [[]];
 	for (let ti in ts) {
