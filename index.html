@@ -439,7 +439,11 @@ function parse_infix(ts) {
             	
             }
         } else {
-        	
+        	if (mode.at(-1) === "quote") {
+        	    rpnts.push(t); 
+            } else {
+            	
+            }
         }
     }
 	let ST = [[]];
