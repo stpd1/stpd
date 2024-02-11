@@ -450,7 +450,8 @@ function parse_infix(ts) {
             }
         }
     }
-	let ST = [[]];
+    console.log(rpnts)
+	let ST = [rpnts];
 	for (let ti in ts) {
 		let t = ts[ti];
 		if (t === "[" || t === "(") {
