@@ -414,7 +414,43 @@ function parse(ts) {
 	assert(ST.length === 1, "Missing )")
 	return ST[0];
 }
+function parse_infix(ts) {
+	let ST = [[]];
+	for (let ti in ts) {
+		let t = ts[ti];
+		if (t === "(") {
+			ST.push([])
+		} else if (t === ")") {
+			assert(ST.length > 1, "Unexpected )")
+			let a = ST.pop(); ST.at(-1).push(a)
+		} else if (t === ")!") {
+			let a = ST.pop(); a.evaluate = true; ST.at(-1).push(a)
+		} else {
+			ST.at(-1).push(parset(t))
+		}
+	}
+	assert(ST.length === 1, "Missing )")
+	return ST[0];
+}
 function stringify(ex) {
+	if (typeof ex === "number") {
+		if (FLAGS["prec"]<0) {
+			return ""+(ex)
+		} else {
+			return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
+	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
+	if (typeof ex === "string") {return '"'+ex+'"'}
+	let s = "(", se = ex.evaluate?")!": ")";
+	for (let ei in ex) {
+		if (Array.isArray(ex[ei])) {
+			s += stringify(ex[ei]) + " "
+		} else {
+			s += stringify(ex[ei]) + " "
+		}
+	}
+	return s === "("?s+se: s.slice(0, -1)+se
+}
+function stringify_infix(ex) {
 	if (typeof ex === "number") {
 		if (FLAGS["prec"]<0) {
 			return ""+(ex)
