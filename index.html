@@ -419,8 +419,14 @@ function parse(ts) {
 function parse_infix(ts) {
 	let opers = {"+": 2, "-": 2, "*": 1, "/": 1, "^": 0,
     "=": 3, ">": 3, "<": 3, ">=": 3, "<=": 3 };
+    let rpnts = [];
     for (let ti in ts) {
-        
+    	let t = ts[ti];
+        if (t==="(" || t===")" || t==="[" || t==="]") {
+        	
+        } else if () {
+        	
+        }
     }
 	let ST = [[]];
 	for (let ti in ts) {
