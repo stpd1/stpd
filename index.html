@@ -162,7 +162,7 @@ const STDENV = {
 	"conv": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
 	"in": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
-		let u = STK.pop()[0].toString(), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
+		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// String
 	"str_join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK.at(-1)); assertStr(STK.at(-2))
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
