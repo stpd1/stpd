@@ -15,7 +15,6 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 <body>
 	<div><textarea id="in">
 (# STPD - Stupid, array-based, RPN calc ) ..
-
 (# Syntax) ..
 (numbers -3.35e-3 2_kN/m2) ..
 (strings "hello world!") ..
@@ -23,7 +22,6 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 (arrays (1 2 3 (4 5))) ..
 (expressions) ... pi 2 / sin 3_cm * ..
 (exprs are arrays (1 2 (1 2 +)! ) ) ..
-
 (# Numbers) ..
 (nums are pushed on the stack) ..
 (nums are parsed to SI value 100_mm) ..
@@ -31,14 +29,11 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 (conversion) ... 1000_cm (km) conv ..
 (apply unit) ... 10 (cm) in ..
 (funcs sqrt sin cos log 10 round rand ... ) ..
-
 (# Strings) ..
 (strings are pushed on the stack) ..
 (joining ("hello " "world" str_join)! ) ..
 (parsing ("2 3 +" parse)! ) ..
-
 (# Functions) ..
-
 
 (# Arrays) ..
 (auto broadcast ((1 2 3) 10 +)!) ..
