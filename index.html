@@ -29,6 +29,7 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 (nums are parsed to SI value 100_mm) ..
 (careful! dims not checked) ... 1_cm 3_g + ..
 (conversion) ... 1000_cm (km) conv ..
+(apply unit) ... 10 (cm) in ..
 (funcs sqrt sin cos log 10 round rand ... ) ..
 
 (# Strings) ..
@@ -161,7 +162,7 @@ const STDENV = {
 	"conv": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
 	"in": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
-		let u = STK.pop()[0], val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
+		let u = STK.pop()[0].toString(), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// String
 	"str_join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK.at(-1)); assertStr(STK.at(-2))
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
