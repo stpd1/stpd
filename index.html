@@ -13,7 +13,36 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 	<link rel="shortcut icon" type="image/png" href="favicon.png?">
 </head>
 <body>
-	<div><textarea id="in"></textarea></div>
+	<div><textarea id="in">
+(# STPD - Stupid, array-based, RPN calc ) ..
+
+(# Syntax) ..
+(numbers -3.35e-3 2_kN/m2) ..
+(strings "hello world!") ..
+(symbols a b my_symbol) ..
+(arrays (1 2 3 (4 5))) ..
+(expressions) ... pi 2 / sin 3_cm * ..
+(exprs are arrays (1 2 (1 2 +)! ) ) ..
+
+(# Numbers) ..
+(nums are pushed on the stack) ..
+(nums are parsed to SI value 100_mm) ..
+(careful! dims not checked) ... 1_cm 3_g + ..
+(conversion) ... 1000_cm (km) conv ..
+(funcs sqrt sin cos log 10 round rand ... ) ..
+
+(# Strings) ..
+(strings are pushed on the stack) ..
+(joining ("hello " "world" str_join)! ) ..
+(parsing ("2 3 +" parse)! ) ..
+
+(# Functions) ..
+
+
+(# Arrays) ..
+(auto broadcast ((1 2 3) 10 +)!) ..
+(see source for all functions and units) ..
+	</textarea></div>
 	<div><pre id="out"></pre></div>
 	<a href="https://www.paypal.com/donate/?business=LXNBYUPHZ5B9Q&no_recurring=0&currency_code=EUR">Make a donation</a>
 </body>
