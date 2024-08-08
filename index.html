@@ -280,8 +280,8 @@ const STDENV = {
 		}
 	},
 	// Flags
-	"prec": (STK,ENV)=> {assertStkl(1,STK);
-		FLAGS["prec"] = STK.pop()},
+	"dprec": (STK,ENV)=> {assertStkl(1,STK);
+		FLAGS["dprec"] = STK.pop()},
 }
 // UTILITIES
 function map1(a, f) {
@@ -436,7 +436,7 @@ function parse(ts) {
 }
 function stringify(ex) {
 	if (typeof ex === "number") {
-		if (FLAGS["prec"]<0) {
+		if (FLAGS["dprec"]<0) {
 			return ""+(ex)
 		} else {
 			return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["dprec"]))}}
