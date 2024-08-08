@@ -296,7 +296,7 @@ function map1(a, f) {
 function map2(a1, a2, f) {
 	let ra = []
 	if (Array.isArray(a1) && Array.isArray(a2)) {
-		assert(a1.length === a2.length, "Arrays must have same <length></length>")
+		assert(a1.length === a2.length, "Arrays must have same length")
 		for (let ei in a1) {
 			ra.push(f(a1[ei], a2[ei]))
 		}
