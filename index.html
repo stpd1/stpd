@@ -1,5 +1,5 @@
 <!--
-(c) 2023 Camillo Troiano <camillo.troiano@gmail.com>
+(c) 2024 Camillo Troiano <camillo.troiano@gmail.com>
 This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/
 or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
@@ -78,11 +78,16 @@ let STK, ENV, LIB="", FLAGS, UNITS = {
 }
 function initEnv() {
 	STK = []; 
-	ENV = {"e": Math.E, "pi": Math.PI, "φ":1.618,
-		"c": 299792458, "G":6.6743e-11, "g":9.80665, "h":6.62607015e-34, "ħ":1.054571817e-34, "e":1.602176634e-19, "me":9.1093837015-31, "mp":1.6726218983-27, 
-		"NA":6.02214076*1023, "kb":1.3806490e-23, "ε0":8.8541878176e-12, "μ0":4e-7*Math.PI, "m_e": 9.10938356e-31, "m_p": 1.67262192369e-27, "F": 9.64853399e4, 
-		σ: 5.670374419e-8}; 
-	FLAGS = {"prec": 4}
+	ENV = {
+		"e": Math.E, "pi": Math.PI, "phi":1.618,
+		"c": 299792458, "G":6.6743e-11, "g":9.80665, "h":6.62607015e-34, 
+	        "hfr":1.054571817e-34, "e":1.602176634e-19, "me":9.1093837015-31, 
+	        "mp":1.6726218983-27, "NA":6.02214076*1023, "kb":1.3806490e-23, 
+	        "eps0":8.8541878176e-12, "mi0":4e-7*Math.PI, "m_e": 9.10938356e-31, 
+	        "m_p": 1.67262192369e-27, "F": 9.64853399e4, "sigma": 5.670374419e-8}; 
+	FLAGS = {
+		"dprec": 4 // number display precision
+	} 
 }
 // STANDARD ENVIRONMENT
 const STDENV = {
@@ -154,9 +159,11 @@ const STDENV = {
 	"tanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.tanh(x)))},
 	// Units
-	"conv": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
+	// SIvalue (unit) => value in unit (eg. 10 (mm) SIvalue => 10000)
+	"toUnit": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
-	"in": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
+	// value in unit (unit) => SIvalue (eg. 10 (mm) toSI => 0.01)
+	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// String
 	"str_join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK.at(-1)); assertStr(STK.at(-2))
@@ -247,23 +254,32 @@ const STDENV = {
 	"push": (STK,ENV)=> {let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
 	"pop": (STK,ENV)=> {let a = STK.pop(); a.pop(); STK.push(a)},
 	// Stack management
+	// pop from stack
 	".": (STK,ENV)=> {assertStkl(1,STK);
 		STK.pop()},
+	// pop from stack and print
 	"..": (STK,ENV)=> {assertStkl(1,STK);
-		PRINT(stringify(STK.at(-1)), "", "<br>"); STK.pop()},
-	"...": (STK,ENV)=> {assertStkl(1,STK);
 		PRINT(stringify(STK.at(-1)), "", " "); STK.pop()},
+	// pop from stack, print and new line
+	"...": (STK,ENV)=> {assertStkl(1,STK);
+		PRINT(stringify(STK.at(-1)), "", "<br>"); STK.pop()},
+	// swap last 2 elements in stack
 	"swap": (STK,ENV)=> {assertStkl(2,STK);
 		swap(STK)},
+	// duplicate last element in stack
 	"dup": (STK,ENV)=> {assertStkl(1,STK);
 		STK.push(STK.at(-1))},
+	// move 2nd element in stack to the top without removing it
 	"over": (STK,ENV)=> {assertStkl(2,STK);
 		STK.push(STK.at(-2))},
+	// rotate stack (last element goes first)
 	"rot": (STK,ENV)=> {assertStkl(2,STK);
 		STK.push(STK.shift())},
+	// 
 	"stkl": (STK,ENV)=> {STK.push(STK.length)},
 	// Programming
-	"err": (STK,ENV)=> {throw "ERROR: User error"},
+	// throw generic error
+	"err": (STK,ENV)=> {throw "ERROR: generic error"},
 	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK.at(-1)), "Argument must be array")
 		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
 	"var": (STK, ENV)=> {assertStkl(2,STK);assert(Array.isArray(STK.at(-1)) && (STK.at(-1).length === 1) && ((typeof STK.at(-1)[0]) === "string"),
