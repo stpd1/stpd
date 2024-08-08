@@ -439,7 +439,7 @@ function stringify(ex) {
 		if (FLAGS["prec"]<0) {
 			return ""+(ex)
 		} else {
-			return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
+			return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["dprec"]))}}
 	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
 	if (typeof ex === "string") {return '"'+ex+'"'}
 	let s = "(", se = ex.evaluate?")!": ")";
