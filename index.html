@@ -377,11 +377,11 @@ function parse(ts) {
 			ST.push([])
 		} else if (t === ")") {
 			assert(ST.length > 1, "Unexpected )")
-			let a = ST.pop(); ST.at(-1).push(a)
+			let a = ST.pop(); ST[ST.length-1].push(a)
 		} else if (t === ")!") {
-			let a = ST.pop(); a.evaluate = true; ST.at(-1).push(a)
+			let a = ST.pop(); a.evaluate = true; ST[ST.length-1].push(a)
 		} else {
-			ST.at(-1).push(parset(t))
+			ST[ST.length-1].push(parset(t))
 		}
 	}
 	assert(ST.length === 1, "Missing )")
