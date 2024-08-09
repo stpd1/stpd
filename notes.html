@@ -29,6 +29,6 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 let inElem = document.getElementById("in")
 inElem.oninput = ()=> {localStorage.setItem('stpdnotes_data', inElem.value)}
 inElem.focus()
-localStorage.getItem('stpdnotes_data')
+inElem.value = localStorage.getItem('stpdnotes_data')
 </script>
 </html>
