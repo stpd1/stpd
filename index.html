@@ -143,7 +143,22 @@ const STDENV = {
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
 	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
-	// Comparison
+	// String
+	"str_join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2])
+	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
+	"str_slice": (STK,ENV)=>{},
+	"str_at": (STK,ENV)=>{},
+	"tostr": (STK,ENV)=>{assertStkl(1,STK);
+		STK.push(stringify(STK.pop()))},
+	"parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]);
+		STK.push(parse(tokenize(STK.pop())))},
+	// Boolean and comparison
+	"not": (STK,ENV)=> {assertStkl(1,STK);
+		STK.push(map1(STK.pop(), (x)=>x === 0?1: 0))},
+	"and": (STK,ENV)=> {assertStkl(2,STK);
+		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a !== 0 && b !== 0?1: 0))},
+	"or": (STK,ENV)=> {assertStkl(2,STK);
+		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a !== 0 || b !== 0?1: 0))},
 	"=": (STK,ENV)=> {assertStkl(2,STK);
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a === b?1: 0))},
 	">": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
@@ -232,6 +247,30 @@ const STDENV = {
 	"rot": (STK,ENV)=> {assertStkl(2,STK);
 		STK.push(STK.shift())},
 	"stkl": (STK,ENV)=> {STK.push(STK.length)},
+	// Programming
+	"err": (STK,ENV)=> {throw "ERROR: generic error"},
+	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be array")
+		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
+	"var": (STK, ENV)=> {assertStkl(2,STK);assert(Array.isArray(STK[STK.length-1]) && (STK[STK.length-1].length === 1) && ((typeof STK[STK.length-1][0]) === "string"),
+			"Second arg must be array with 1 symbol")
+		let w = STK.pop()[0],e = STK.pop(); ENV[w] = e
+	},
+	"fun": (STK, ENV)=> {assertStkl(2,STK);
+		assert(Array.isArray(STK[STK.length-1]) && (STK[STK.length-1].length === 1) && ((typeof STK[STK.length-1][0]) === "string"),
+			"Second arg must be array with 1 symbol")
+		let w = STK.pop()[0],e = STK.pop(); e.evaluate = true; ENV[w] = e
+	},
+	"cond": (STK,ENV)=> {assertStkl(2,STK);
+		let ex = STK.pop(),c = STK.pop()
+		if (c !== 0) {
+			STK.push(ex); STDENV["eval"](STK)}
+	},
+	"loop": (STK,ENV)=> {assertStkl(2,STK);
+		let n = STK.pop(); let ex = STK.pop();
+		while (n !== 0) {
+			STK.push(ex); STDENV["eval"](STK); n--
+		}
+	},
 	// Flags
 	"dprec": (STK,ENV)=> {assertStkl(1,STK);
 		FLAGS["dprec"] = STK.pop()},
