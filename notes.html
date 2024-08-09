@@ -27,17 +27,8 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 "use strict"
 // USER INTERFACE
 let inElem = document.getElementById("in")
-let waitTime = 2000; let editing = 0;
-inElem.oninput = ()=> {
-	editing += waitTime
-	setTimeout(()=> {
-		editing -= waitTime;
-		if (editing === 0) {
-      sessionStorage.setItem('stpdnotes_data', inElem.value)
-    }
-	},waitTime)
-}
+inElem.oninput = ()=> {localStorage.setItem('stpdnotes_data', inElem.value)}
 inElem.focus()
-sessionStorage.getItem('stpdnotes_data')
+localStorage.getItem('stpdnotes_data')
 </script>
 </html>
