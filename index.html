@@ -72,105 +72,105 @@ function initEnv() {
 // STANDARD ENVIRONMENT
 const STDENV = {
 	// Arithmetic
-	"neg": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"neg": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>-x))},
-	"inv": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "not0");
+	"inv": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "not0");
 		STK.push(map1(STK.pop(), (x)=>-x))},
-	"abs": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"abs": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.abs(x)))},
-	"ceil": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"ceil": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.ceil(x)))},
-	"floor": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"floor": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.floor(x)))},
 	"rand": (STK,ENV)=> {STK.push(Math.random())},
-	"round": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"round": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.round(x)))},
-	"sign": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"sign": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.sign(x)))},
-	"trunc": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"trunc": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.trunc(x)))},
-	"+": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	"+": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x+y))},
-	"-": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	"-": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x-y))},
-	"*": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	"*": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x*y))},
-	"/": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assertArr(STK.at(-1), assertNum, "not0");
+	"/": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assertArr(STK[STK.length-1], assertNum, "not0");
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x/y))},
-	"^": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	"^": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x**y))},
-	"rem": (STK)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	"rem": (STK)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		swap(STK,ENV); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x%y))},
 	// Scientific
-	"acos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "-1/1");
+	"acos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1");
 		STK.push(map1(STK.pop(), (x)=>Math.acos(x)))},
-	"acosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, ">=1");
+	"acosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">=1");
 		STK.push(map1(STK.pop(), (x)=>Math.acosh(x)))},
-	"asin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "-1/1");
+	"asin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1");
 		STK.push(map1(STK.pop(), (x)=>Math.asin(x)))},
-	"asinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"asinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.asinh(x)))},
-	"atan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"atan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.atan(x)))},
-	"atanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"atanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.atanh(x)))},
-	"cbrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"cbrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.cbrt(x)))},
-	"cos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"cos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.cos(x)))},
-	"cosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"cosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.cosh(x)))},
-	"exp": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"exp": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.exp(x)))},
-	"logn": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, ">0");
+	"logn": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0");
 		STK.push(map1(STK.pop(), (x)=>Math.log(x)))},
-	"log10": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, ">0");
+	"log10": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0");
 		STK.push(map1(STK.pop(), (x)=>Math.log10(x)))},
-	"log2": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, ">0");
+	"log2": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0");
 		STK.push(map1(STK.pop(), (x)=>Math.log2(x)))},
-	"sin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"sin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.sin(x)))},
-	"sinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"sinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.sinh(x)))},
-	"sqrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, ">=0");
+	"sqrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">=0");
 		STK.push(map1(STK.pop(), (x)=>Math.sqrt(x)))},
-	"tan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"tan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.tan(x)))},
-	"tanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
+	"tanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.tanh(x)))},
 	// Units
-	"toUnit": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
+	"toUnit": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
-	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
+	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// Comparison
 	"=": (STK,ENV)=> {assertStkl(2,STK);
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a === b?1: 0))},
-	">": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	">": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a > b?1: 0))},
-	"<": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	"<": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a < b?1: 0))},
-	">=": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	">=": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a >= b?1: 0))},
-	"<=": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
+	"<=": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a <= b?1: 0))},
 	// Array
-	"iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK.at(-1), "int>0")
+	"iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0")
 		STK.push([...Array(STK.pop()).keys()].map((x)=>x+1))},
-	"ones": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK.at(-1), "int>0")
+	"ones": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0")
 		STK.push(new Array(STK.pop()).fill(1))},
-	"zeros": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK.at(-1), "int>0")
+	"zeros": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0")
 		STK.push(new Array(STK.pop()).fill(0))},
-	"elem": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK.at(-1), "int>0"); assert(STK.at(-1) <= STK.at(-2).length, "Array index out of range")
-		STK.push(STK.at(-2)[STK.pop()-1])},
-	"slice": (STK,ENV)=> {assertStkl(3,STK); assertNum(STK.at(-1)); assertNum(STK.at(-2));
-		assert(STK.at(-1) <= STK.at(-3).length, "Array index out of range"); assert(STK.at(-2) <= STK.at(-3).length, "Array index out of range")
+	"elem": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK[STK.length-1], "int>0"); assert(STK[STK.length-1] <= STK[STK.length-2].length, "Array index out of range")
+		STK.push(STK[STK.length-2][STK.pop()-1])},
+	"slice": (STK,ENV)=> {assertStkl(3,STK); assertNum(STK[STK.length-1]); assertNum(STK[STK.length-2]);
+		assert(STK[STK.length-1] <= STK[STK.length-3].length, "Array index out of range"); assert(STK[STK.length-2] <= STK[STK.length-3].length, "Array index out of range")
 		let i2 = STK.pop(),i1 = STK.pop(),a = STK.pop();
 		if (i2 === 0) {
 			STK.push(a.slice(i1-1))
 		} else {
 			STK.push(a.slice(i1-1, i2))}},
-	"join": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK.at(-2)), "First argument must be an array")
+	"join": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array")
 		let a2 = STK.pop(),a1 = STK.pop(); 
 		STK.push(a1.concat(a2))},
 	"map": (STK,ENV)=> {assertStkl(2,STK);
@@ -205,11 +205,11 @@ const STDENV = {
 			let e = a.shift(); STK.push(e); STK.push(ex);
 			STDENV["eval"](STK, ENV)}
 	},
-	"len": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length()-1]))
+	"len": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]))
 		STK.push(STK.pop().length)},
-	"sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length()-1]))
+	"sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]))
 		STK.push(STK.pop().toSorted())},
-	"rev": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length()-1]))
+	"rev": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]))
 		STK.push(STK.pop().toReversed())},
 	"find": (STK,ENV)=> {let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
 	"assoc": (STK,ENV)=> {let ks = STK.pop(),a = STK.pop(); 
@@ -220,15 +220,15 @@ const STDENV = {
 	".": (STK,ENV)=> {assertStkl(1,STK); // pop from stack
 		STK.pop()},
 	"..": (STK,ENV)=> {assertStkl(1,STK); // pop from stack and print
-		PRINT(stringify(STK[STK.length()-1]), "", " "); STK.pop()},
+		PRINT(stringify(STK[STK.length-1]), "", " "); STK.pop()},
 	"...": (STK,ENV)=> {assertStkl(1,STK); // pop from stack, print and new line
-		PRINT(stringify(STK[STK.length()-1]), "", "<br>"); STK.pop()},
+		PRINT(stringify(STK[STK.length-1]), "", "<br>"); STK.pop()},
 	"swap": (STK,ENV)=> {assertStkl(2,STK);
 		swap(STK)},
 	"dup": (STK,ENV)=> {assertStkl(1,STK);
-		STK.push(STK[STK.length()-1])},
+		STK.push(STK[STK.length-1])},
 	"over": (STK,ENV)=> {assertStkl(2,STK);
-		STK.push(STK[STK.length()-2])},
+		STK.push(STK[STK.length-2])},
 	"rot": (STK,ENV)=> {assertStkl(2,STK);
 		STK.push(STK.shift())},
 	"stkl": (STK,ENV)=> {STK.push(STK.length)},
