@@ -4,6 +4,8 @@ This work is licensed under the Creative Commons Attribution-NonCommercial-Share
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/
 or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,19 +15,19 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 	<link rel="shortcut icon" type="image/png" href="favicon.png?">
 </head>
 <body>
-	<div><textarea id="in">
-(# STPD - Stupid, array-based, RPN calc ) ...
-	</textarea></div>
+	<div><textarea id="in"></textarea></div>
 	<div><pre id="out"></pre></div>
 	<a href="https://www.paypal.com/donate/?business=LXNBYUPHZ5B9Q&no_recurring=0&currency_code=EUR">Make a donation</a>
 </body>
 <style>
-#in, #out {font-family: monospace; width: calc(100vw - 30px); height: calc(50vh - 30px); overflow: auto}
+#in, #out {font-family: monospace; width: calc(100vw - 35px); height: calc(50vh - 35px); overflow: auto}
 </style>
+
+
 <script>
-"use strict";
+"use strict"
 // ENVIRONMENT
-let STK, ENV, LIB="", FLAGS, UNITS = {
+let STK, ENV, FLAGS, UNITS = {
 	"m": 1,"dm": 1e-1,"cm": 1e-2,"mm": 1e-3,"um": 1e-6,"nm": 1e-9,"dam": 1e1,"hm": 1e2,"km": 1e3,"Mm": 1e6,"Gm": 1e9,"in": 0.0254,"ft": 0.3048,"yd": 0.9144,"mi": 1609.344,"ly": 9460730472580800,"au": 149597870700,"pc": 30856775814671900, // length
 	"g": 1e-3, "dg": 1e-4,"cg": 1e-5,"mg": 1e-6,"ug": 1e-9,"ng": 1e-12,"dag": 1e-2,"hg": 1e-1,"kg": 1,"Mg": 1e3,"Gg": 1e6,"q": 100,"t": 1000,"lb": 453.59/1000,"oz": 28.35/1000, // mass
 	"s": 1,"min": 60,"h": 60*60,"d": 60*60*24, "w":60*60*24*7, "mo":60*60*24*7*30, "y":60*60*24*7*30*12,  // time
@@ -54,17 +56,18 @@ let STK, ENV, LIB="", FLAGS, UNITS = {
 	"kat": 1,"dkat": 1e-1,"ckat": 1e-2,"mkat": 1e-3,"ukat": 1e-6,"nkat": 1e-9,"dakat": 1e1,"hkat": 1e2,"kkat": 1e3,"Mkat": 1e6,"Gkat": 1e9, // catalytic activity
 }
 function initEnv() {
-	STK = []; 
+	STK = []
 	ENV = {
-		"e": Math.E, "pi": Math.PI, "phi":1.618,
-		"c": 299792458, "G":6.6743e-11, "g":9.80665, "h":6.62607015e-34, 
-	        "hfr":1.054571817e-34, "e":1.602176634e-19, "me":9.1093837015-31, 
-	        "mp":1.6726218983-27, "NA":6.02214076*1023, "kb":1.3806490e-23, 
-	        "eps0":8.8541878176e-12, "mi0":4e-7*Math.PI, "m_e": 9.10938356e-31, 
-	        "m_p": 1.67262192369e-27, "F": 9.64853399e4, "sigma": 5.670374419e-8}; 
+		"e": Math.E, "pi": Math.PI, "phi":1.618033988749, // euler's number, pi number, golden ratio
+		"c": 299792458, "G":6.6743e-11, "g":9.80665, // speed of light, gravitational constant, gravitational acceleration
+	    "h":6.62607015e-34, "hfr":1.054571817e-34, "me":9.1093837015-31,  // plank constant, reduced plank constant, electron mass
+	    "mp":1.6726218983-27, "NA":6.02214076*1023, "kb":1.3806490e-23, // proton mass, avogadro constant, boltzmann constant
+	    "eps0":8.8541878176e-12, "mi0":4e-7*Math.PI, "F": 9.64853399e4, // vacuum permittivity, permeability of vacuum, faraday constant
+	    "sigma": 5.670374419e-8 // stefan-boltzmann constant
+	}
 	FLAGS = {
-		"dprec": 4 // number display precision
-	} 
+		"dprec": 8 // number display precision
+	}
 }
 // STANDARD ENVIRONMENT
 const STDENV = {
@@ -136,28 +139,11 @@ const STDENV = {
 	"tanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK.at(-1), assertNum, "");
 		STK.push(map1(STK.pop(), (x)=>Math.tanh(x)))},
 	// Units
-	// SIvalue (unit) => value in unit (eg. 10 (mm) SIvalue => 10000)
 	"toUnit": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
-	// value in unit (unit) => SIvalue (eg. 10 (mm) toSI => 0.01)
 	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-2), assertNum, ""); assert(STK.at(-1).length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
-	// String
-	"str_join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK.at(-1)); assertStr(STK.at(-2))
-	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
-	"str_slice": (STK,ENV)=>{},
-	"str_at": (STK,ENV)=>{},
-	"tostr": (STK,ENV)=>{assertStkl(1,STK);
-	    STK.push(stringify(STK.pop()))},
-	"parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK.at(-1));
-	    STK.push(parse(tokenize(STK.pop())))},
-	// Boolean and comparison
-	"not": (STK,ENV)=> {assertStkl(1,STK);
-		STK.push(map1(STK.pop(), (x)=>x === 0?1: 0))},
-	"and": (STK,ENV)=> {assertStkl(2,STK);
-		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a !== 0 && b !== 0?1: 0))},
-	"or": (STK,ENV)=> {assertStkl(2,STK);
-		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a !== 0 || b !== 0?1: 0))},
+	// Comparison
 	"=": (STK,ENV)=> {assertStkl(2,STK);
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a === b?1: 0))},
 	">": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK.at(-1), assertNum, ""); assertArr(STK.at(-2), assertNum, "");
@@ -231,54 +217,21 @@ const STDENV = {
 	"push": (STK,ENV)=> {let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
 	"pop": (STK,ENV)=> {let a = STK.pop(); a.pop(); STK.push(a)},
 	// Stack management
-	// pop from stack
-	".": (STK,ENV)=> {assertStkl(1,STK);
+	".": (STK,ENV)=> {assertStkl(1,STK); // pop from stack
 		STK.pop()},
-	// pop from stack and print
-	"..": (STK,ENV)=> {assertStkl(1,STK);
+	"..": (STK,ENV)=> {assertStkl(1,STK); // pop from stack and print
 		PRINT(stringify(STK.at(-1)), "", " "); STK.pop()},
-	// pop from stack, print and new line
-	"...": (STK,ENV)=> {assertStkl(1,STK);
+	"...": (STK,ENV)=> {assertStkl(1,STK); // pop from stack, print and new line
 		PRINT(stringify(STK.at(-1)), "", "<br>"); STK.pop()},
-	// swap last 2 elements in stack
 	"swap": (STK,ENV)=> {assertStkl(2,STK);
 		swap(STK)},
-	// duplicate last element in stack
 	"dup": (STK,ENV)=> {assertStkl(1,STK);
 		STK.push(STK.at(-1))},
-	// move 2nd element in stack to the top without removing it
 	"over": (STK,ENV)=> {assertStkl(2,STK);
 		STK.push(STK.at(-2))},
-	// rotate stack (last element goes first)
 	"rot": (STK,ENV)=> {assertStkl(2,STK);
 		STK.push(STK.shift())},
-	// 
 	"stkl": (STK,ENV)=> {STK.push(STK.length)},
-	// Programming
-	// throw generic error
-	"err": (STK,ENV)=> {throw "ERROR: generic error"},
-	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK.at(-1)), "Argument must be array")
-		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
-	"var": (STK, ENV)=> {assertStkl(2,STK);assert(Array.isArray(STK.at(-1)) && (STK.at(-1).length === 1) && ((typeof STK.at(-1)[0]) === "string"),
-			"Second arg must be array with 1 symbol")
-		let w = STK.pop()[0],e = STK.pop(); ENV[w] = e
-	},
-	"fun": (STK, ENV)=> {assertStkl(2,STK);
-		assert(Array.isArray(STK.at(-1)) && (STK.at(-1).length === 1) && ((typeof STK.at(-1)[0]) === "string"),
-			"Second arg must be array with 1 symbol")
-		let w = STK.pop()[0],e = STK.pop(); e.evaluate = true; ENV[w] = e
-	},
-	"cond": (STK,ENV)=> {assertStkl(2,STK);
-		let ex = STK.pop(),c = STK.pop()
-		if (c !== 0) {
-			STK.push(ex); STDENV["eval"](STK)}
-	},
-	"loop": (STK,ENV)=> {assertStkl(2,STK);
-		let n = STK.pop(); let ex = STK.pop();
-		while (n !== 0) {
-			STK.push(ex); STDENV["eval"](STK); n--
-		}
-	},
 	// Flags
 	"dprec": (STK,ENV)=> {assertStkl(1,STK);
 		FLAGS["dprec"] = STK.pop()},
@@ -366,9 +319,9 @@ function assertStkl(n,STK) {
 function tokenize(s) {
 	let ts = s.split('"').map((e,i)=>{
 	    if (i%2===0) {
-	        return e.replaceAll(/\(/g, ' ( ')
-	        .replaceAll(/\)(?![!])/g, ' ) ')
-	        .replaceAll(/(\)!)/g, ' $1 ')
+	        return e.replace(/\(/g, ' ( ')
+	        .replace(/\)(?![!])/g, ' ) ')
+	        .replace(/(\)!)/g, ' $1 ')
 	.split(/\s+/).filter((t)=>t !== "");
 	    } else {
 	        return '"'+e+'"'
