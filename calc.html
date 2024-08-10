@@ -171,19 +171,19 @@ const STDENV = {
 		STK.push(new Array(STK.pop()).fill(1))},
 	"arr/zeros": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (0 ... 0) - length==n
 		STK.push(new Array(STK.pop()).fill(0))},
-	"arr/get": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK[STK.length-1], "int>0"); assert(STK[STK.length-1] <= STK[STK.length-2].length, "Array index out of range")
-		STK.push(STK[STK.length-2][STK.pop()-1])},
-	"arr/slice": (STK,ENV)=> {assertStkl(3,STK); assertNum(STK[STK.length-1]); assertNum(STK[STK.length-2]);
-		assert(STK[STK.length-1] <= STK[STK.length-3].length, "Array index out of range"); assert(STK[STK.length-2] <= STK[STK.length-3].length, "Array index out of range")
-		let i2 = STK.pop(),i1 = STK.pop(),a = STK.pop();
-		if (i2 === 0) {
-			STK.push(a.slice(i1-1))
-		} else {
-			STK.push(a.slice(i1-1, i2))}},
-	"arr/join": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array")
+	"arr/get": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK[STK.length-1], "int>0"); // arr n -> arr[n]
+		assert(STK[STK.length-1] <= STK[STK.length-2].length, "Array index out of range");
+		let n = STK.pop(), a = STK.pop(); STK.push(a[n-1])},
+	"arr/slice": (STK,ENV)=> {assertStkl(3,STK); assertNum(STK[STK.length-1]); assertNum(STK[STK.length-2]); // arr n1 n2 -> arr[n1:n2]
+		assert(STK[STK.length-1] <= STK[STK.length-3].length, "Array index out of range"); 
+		assert(STK[STK.length-2] <= STK[STK.length-3].length, "Array index out of range")
+		let i2 = STK.pop(), i1 = STK.pop(), a = STK.pop();
+		if (i2 === 0) {STK.push(a.slice(i1-1))
+		} else {STK.push(a.slice(i1-1, i2))}},
+	"arr/join": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array") // arr1 arr2 -> (arr1...arr2)
 		let a2 = STK.pop(),a1 = STK.pop(); 
 		STK.push(a1.concat(a2))},
-	"arr/map1": (STK,ENV)=> {assertStkl(2,STK);
+	"arr/map1": (STK,ENV)=> {assertStkl(2,STK); // arr (expr) -> (expr(arr))
 		let ex = STK.pop(),a = STK.pop(),na = []; ex.evaluate = true
 		for (let ei in a) {
 			STK.push(a[ei]); STK.push(ex); STDENV["eval"](STK,ENV);
@@ -191,7 +191,7 @@ const STDENV = {
 		}
 		STK.push(na)
 	},
-	"arr/map2": (STK,ENV)=> {assertStkl(3,STK);
+	"arr/map2": (STK,ENV)=> {assertStkl(3,STK);  // arr1 arr2 (expr) -> (expr(arr1,arr2))
 		let ex = STK.pop(),a2 = STK.pop(),a1 = STK.pop(),na = []; ex.evaluate = true
 		for (let ei in a1) {
 			STK.push(a1[ei]); STK.push(a2[ei]); STK.push(ex); STDENV["eval"](STK,ENV);
@@ -199,7 +199,7 @@ const STDENV = {
 		}
 		STK.push(na)
 	},
-	"arr/filter": (STK,ENV)=> {assertStkl(2,STK)
+	"arr/filter": (STK,ENV)=> {assertStkl(2,STK)  // arr (expr) -> (expr(arr))
 		let ex = STK.pop(),a = STK.pop(),na = []; ex.evaluate = true
 		for (let ei in a) {
 			STK.push(a[ei]); STK.push(ex); STDENV["eval"](STK, ENV);
@@ -208,18 +208,18 @@ const STDENV = {
 				na.push(a[ei])}}
 		STK.push(na)
 	},
-	"arr/reduce": (STK,ENV)=> {assertStkl(2,STK);
+	"arr/reduce": (STK,ENV)=> {assertStkl(2,STK);  // arr (expr) -> reduce(arr,expr)
 		let ex = STK.pop(),a = STK.pop(); ex.evaluate = true
 		STK.push(a.shift());
 		while (a.length > 0) {
 			let e = a.shift(); STK.push(e); STK.push(ex);
 			STDENV["eval"](STK, ENV)}
 	},
-	"arr/length": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]))
+	"arr/length": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1])) // arr -> arrlen
 		STK.push(STK.pop().length)},
-	"arr/sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]))
+	"arr/sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1])) // arr -> arr (sorted)
 		STK.push(STK.pop().toSorted())},
-	"arr/reverse": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]))
+	"arr/reverse": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1])) // arr -> arr (reversed)
 		STK.push(STK.pop().toReversed())},
 	"arr/find": (STK,ENV)=> {
 		let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
