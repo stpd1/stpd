@@ -279,7 +279,7 @@ const STDENV = {
 	},
 	"fun": (STK, ENV)=> {assertStkl(2,STK);
 		assert(Array.isArray(STK[STK.length-1]) && (STK[STK.length-1].length === 1) && ((typeof STK[STK.length-1][0]) === "symbol"), "Second arg must be array with 1 symbol")
-		let w = STK.pop()[0],e = STK.pop(); e.evaluate = true; ENV[w] = e
+		let w = Symbol.keyFor(STK.pop()[0]), e = STK.pop(); e.evaluate = true; ENV[w] = e
 	},
 	"cond": (STK,ENV)=> {assertStkl(2,STK);
 		let ex = STK.pop(),c = STK.pop()
