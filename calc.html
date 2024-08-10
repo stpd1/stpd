@@ -515,7 +515,7 @@ function RUN() {
 	try {
 		evals(inElem.value, STK); PRINT(stringify(STK), "<br>STACK: ", "")
 	} catch (e) {
-		PRINT(e, "", "")}
+		throw e} // PRINT(e, "", "")
 }
 inElem.oninput = ()=> {
 	editing += waitTime
