@@ -513,7 +513,7 @@ function RUN() {
 	try {
 		evals(inElem.value, STK); PRINT(stringify(STK), "<br>STACK: ", "")
 	} catch (e) {
-		throw e // PRINT(e, "", "")
+		PRINT(e, "", "")
 	}
 }
 inElem.oninput = ()=> {
