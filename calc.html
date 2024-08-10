@@ -481,7 +481,7 @@ function evaluate(ST, STK, ENV) {
 		STK.push(ST)
 	} else if (typeof ST === "symbol") {
 		if (ENV[Symbol.keyFor(ST)] === undefined) {
-   assertSym(ST, STDENV)
+   // assertSym(ST, STDENV)
 			STDENV[Symbol.keyFor(ST)](STK, ENV)
 		} else {
 			let ne = Object.create(ENV)
