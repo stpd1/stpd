@@ -284,7 +284,7 @@ const STDENV = {
 	"cond": (STK,ENV)=> {assertStkl(2,STK);
 		let ex = STK.pop(),c = STK.pop()
 		if (c !== 0) {
-			STK.push(ex); STDENV["eval"](STK)}
+			STK.push(ex); STDENV["eval"](STK,ENV)}
 	},
 	"loop": (STK,ENV)=> {assertStkl(2,STK);
 		let n = STK.pop(); let ex = STK.pop();
