@@ -5,6 +5,7 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 -->
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +28,7 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 "use strict"
 // ENVIRONMENT
 let STK, ENV, FLAGS, UNITS = {
+	// WARNING: Unit dimensions are not checked!
 	"m": 1,"dm": 1e-1,"cm": 1e-2,"mm": 1e-3,"um": 1e-6,"nm": 1e-9,"dam": 1e1,"hm": 1e2,"km": 1e3,"Mm": 1e6,"Gm": 1e9,"in": 0.0254,"ft": 0.3048,"yd": 0.9144,"mi": 1609.344,"ly": 9460730472580800,"au": 149597870700,"pc": 30856775814671900, // length
 	"g": 1e-3, "dg": 1e-4,"cg": 1e-5,"mg": 1e-6,"ug": 1e-9,"ng": 1e-12,"dag": 1e-2,"hg": 1e-1,"kg": 1,"Mg": 1e3,"Gg": 1e6,"q": 100,"t": 1000,"lb": 453.59/1000,"oz": 28.35/1000, // mass
 	"s": 1,"min": 60,"h": 60*60,"d": 60*60*24, "w":60*60*24*7, "mo":60*60*24*7*30, "y":60*60*24*7*30*12,  // time
@@ -65,91 +67,98 @@ function initEnv() {
 		"sigma": 5.670374419e-8 // stefan-boltzmann constant
 	}
 	FLAGS = {
-		"prec": 8 // number display precision
+		"prec": 8 // numbers display precision
 	}
 }
 // STANDARD ENVIRONMENT
 const STDENV = {
 	// Arithmetic
-	"neg": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"neg": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> -n
 		STK.push(map1(STK.pop(), (x)=>-x))},
-	"inv": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "not0");
+	"inv": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "not0"); // n -> 1/n
 		STK.push(map1(STK.pop(), (x)=>-x))},
-	"abs": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"abs": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> |n|
 		STK.push(map1(STK.pop(), (x)=>Math.abs(x)))},
-	"ceil": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"ceiling": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> ceiling(n)
 		STK.push(map1(STK.pop(), (x)=>Math.ceil(x)))},
-	"floor": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"floor": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> floor(n)
 		STK.push(map1(STK.pop(), (x)=>Math.floor(x)))},
-	"rand": (STK,ENV)=> {STK.push(Math.random())},
-	"round": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"random": (STK,ENV)=> {STK.push(Math.random())},  // -> random n
+	"round": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> round(n)
 		STK.push(map1(STK.pop(), (x)=>Math.round(x)))},
-	"sign": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"sign": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> sign(n)
 		STK.push(map1(STK.pop(), (x)=>Math.sign(x)))},
-	"trunc": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"truncate": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> trunc(n)
 		STK.push(map1(STK.pop(), (x)=>Math.trunc(x)))},
-	"+": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
+	"+": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1+n2
 		STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x+y))},
-	"-": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
+	"-": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1-n2
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x-y))},
-	"*": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
+	"*": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1*n2
 		STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x*y))},
-	"/": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assertArr(STK[STK.length-1], assertNum, "not0");
+	"/": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assertArr(STK[STK.length-1], assertNum, "not0"); // n1 n2 -> n1/n2
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x/y))},
-	"^": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
+	"^": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1^n2
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x**y))},
-	"rem": (STK)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, "");
+	"remainder": (STK)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1%n2
 		swap(STK,ENV); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x%y))},
 	// Scientific
-	"acos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1");
+	"acos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1"); // n -> acos(n)
 		STK.push(map1(STK.pop(), (x)=>Math.acos(x)))},
-	"acosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">=1");
+	"acosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">=1"); // n -> acosh(n)
 		STK.push(map1(STK.pop(), (x)=>Math.acosh(x)))},
-	"asin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1");
+	"asin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1"); // n -> asin(n)
 		STK.push(map1(STK.pop(), (x)=>Math.asin(x)))},
-	"asinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"asinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> asinh(n)
 		STK.push(map1(STK.pop(), (x)=>Math.asinh(x)))},
-	"atan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"atan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> atan(n)
 		STK.push(map1(STK.pop(), (x)=>Math.atan(x)))},
-	"atanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"atanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> atanh(n)
 		STK.push(map1(STK.pop(), (x)=>Math.atanh(x)))},
-	"cbrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"cbrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> n^1/3
 		STK.push(map1(STK.pop(), (x)=>Math.cbrt(x)))},
-	"cos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"cos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> cos(n)
 		STK.push(map1(STK.pop(), (x)=>Math.cos(x)))},
-	"cosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"cosh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> cosh(n)
 		STK.push(map1(STK.pop(), (x)=>Math.cosh(x)))},
-	"exp": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"exp": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> e^n
 		STK.push(map1(STK.pop(), (x)=>Math.exp(x)))},
-	"logn": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0");
+	"logn": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0"); // n -> logn(n)
 		STK.push(map1(STK.pop(), (x)=>Math.log(x)))},
-	"log10": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0");
+	"log10": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0"); // n -> log10(n)
 		STK.push(map1(STK.pop(), (x)=>Math.log10(x)))},
-	"log2": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0");
+	"log2": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">0"); // n -> log2(n)
 		STK.push(map1(STK.pop(), (x)=>Math.log2(x)))},
-	"sin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"sin": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> sin(n)
 		STK.push(map1(STK.pop(), (x)=>Math.sin(x)))},
-	"sinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"sinh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> sinh(n)
 		STK.push(map1(STK.pop(), (x)=>Math.sinh(x)))},
-	"sqrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">=0");
+	"sqrt": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ">=0"); // n -> n^1/2
 		STK.push(map1(STK.pop(), (x)=>Math.sqrt(x)))},
-	"tan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"tan": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> tan(n)
 		STK.push(map1(STK.pop(), (x)=>Math.tan(x)))},
-	"tanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "");
+	"tanh": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> tanh(n)
 		STK.push(map1(STK.pop(), (x)=>Math.tanh(x)))},
 	// Units
-	"toUnit": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
+	"toUnit": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); // sival (unitsymb) -> unitval
+		assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
-	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
+	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, "");  // unitval (unitsymb) -> si_val
+		assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// Strings
-	"str_join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2])
+	"str/join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> str1+str2
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
-	"str_slice": (STK,ENV)=>{},
-	"str_at": (STK,ENV)=>{},
-	"tostr": (STK,ENV)=>{assertStkl(1,STK);
-		STK.push(stringify(STK.pop()))},
-	"parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]);
+	"str/slice": (STK,ENV)=>{assertStkl(3,STK); assertStr(STK[STK.length-1]); // n1 n2 str -> str[n1:n2]
+		assertNum(STK[STK.length-2]); assertNum(STK[STK.length-3]); 
+		let s=STK.pop(), n2=STK.pop(); n1=STK.pop(); STK.push(s.slice(n1,n2))},
+	"str/uppercase": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> STR
+		STK.push(STK.pop().toUpperCase())},
+	"str/lowercase": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // STR -> str
+		STK.push(STK.pop().toLowerCase())},
+	"str/charat": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-1]); assertStr(STK[STK.length-2]); // str n -> str[n]
+		let s=STK.pop(), n=STK.pop(); STK.push(s.at(n))},
+	"str/parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
 		STK.push(parse(tokenize(STK.pop())))},
 	// Booleans
 	"not": (STK,ENV)=> {assertStkl(1,STK);
@@ -226,13 +235,17 @@ const STDENV = {
 		STK.push(STK.pop().toSorted())},
 	"rev": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]))
 		STK.push(STK.pop().toReversed())},
-	"find": (STK,ENV)=> {let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
-	"assoc": (STK,ENV)=> {let ks = STK.pop(),a = STK.pop(); 
+	"find": (STK,ENV)=> {
+		let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
+	"assoc": (STK,ENV)=> {
+		let ks = STK.pop(),a = STK.pop(); 
 		ks.map((k)=>STK.push(a[a.findIndex((e)=>e === k)+1]))},
-	"push": (STK,ENV)=> {let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
-	"pop": (STK,ENV)=> {let a = STK.pop(); a.pop(); STK.push(a)},
+	"push": (STK,ENV)=> {
+		let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
+	"pop": (STK,ENV)=> {
+		let a = STK.pop(); a.pop(); STK.push(a)},
 	// Stack
-	"pop": (STK,ENV)=> {assertStkl(1,STK); // pop from stack
+	"pop": (STK,ENV)=> {assertStkl(1,STK);
 		STK.pop()},
 	"swap": (STK,ENV)=> {assertStkl(2,STK);
 		swap(STK)},
@@ -242,8 +255,11 @@ const STDENV = {
 		STK.push(STK[STK.length-2])},
 	"rot": (STK,ENV)=> {assertStkl(2,STK);
 		STK.push(STK.shift())},
-	"stkl": (STK,ENV)=> {STK.push(STK.length)},
+	"stack": (STK,ENV)=> {STK.push(STK)},
+	"stackl": (STK,ENV)=> {STK.push(STK.length)},
 	// Programming
+	"stringify": (STK,ENV)=>{assertStkl(1,STK);
+		STK.push(stringify(STK.pop()))},
 	"err": (STK,ENV)=> {throw "ERROR: generic error"},
 	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be array")
 		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
@@ -268,17 +284,13 @@ const STDENV = {
 		}
 	},
 	// Interface
-	"print": (STK,ENV)=> {assertStkl(1,STK); // pop from stack and print
-		assertStkl(1,STK);
+	"print": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
 		PRINT(stringify(STK[STK.length-1]), "", " "); STK.pop()},
-	"printn": (STK,ENV)=> {assertStkl(1,STK); // pop from stack, print and new line
-		assertStkl(1,STK);
+	"printn": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
 		PRINT(stringify(STK[STK.length-1]), "", "<br>"); STK.pop()},
-	"prints": (STK,ENV)=> {assertStkl(1,STK); // pop from stack and print as string
-		assertStkl(1,STK); assertStr(STK[STK.length-1]);
+	"prints": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		PRINT(STK[STK.length-1], "", " "); STK.pop()},
-	"printsn": (STK,ENV)=> {assertStkl(1,STK); // pop from stack, print as string and new line
-		assertStkl(1,STK); assertStr(STK[STK.length-1]);
+	"printsn": (STK,ENV)=> {assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		PRINT(STK[STK.length-1], "", "<br>"); STK.pop()},
 	// Flags
 	"prec": (STK,ENV)=> {assertStkl(1,STK);
