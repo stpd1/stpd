@@ -289,7 +289,7 @@ const STDENV = {
 	"loop": (STK,ENV)=> {assertStkl(2,STK);
 		let n = STK.pop(); let ex = STK.pop();
 		while (n !== 0) {
-			STK.push(ex); STDENV["eval"](STK); n--
+			STK.push(ex); STDENV["eval"](STK,ENV); n--
 		}
 	},
 	// Interface
