@@ -481,7 +481,7 @@ function evaluate(ST, STK, ENV) {
 		STK.push(ST)
 	} else if (typeof ST === "symbol") {
 		if (ENV[Symbol.keyFor(ST)] === undefined) {
-   // assertSym(ST, STDENV)
+                        assertSym(ST, STDENV)
 			STDENV[Symbol.keyFor(ST)](STK, ENV)
 		} else {
 			let ne = Object.create(ENV)
@@ -515,7 +515,8 @@ function RUN() {
 	try {
 		evals(inElem.value, STK); PRINT(stringify(STK), "<br>STACK: ", "")
 	} catch (e) {
-		PRINT(e, "", "")}
+		throw e // PRINT(e, "", "")
+	}
 }
 inElem.oninput = ()=> {
 	editing += waitTime
