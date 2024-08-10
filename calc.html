@@ -259,12 +259,15 @@ const STDENV = {
 		STK.push(STK.pop().toUpperCase())},
 	"str/lowercase": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // STR -> str
 		STK.push(STK.pop().toLowerCase())},
-	"str/charat": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-1]); assertStr(STK[STK.length-2]); // str n -> str[n]
+	"str/findchar": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-1]); assertStr(STK[STK.length-2]); // str n -> str[n]
 		let s=STK.pop(), n=STK.pop(); STK.push(s.at(n))},
 	"str/parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
 		STK.push(parse(tokenize(STK.pop())))},
-	"str/tosymbol": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> symbol
+	"str/tosymbol": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> symb
 		STK.push(Symbol.for(STK.pop()))},
+	// Symbols
+	"symb/tostring": (STK,ENV)=>{assertStkl(1,STK); assertSymb(STK[STK.length-1]); // symb -> str
+		STK.push(stringify(STK.pop())},
 	// Programming
 	"stringify": (STK,ENV)=>{assertStkl(1,STK);
 		STK.push(stringify(STK.pop()))},
