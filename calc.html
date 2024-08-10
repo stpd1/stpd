@@ -165,13 +165,13 @@ const STDENV = {
 		assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// Array
-	"arr/iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // 
+	"arr/iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... n)
 		STK.push([...Array(STK.pop()).keys()].map((x)=>x+1))},
-	"arr/ones": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0")
+	"arr/ones": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... 1) - length==n
 		STK.push(new Array(STK.pop()).fill(1))},
-	"arr/zeros": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0")
+	"arr/zeros": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (0 ... 0) - length==n
 		STK.push(new Array(STK.pop()).fill(0))},
-	"arr/getelement": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK[STK.length-1], "int>0"); assert(STK[STK.length-1] <= STK[STK.length-2].length, "Array index out of range")
+	"arr/get": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK[STK.length-1], "int>0"); assert(STK[STK.length-1] <= STK[STK.length-2].length, "Array index out of range")
 		STK.push(STK[STK.length-2][STK.pop()-1])},
 	"arr/slice": (STK,ENV)=> {assertStkl(3,STK); assertNum(STK[STK.length-1]); assertNum(STK[STK.length-2]);
 		assert(STK[STK.length-1] <= STK[STK.length-3].length, "Array index out of range"); assert(STK[STK.length-2] <= STK[STK.length-3].length, "Array index out of range")
