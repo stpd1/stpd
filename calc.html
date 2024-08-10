@@ -221,11 +221,11 @@ const STDENV = {
 			let e = a.shift(); STK.push(e); STK.push(ex);
 			STDENV["eval"](STK, ENV)}
 	},
-	"arr/length": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Aargument must be an array") // arr -> arrlen
+	"arr/length": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arrlen
 		STK.push(STK.pop().length)},
-	"arr/sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Aargument must be an array") // arr -> arr (sorted)
+	"arr/sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (sorted)
 		STK.push(STK.pop().toSorted())},
-	"arr/reverse": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Aargument must be an array") // arr -> arr (reversed)
+	"arr/reverse": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (reversed)
 		STK.push(STK.pop().toReversed())},
 	"arr/find": (STK,ENV)=> {  // arr -> arr (reversed)
 		let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
