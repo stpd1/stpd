@@ -460,7 +460,7 @@ function parse(ts) {
 		assert(ST.length === 1, "Missing )")
 		return ST[0];
 	} catch (e) {
-		throw new Error("Parsing error."+e)
+		throw new Error("Parsing error at " + ti + e)
 	}
 }
 function stringify(ex) {
