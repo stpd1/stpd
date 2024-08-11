@@ -359,33 +359,33 @@ function assertArr(arr, assf, cond) {
 	}
 }
 function assertNum(v, cond) {
-	if (typeof v !== "number") {throw "arg must be number"}
+	if (typeof v !== "number") {throw "Arg must be number"}
 	if (cond === ">0") {
-		if (!(v > 0)) {throw "arg must be > 0"}}
+		if (!(v > 0)) {throw "Arg must be > 0"}}
 	if (cond === "int>0") {
-		if (!(v > 0)||(!Number.isInteger(v))) {throw "arg must be an integer > 0"}}
+		if (!(v > 0)||(!Number.isInteger(v))) {throw "Arg must be an integer > 0"}}
 	else if (cond === "<0") {
-		if (!(v < 0)) {throw "arg must be < 0"}}
+		if (!(v < 0)) {throw "Arg must be < 0"}}
 	else if (cond === ">=0") {
-		if (!(v >= 0)) {throw "arg must be > 0"}}
+		if (!(v >= 0)) {throw "Arg must be > 0"}}
 	else if (cond === "<=0") {
-		if (!(v <= 0)) {throw "arg must be < 0"}}
+		if (!(v <= 0)) {throw "Arg must be < 0"}}
 	else if (cond === "not0") {
-		if (v === 0) {throw "arg must not be 0"}}
+		if (v === 0) {throw "Arg must not be 0"}}
 	else if (cond === ">=1") {
-		if (v < 1) {throw "arg must be >=1"}}
+		if (v < 1) {throw "Arg must be >=1"}}
 	else if (cond === "-1/1") {
-		if (!(v >= -1 && v <= 1)) {throw "arg must be >=-1 and <=1"}}
+		if (!(v >= -1 && v <= 1)) {throw "Arg must be >=-1 and <=1"}}
 }
 function assertSym(v, env) {
-	if (! typeof v === "symbol") {throw "arg must be symbol"}
-	if (env[Symbol.keyFor(v)] === undefined && STDENV[Symbol.keyFor(v)] === undefined) {throw "unknown symbol "+Symbol.keyFor(v)}
+	if (! typeof v === "symbol") {throw "Arg must be symbol"}
+	if (env[Symbol.keyFor(v)] === undefined && STDENV[Symbol.keyFor(v)] === undefined) {throw "Unknown symbol "+Symbol.keyFor(v)}
 }
 function assertStr(v) {
-    if (! typeof v === "string") {throw "arg must be string"}
+    if (! typeof v === "string") {throw "Arg must be string"}
 }
 function assertStkl(n,STK) {
-	if (STK.length < n) {throw "Stack length <"+n}}
+	if (STK.length < n) {throw "Stack length <" + n}}
 
 // INTERPRETER
 function tokenize(s) {
@@ -408,8 +408,8 @@ function parseu(us,v,mode="") {
 	assert(Number.isNaN(+us), "Invalid unit literal")
 	let cf = 1,a = us.split("/")
 	assert(a.length < 3, "Unexpected / in unit literal")
-	assert(a[0] !== "", "missing units before /")
-	assert(a[1] !== "", "missing units after /")
+	assert(a[0] !== "", "Missing units before /")
+	assert(a[1] !== "", "Missing units after /")
 	let n = a[0].split("*").map((e)=>e.match(/(\D+)(\d*)/))
 	for (let ei in n) {
 		assert(n[ei] !== null, "Missing unit after *")
@@ -424,7 +424,7 @@ function parseu(us,v,mode="") {
 			assert(d[ei] !== null, "Missing unit after *")
 			assert(d[ei][0] !== "°C","°C unit not allowed in compound unit")
 			assert(d[ei][0] !== "°F","°F unit not allowed in compound unit")
-			assert(UNITS[d[ei][1]] !== undefined, "unknown unit "+d[ei][1])
+			assert(UNITS[d[ei][1]] !== undefined, "Unknown unit "+d[ei][1])
 			if (d[ei][2] === "") {d[ei][2] = "1"}
 			cf = cf/(UNITS[d[ei][1]]**(+d[ei][2]))}}
 	if (mode==="conv") {return v/cf}
@@ -457,13 +457,13 @@ function parse(ts) {
 				ST[ST.length-1].push(parset(t))
 			}
 		} catch (e) {
-			throw new Error("Parsing error. Token " + ti  + " " + e)
+			throw new Error("Parsing error. Token " + ti + ". " + e)
 		}
 	}
 	try {
 		assert(ST.length === 1, "Missing )")
 	} catch (e) {
-		throw new Error("Parsing error. Token " + ts.length  + " " + e)
+		throw new Error("Parsing error. Token " + ts.length  + ". " + e)
 	}
 	return ST[0];
 }
