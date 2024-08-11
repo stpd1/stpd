@@ -250,6 +250,8 @@ const STDENV = {
 	"stack/toarray": (STK,ENV)=> {STK.push(STK)},
 	"stack/length": (STK,ENV)=> {STK.push(STK.length)},
 	// Strings
+	"str/length": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]);
+		STK.push(STK.pop().length)},
 	"str/join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> str1+str2
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
 	"str/slice": (STK,ENV)=>{assertStkl(3,STK); assertNum(STK[STK.length-1]); // str n1 n2 -> str[n1:n2]
@@ -269,6 +271,8 @@ const STDENV = {
 	"symb/tostring": (STK,ENV)=>{assertStkl(1,STK); assert(typeof(STK[STK.length-1])==="symbol","Argument must be symbol"); // symb -> str
 		STK.push(Symbol.keyFor(STK.pop()))},
 	// Programming
+	"typeof": (STK,ENV)=>{assertStkl(1,STK);
+		STK.push(typeof(STK.pop()))},
 	"stringify": (STK,ENV)=>{assertStkl(1,STK);
 		STK.push(stringify(STK.pop()))},
 	"err": (STK,ENV)=> {throw "ERROR: generic error"},
