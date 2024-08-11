@@ -489,12 +489,16 @@ function evaluate(ST, STK, ENV) {
 	if ((typeof ST === "number") || (typeof ST === "string")) {
 		STK.push(ST)
 	} else if (typeof ST === "symbol") {
-		if (ENV[Symbol.keyFor(ST)] === undefined) {
-                        assertSym(ST, STDENV)
-			STDENV[Symbol.keyFor(ST)](STK, ENV)
-		} else {
-			let ne = Object.create(ENV)
-			evaluate(ENV[Symbol.keyFor(ST)], STK, ne)
+		try {
+			if (ENV[Symbol.keyFor(ST)] === undefined) {
+	                        assertSym(ST, STDENV)
+				STDENV[Symbol.keyFor(ST)](STK, ENV)
+			} else {
+				let ne = Object.create(ENV)
+				evaluate(ENV[Symbol.keyFor(ST)], STK, ne)
+			}
+		} catch (e) {
+			throw new Error("Evaluation error. Token " + ST + ". " + e)
 		}
 	} else if (Array.isArray(ST) && ST.evaluate) {
 		for (let ei in ST) {
