@@ -498,7 +498,7 @@ function evaluate(ST, STK, ENV) {
 				evaluate(ENV[Symbol.keyFor(ST)], STK, ne)
 			}
 		} catch (e) {
-			throw new Error("Evaluation error. Token " + ST + ". " + e)
+			throw new Error("Evaluation error. Token " + Symbol.keyFor(ST) + ". " + e)
 		}
 	} else if (Array.isArray(ST) && ST.evaluate) {
 		for (let ei in ST) {
