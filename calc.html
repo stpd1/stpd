@@ -177,26 +177,26 @@ const STDENV = {
 		STK.push(STK.shift())},
 	"stack": (STK,ENV)=> {STK.push(STK)},
 	// Array
-	"arr/iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... n)
+	"iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... n)
 		STK.push([...Array(STK.pop()).keys()].map((x)=>x+1))},
-	"arr/ones": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... 1) - length==n
+	"ones": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... 1) - length==n
 		STK.push(new Array(STK.pop()).fill(1))},
-	"arr/zeros": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (0 ... 0) - length==n
+	"zeros": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (0 ... 0) - length==n
 		STK.push(new Array(STK.pop()).fill(0))},
-	"arr/get": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK[STK.length-1], "int>0"); // arr n -> arr[n]
+	"get": (STK,ENV)=> {assertStkl(2,STK); assertNum(STK[STK.length-1], "int>0"); // arr n -> arr[n]
 		assert(STK[STK.length-1] <= STK[STK.length-2].length, "Array index out of range");
 		let n = STK.pop(), a = STK.pop(); STK.push(a[n-1])},
-	"arr/slice": (STK,ENV)=> {assertStkl(3,STK); assertNum(STK[STK.length-1]); assertNum(STK[STK.length-2]); // arr n1 n2 -> arr[n1:n2]
+	"slice": (STK,ENV)=> {assertStkl(3,STK); assertNum(STK[STK.length-1]); assertNum(STK[STK.length-2]); // arr n1 n2 -> arr[n1:n2]
 		assert(STK[STK.length-1] <= STK[STK.length-3].length, "Array index out of range"); 
 		assert(STK[STK.length-2] <= STK[STK.length-3].length, "Array index out of range")
 		let i2 = STK.pop(), i1 = STK.pop(), a = STK.pop();
 		if (i2 === 0) {STK.push(a.slice(i1-1))
 		} else {STK.push(a.slice(i1-1, i2))}},
-	"arr/join": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array") // arr1 arr2 -> (arr1...arr2)
+	"join": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array") // arr1 arr2 -> (arr1...arr2)
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an array");
 		let a2 = STK.pop(), a1 = STK.pop(); 
 		STK.push(a1.concat(a2))},
-	"arr/map1": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array") // arr (expr) -> (expr(arr))
+	"map": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array") // arr (expr) -> (expr(arr))
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an expression array");
 		let ex = STK.pop(),a = STK.pop(),na = []; ex.evaluate = true
 		for (let ei in a) {
@@ -205,7 +205,7 @@ const STDENV = {
 		}
 		STK.push(na)
 	},
-	"arr/map2": (STK,ENV)=> {assertStkl(3,STK); assert(Array.isArray(STK[STK.length-3]), "First argument must be an array") // arr1 arr2 (expr) -> (expr(arr1,arr2))
+	"map2": (STK,ENV)=> {assertStkl(3,STK); assert(Array.isArray(STK[STK.length-3]), "First argument must be an array") // arr1 arr2 (expr) -> (expr(arr1,arr2))
 		assert(Array.isArray(STK[STK.length-2]), "Second argument must be an expression array"); 
 		assert(Array.isArray(STK[STK.length-2]), "Third argument must be an expression array");
 		let ex = STK.pop(), a2 = STK.pop(), a1 = STK.pop(), na = []; ex.evaluate = true
@@ -215,7 +215,7 @@ const STDENV = {
 		}
 		STK.push(na)
 	},
-	"arr/filter": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> (expr(arr))
+	"filt": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> (expr(arr))
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an expression array");
 		let ex = STK.pop(),a = STK.pop(),na = []; ex.evaluate = true
 		for (let ei in a) {
@@ -225,7 +225,7 @@ const STDENV = {
 				na.push(a[ei])}}
 		STK.push(na)
 	},
-	"arr/reduce": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> reduce(arr,expr)
+	"red": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> reduce(arr,expr)
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an expression array");
 		let ex = STK.pop(),a = STK.pop(); ex.evaluate = true
 		STK.push(a.shift());
@@ -233,20 +233,20 @@ const STDENV = {
 			let e = a.shift(); STK.push(e); STK.push(ex);
 			STDENV["eval"](STK, ENV)}
 	},
-	"arr/length": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arrlen
+	"length": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arrlen
 		STK.push(STK.pop().length)},
-	"arr/sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (sorted)
+	"sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (sorted)
 		STK.push(STK.pop().toSorted())},
-	"arr/reverse": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (reversed)
+	"rev": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (reversed)
 		STK.push(STK.pop().toReversed())},
-	"arr/find": (STK,ENV)=> {  // arr -> arr (reversed)
+	"find": (STK,ENV)=> {  // arr -> arr (reversed)
 		let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
-	"arr/associate": (STK,ENV)=> {
+	"assoc": (STK,ENV)=> {
 		let ks = STK.pop(),a = STK.pop(); 
 		ks.map((k)=>STK.push(a[a.findIndex((e)=>e === k)+1]))},
-	"arr/push": (STK,ENV)=> {
+	"apush": (STK,ENV)=> {
 		let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
-	"arr/pop": (STK,ENV)=> {
+	"apop": (STK,ENV)=> {
 		let a = STK.pop(); a.pop(); STK.push(a)},
 	// Strings
 	"str/length": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]);
@@ -272,7 +272,7 @@ const STDENV = {
 	// Programming
 	"typeof": (STK,ENV)=>{assertStkl(1,STK);
 		STK.push(typeof(STK.pop()))},
-	"stringify": (STK,ENV)=>{assertStkl(1,STK);
+	"tostr": (STK,ENV)=>{assertStkl(1,STK);
 		STK.push(stringify(STK.pop()))},
 	"err": (STK,ENV)=> {throw "generic error"},
 	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be array")
