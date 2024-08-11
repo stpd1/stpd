@@ -463,7 +463,7 @@ function parse(ts) {
 	try {
 		assert(ST.length === 1, "Missing )")
 	} catch (e) {
-		throw new Error("Parsing error. Token " + ts.length  + ". " + e)
+		throw new Error("Parsing error. Token " + ts[ts.length]  + ". " + e)
 	}
 	return ST[0];
 }
@@ -498,7 +498,7 @@ function evaluate(ST, STK, ENV) {
 				evaluate(ENV[Symbol.keyFor(ST)], STK, ne)
 			}
 		} catch (e) {
-			throw new Error("Evaluation error. Token " + Symbol.keyFor(ST) + ". " + e)
+			throw new Error("Evaluation error. Symbol " + Symbol.keyFor(ST) + ". " + e)
 		}
 	} else if (Array.isArray(ST) && ST.evaluate) {
 		for (let ei in ST) {
