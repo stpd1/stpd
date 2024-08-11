@@ -79,16 +79,16 @@ const STDENV = {
 		STK.push(map1(STK.pop(), (x)=>-x))},
 	"abs": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> |n|
 		STK.push(map1(STK.pop(), (x)=>Math.abs(x)))},
-	"ceiling": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> ceiling(n)
+	"ceil": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> ceiling(n)
 		STK.push(map1(STK.pop(), (x)=>Math.ceil(x)))},
 	"floor": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> floor(n)
 		STK.push(map1(STK.pop(), (x)=>Math.floor(x)))},
-	"random": (STK,ENV)=> {STK.push(Math.random())},  // -> random n
+	"rand": (STK,ENV)=> {STK.push(Math.random())},  // -> random n
 	"round": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> round(n)
 		STK.push(map1(STK.pop(), (x)=>Math.round(x)))},
 	"sign": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> sign(n)
 		STK.push(map1(STK.pop(), (x)=>Math.sign(x)))},
-	"truncate": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> trunc(n)
+	"trunc": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> trunc(n)
 		STK.push(map1(STK.pop(), (x)=>Math.trunc(x)))},
 	"+": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1+n2
 		STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x+y))},
@@ -100,7 +100,7 @@ const STDENV = {
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x/y))},
 	"^": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1^n2
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x**y))},
-	"remainder": (STK)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1%n2
+	"rem": (STK)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1%n2
 		swap(STK,ENV); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x%y))},
 	// Scientific
 	"acos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1"); // n -> acos(n)
@@ -164,6 +164,18 @@ const STDENV = {
 	"toSI": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, "");  // unitval (unitsymb) -> si_val
 		assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
+	// Stack
+	"pop": (STK,ENV)=> {assertStkl(1,STK);
+		STK.pop()},
+	"swap": (STK,ENV)=> {assertStkl(2,STK);
+		swap(STK)},
+	"dup": (STK,ENV)=> {assertStkl(1,STK);
+		STK.push(STK[STK.length-1])},
+	"over": (STK,ENV)=> {assertStkl(2,STK);
+		STK.push(STK[STK.length-2])},
+	"rot": (STK,ENV)=> {assertStkl(2,STK);
+		STK.push(STK.shift())},
+	"stack": (STK,ENV)=> {STK.push(STK)},
 	// Array
 	"arr/iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... n)
 		STK.push([...Array(STK.pop()).keys()].map((x)=>x+1))},
@@ -236,19 +248,6 @@ const STDENV = {
 		let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
 	"arr/pop": (STK,ENV)=> {
 		let a = STK.pop(); a.pop(); STK.push(a)},
-	// Stack
-	"stack/pop": (STK,ENV)=> {assertStkl(1,STK);
-		STK.pop()},
-	"stack/swap": (STK,ENV)=> {assertStkl(2,STK);
-		swap(STK)},
-	"stack/duplicate": (STK,ENV)=> {assertStkl(1,STK);
-		STK.push(STK[STK.length-1])},
-	"stack/over": (STK,ENV)=> {assertStkl(2,STK);
-		STK.push(STK[STK.length-2])},
-	"stack/rotate": (STK,ENV)=> {assertStkl(2,STK);
-		STK.push(STK.shift())},
-	"stack/toarray": (STK,ENV)=> {STK.push(STK)},
-	"stack/length": (STK,ENV)=> {STK.push(STK.length)},
 	// Strings
 	"str/length": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		STK.push(STK.pop().length)},
@@ -275,7 +274,7 @@ const STDENV = {
 		STK.push(typeof(STK.pop()))},
 	"stringify": (STK,ENV)=>{assertStkl(1,STK);
 		STK.push(stringify(STK.pop()))},
-	"err": (STK,ENV)=> {throw "ERROR: generic error"},
+	"err": (STK,ENV)=> {throw "generic error"},
 	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be array")
 		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
 	"var": (STK, ENV)=> {assertStkl(2,STK);assert(Array.isArray(STK[STK.length-1]) && (STK[STK.length-1].length === 1) && ((typeof STK[STK.length-1][0]) === "symbol"), "Second arg must be array with 1 symbol")
@@ -296,7 +295,7 @@ const STDENV = {
 			STK.push(ex); STDENV["eval"](STK,ENV); n--
 		}
 	},
-	// Interface
+	// User interface
 	"print": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
 		PRINT(stringify(STK[STK.length-1]), "", " "); STK.pop()},
 	"printn": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
@@ -349,7 +348,7 @@ function swap(STK) {
 }
 function assert(t, msg) {
 	if (t === false) {
-		throw "ERROR: "+msg
+		throw ""+msg
 	}}
 function assertArr(arr, assf, cond) {
 	if (Array.isArray(arr)) {
@@ -360,33 +359,33 @@ function assertArr(arr, assf, cond) {
 	}
 }
 function assertNum(v, cond) {
-	if (typeof v !== "number") {throw "ERROR: arg must be number"}
+	if (typeof v !== "number") {throw "arg must be number"}
 	if (cond === ">0") {
-		if (!(v > 0)) {throw "ERROR: arg must be > 0"}}
+		if (!(v > 0)) {throw "arg must be > 0"}}
 	if (cond === "int>0") {
-		if (!(v > 0)||(!Number.isInteger(v))) {throw "ERROR: arg must be an integer > 0"}}
+		if (!(v > 0)||(!Number.isInteger(v))) {throw "arg must be an integer > 0"}}
 	else if (cond === "<0") {
-		if (!(v < 0)) {throw "ERROR: arg must be < 0"}}
+		if (!(v < 0)) {throw "arg must be < 0"}}
 	else if (cond === ">=0") {
-		if (!(v >= 0)) {throw "ERROR: arg must be > 0"}}
+		if (!(v >= 0)) {throw "arg must be > 0"}}
 	else if (cond === "<=0") {
-		if (!(v <= 0)) {throw "ERROR: arg must be < 0"}}
+		if (!(v <= 0)) {throw "arg must be < 0"}}
 	else if (cond === "not0") {
-		if (v === 0) {throw "ERROR: arg must not be 0"}}
+		if (v === 0) {throw "arg must not be 0"}}
 	else if (cond === ">=1") {
-		if (v < 1) {throw "ERROR: arg must be >=1"}}
+		if (v < 1) {throw "arg must be >=1"}}
 	else if (cond === "-1/1") {
-		if (!(v >= -1 && v <= 1)) {throw "ERROR: arg must be >=-1 and <=1"}}
+		if (!(v >= -1 && v <= 1)) {throw "arg must be >=-1 and <=1"}}
 }
 function assertSym(v, env) {
-	if (! typeof v === "symbol") {throw "ERROR: arg must be symbol"}
-	if (env[Symbol.keyFor(v)] === undefined && STDENV[Symbol.keyFor(v)] === undefined) {throw "ERROR: unknown symbol "+Symbol.keyFor(v)}
+	if (! typeof v === "symbol") {throw "arg must be symbol"}
+	if (env[Symbol.keyFor(v)] === undefined && STDENV[Symbol.keyFor(v)] === undefined) {throw "unknown symbol "+Symbol.keyFor(v)}
 }
 function assertStr(v) {
-    if (! typeof v === "string") {throw "ERROR: arg must be string"}
+    if (! typeof v === "string") {throw "arg must be string"}
 }
 function assertStkl(n,STK) {
-	if (STK.length < n) {throw "ERROR: Stack length <"+n}}
+	if (STK.length < n) {throw "Stack length <"+n}}
 
 // INTERPRETER
 function tokenize(s) {
@@ -444,21 +443,25 @@ function parset(t) {
 }
 function parse(ts) {
 	let ST = [[]];
-	for (let ti in ts) {
-		let t = ts[ti];
-		if (t === "(") {
-			ST.push([])
-		} else if (t === ")") {
-			assert(ST.length > 1, "Unexpected )")
-			let a = ST.pop(); ST[ST.length-1].push(a)
-		} else if (t === ")!") {
-			let a = ST.pop(); a.evaluate = true; ST[ST.length-1].push(a)
-		} else {
-			ST[ST.length-1].push(parset(t))
+	try {
+		for (let ti in ts) {
+			let t = ts[ti];
+			if (t === "(") {
+				ST.push([])
+			} else if (t === ")") {
+				assert(ST.length > 1, "Unexpected )")
+				let a = ST.pop(); ST[ST.length-1].push(a)
+			} else if (t === ")!") {
+				let a = ST.pop(); a.evaluate = true; ST[ST.length-1].push(a)
+			} else {
+				ST[ST.length-1].push(parset(t))
+			}
 		}
+		assert(ST.length === 1, "Missing )")
+		return ST[0];
+	} catch (e) {
+		throw new Error("Parsing error."+e)
 	}
-	assert(ST.length === 1, "Missing )")
-	return ST[0];
 }
 function stringify(ex) {
 	if (typeof ex === "number") {
