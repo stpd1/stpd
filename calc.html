@@ -443,8 +443,8 @@ function parset(t) {
 }
 function parse(ts) {
 	let ST = [[]];
-	try {
-		for (let ti in ts) {
+	for (let ti in ts) {
+		try {
 			let t = ts[ti];
 			if (t === "(") {
 				ST.push([])
@@ -456,12 +456,16 @@ function parse(ts) {
 			} else {
 				ST[ST.length-1].push(parset(t))
 			}
+		} catch (e) {
+			throw new Error("Parsing error. Token " + ti  + " " + e)
 		}
-		assert(ST.length === 1, "Missing )")
-		return ST[0];
-	} catch (e) {
-		throw new Error("Parsing error at " + ti + e)
 	}
+	try {
+		assert(ST.length === 1, "Missing )")
+	} catch (e) {
+		throw new Error("Parsing error. Token " + ts.length  + " " + e)
+	}
+	return ST[0];
 }
 function stringify(ex) {
 	if (typeof ex === "number") {
