@@ -160,6 +160,8 @@ const STDENV = {
 	"<=": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // val1 val2 -> val1 <= val2
 		let b = STK.pop(), a = STK.pop(); STK.push(map2(a, b, (a, b)=>a <= b?1: 0))},
 	// Units
+	"units": (STK,ENV)=> {let ua = []; for (u in UNITS) {ua.push(u); ua.push(UNITS[u]);}
+		STK.push(ua)},
 	"toUnit": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-2], assertNum, ""); // sival (unitsymb) -> unitval
 		assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val, "conv")))},
