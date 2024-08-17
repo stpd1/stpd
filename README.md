@@ -5,6 +5,7 @@ STPD is a toy minimalistic programming language for scientific calculations. Its
 - array oriented (most functions automatically works on arrays);
 - homoiconicity (language expressions are written as arrays);
 - support for quick units of measurement conversion.
+
 An STPD array literal is a list of tokens separated by whitespace and enclosed in parenthesis. Arrays can represent data (evaluate to themselves) or expressions (each token is evaluated with reference to the stack). Tokens can be numbers, strings or symbols (references to expressions). Expressions are evaluated with reference to the global environment (symbol definitions object). User defined expression are evaluated in a new child environment (i.e. new definitions inside them are local to themselves).
 ## Data types
 Data types are numbers, strings and symbols (each maps to the corresponding Javascript data type). Numbers and strings always evaluate to themselves and are pushed on the stack. 
