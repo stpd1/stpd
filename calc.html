@@ -219,7 +219,7 @@ const STDENV = {
 		}
 		STK.push(na)
 	},
-	"filt": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> (expr(arr))
+	"filter": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> (expr(arr))
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an expression array");
 		let ex = STK.pop(),a = STK.pop(),na = []; ex.evaluate = true
 		for (let ei in a) {
@@ -229,7 +229,7 @@ const STDENV = {
 				na.push(a[ei])}}
 		STK.push(na)
 	},
-	"red": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> reduce(arr,expr)
+	"reduce": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> reduce(arr,expr)
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an expression array");
 		let ex = STK.pop(),a = STK.pop(); ex.evaluate = true
 		STK.push(a.shift());
@@ -241,7 +241,7 @@ const STDENV = {
 		STK.push(STK.pop().length)},
 	"sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (sorted)
 		STK.push(STK.pop().toSorted())},
-	"rev": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (reversed)
+	"reverse": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (reversed)
 		STK.push(STK.pop().toReversed())},
 	"find": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array")  // arr -> arr (reversed)
 		let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
