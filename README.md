@@ -11,8 +11,8 @@ An STPD array literal is a list of tokens separated by whitespace and enclosed i
 Data types are numbers, strings and symbols (each maps to the corresponding Javascript data type). Numbers and strings always evaluate to themselves and are pushed on the stack. 
 Number literals with units suffix are converted to corresponding SI value (unit is not preserved and dimensions are not checked!!!). Compound units, with numerator and denominator, are supported.
 Symbols evaluate:
-- to themselves and are pushed on the stack in data arrays;
-- to builtin function excecution or user defined expression evaluation in expression arrays.
+- in data arrays to themselves and pushed on stack;
+- in expression arrays to builtin function excecution or user defined expression evaluation.
 ```
 1  ->  STACK: (1)
 1.33e-3  ->  STACK: (0.001330)
