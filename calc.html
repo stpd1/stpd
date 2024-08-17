@@ -248,7 +248,7 @@ const STDENV = {
 	"assoc": (STK,ENV)=> {assertStkl(2,STK); 
 		let ks = STK.pop(), a = STK.pop(); 
 		if (Array.isArray(ks)) {ks.map((k)=>STK.push(a[a.findIndex((e)=>e === k)+1]))}
-		else {STK.push(a[a.findIndex((e)=>e === k)+1])}},
+		else {STK.push(a[a.findIndex((e)=>e === ks)+1])}},
 	"apush": (STK,ENV)=> {
 		let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
 	"apop": (STK,ENV)=> {
