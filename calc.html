@@ -416,7 +416,7 @@ function parse(ts) {
 			else {ST[ST.length-1].push(parset(t))}
 		} catch (e) {throw new Error("Parsing error. Token " + ti + ". " + e)}}
 	try {assert(ST.length === 1, "Missing )")} 
-	catch (e) {throw new Error("Parsing error. Token " + ts[ts.length]  + ". " + e)}
+	catch (e) {throw new Error("Parsing error. Token " + ts[ts.length-1]  + ". " + e)}
 	return ST[0];}
 function stringify(ex) {
 	if (typeof ex === "number") {
