@@ -1,6 +1,6 @@
 # STPD language
 ## Introduction
-STPD is a toy minimalistic programming language for engineering calculations. Its main characteristics are: 
+STPD is a toy minimalistic programming language for scientific calculations. Its main characteristics are: 
 - stack RPN based (no PEMDAS and parenthesis needed);
 - array oriented (most functions automatically works on arrays);
 - homoiconicity (language expressions are written as arrays);
