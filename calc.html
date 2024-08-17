@@ -243,11 +243,12 @@ const STDENV = {
 		STK.push(STK.pop().toSorted())},
 	"rev": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (reversed)
 		STK.push(STK.pop().toReversed())},
-	"find": (STK,ENV)=> {  // arr -> arr (reversed)
+	"find": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array")  // arr -> arr (reversed)
 		let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
-	"assoc": (STK,ENV)=> {
-		let ks = STK.pop(),a = STK.pop(); 
-		ks.map((k)=>STK.push(a[a.findIndex((e)=>e === k)+1]))},
+	"assoc": (STK,ENV)=> {assertStkl(2,STK); 
+		let ks = STK.pop(), a = STK.pop(); 
+		if (Array.isArray(ks) {ks.map((k)=>STK.push(a[a.findIndex((e)=>e === k)+1]))}
+		else {STK.push(a[a.findIndex((e)=>e === k)+1])}},
 	"apush": (STK,ENV)=> {
 		let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
 	"apop": (STK,ENV)=> {
