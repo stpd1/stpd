@@ -1,16 +1,19 @@
-# STPD Calc
+# STPD language
 ## Introduction
 STPD is a toy minimalistic programming language for engineering calculations. Its main characteristics are: 
-- array-oriented (most functions broadcast on arrays);
+- stack RPN based (no PEMDAS and parenthesis needed);
+- array oriented (most functions automatically works on arrays);
 - homoiconicity (language expressions are written as arrays);
 - support for quick units of measurement conversion.
-Array literals are enclosed in parenthesis and list of tokens separated by whitespace. Array data in (...) evaluate to itseld, expressions (...)! are evaluated per token.
-Basic types are numbers, strings (evaluate to themselves) and symbols (evaluate builtin or user expression). User expression evaluation introduces a new child environment.
-
+An STPD array literal is a list of tokens separated by whitespace and enclosed in parenthesis. Arrays can represent data (evaluate to themselves) or expressions (each token is evaluated with reference to the stack). Tokens can be numbers, strings or symbols (references to expressions). Expressions are evaluated with reference to the global environment (symbol definitions object). User defined expression are evaluated in a new child environment (i.e. new definitions inside them are local to themselves).
 ## Examples
 ### Data types
-Data types are numbers, symbols, strings and arrays (quoted () or evaluated ()!). They map to corresponding Javascript data types.
-Number literals with units suffix are parsed to corresponding SI value. Compound units are supported but dimensions are not checked!!!. 
+Data types are numbers, strings and symbols (each maps to the corresponding Javascript data type). Numbers and strings always evaluate to themselves and are pushed on the stack. 
+Number literals with units suffix are converted to corresponding SI value (unit is not preserved and dimensions are not checked!!!). Compound units, with numerator and denominator, are supported.
+Symbols evaluate:
+- to themselves and are pushed on the stack in data arrays;
+- to builtin function excecution or user defined expression evaluation in expression arrays.
+
 ```
 1  ->  STACK: (1)
 1.33e-3  ->  STACK: (0.001330)
@@ -21,12 +24,15 @@ pi  ->  STACK: (3.142)
 (1 2 (3 4) 5)  ->  STACK: ((1 2 (3 4) 5))
 (1 2 +)!  ->  STACK: (3)
 ```
-### Expressions
-Expressions are arrays (STPD is homoiconic). Top level expressions does not need parenthesis and are always evaluated (i.e. 1 2 3 is equivalent to (1 2 3)!). Expressions can be quoted (evaluate to themselves) or evaluated
+### Arrays
+Arrays can represent data (...) or expression (...)!.
+Data arrays can be used as lists and dictionaries (list of key value pairs).
+Top level expressions does not need parenthesis (i.e. 1 2 3 is equivalent to (1 2 3)!) and are evaluated on the stack. Nested expressions use the parent array as stack. 
 ```
 1 2 3  ->  STACK: (1 2 3)
-(1 2 3)  ->  STACK: ((1 2 3))
-(1 2 3 +)!  ->  STACK: (1 2 3)
+1 2 +  ->  STACK: (1 2 3)
+(1 2 (3 4))  ->  STACK: ((1 2 (3 4)))
+(1 2 +)!  ->  STACK: (3)
 (1 2 3 (2 2 +)! 5)  ->  STACK: ((1 2 3 4 5))
 ```
 ### Number functions
