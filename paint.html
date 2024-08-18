@@ -60,15 +60,15 @@ function getX(e) {return e.touches ? e.touches[0].clientX : e.clientX;}
 function getY(e) {return e.touches ? e.touches[0].clientY : e.clientY;}
 function resetCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    localStorage.removeItem('savedCanvas');
+    localStorage.removeItem('stpd_notes');
 }
 function saveCanvasToLocalStorage() {
     const dataURL = canvas.toDataURL();
-    localStorage.setItem('savedCanvas', dataURL);
+    localStorage.setItem('stpd_notes', dataURL);
 }
 
 function loadCanvasFromLocalStorage() {
-    const dataURL = localStorage.getItem('savedCanvas');
+    const dataURL = localStorage.getItem('stpd_notes');
     if (dataURL) {
         const img = new Image();
         img.src = dataURL;
