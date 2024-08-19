@@ -19,13 +19,13 @@
             "src": "/stpd/screenshot1.png",
             "sizes": "540x720",
             "type": "image/png",
-            "form_factor": "narrow",
+            "form_factor": "narrow"
         },
         {
             "src": "/stpd/screenshot2.png",
             "sizes": "720x540",
             "type": "image/png",
-            "form_factor": "wide",
+            "form_factor": "wide"
         }
     ]
 }
