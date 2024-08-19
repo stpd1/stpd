@@ -13,7 +13,7 @@
             "src": "/stpd/favico.png",
             "sizes": "144x144"
         }
-    ]
+    ],
     "screenshots" : [
         {
             "src": "/stpd/screenshot1.png",
@@ -27,5 +27,5 @@
             "type": "image/png",
             "form_factor": "wide",
         }
-]
+    ]
 }
