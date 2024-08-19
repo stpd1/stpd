@@ -1,8 +1,8 @@
 {
     "lang": "en-us",
-    "name": "STPD calc",
-    "short_name": "STPD calc",
-    "description": "STPD calc",
+    "name": "STPD language",
+    "short_name": "STPD",
+    "description": "Stupid programming language for scientific calculations",
     "start_url": "/",
     "background_color": "#2f3d58",
     "theme_color": "#2f3d58",
@@ -14,4 +14,18 @@
             "sizes": "144x144"
         }
     ]
+    "screenshots" : [
+        {
+            "src": "/stpd/screenshot1.png",
+            "sizes": "540x720",
+            "type": "image/png",
+            "form_factor": "narrow",
+        },
+        {
+            "src": "/stpd/screenshot2.png",
+            "sizes": "720x540",
+            "type": "image/png",
+            "form_factor": "wide",
+        }
+]
 }
