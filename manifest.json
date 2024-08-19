@@ -8,12 +8,6 @@
     "theme_color": "#2f3d58",
     "orientation": "any",
     "display": "standalone",
-    "icons": [
-        {
-            "src": "/stpd/favico.png",
-            "sizes": "144x144"
-        }
-    ],
     "screenshots": [
         {
             "src": "/stpd/screen1.png",
@@ -26,6 +20,13 @@
             "sizes": "720x540",
             "type": "image/png",
             "form_factor": "wide"
+        }
+    ],
+    "icons": [
+        {
+            "src": "/stpd/favico.png",
+            "type": "image/png",
+            "sizes": "144x144"
         }
     ]
 }
