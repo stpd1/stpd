@@ -364,12 +364,12 @@ function assertStkl(n,STK) {
 // INTERPRETER
 function tokenize(s) {
 	let ts = s.split('"').map((e,i)=>{
-	    if (i%2===0) {
-	        return e.replace(/\(/g, ' ( ')
-	        .replace(/\)(?![!])/g, ' ) ')
-	        .replace(/(\)!)/g, ' $1 ')
+		if (i%2===0) {
+			return e.replace(/\(/g, ' ( ')
+			.replace(/\)(?![!])/g, ' ) ')
+			.replace(/(\)!)/g, ' $1 ')
 		.split(/\s+/).filter((t)=>t !== "");
-	    } else {return '"'+e+'"'}
+		} else {return '"'+e+'"'}
 	}).flat()
 	return ts;}
 function parseu(us,v,mode="") {
@@ -401,7 +401,7 @@ function parseu(us,v,mode="") {
 	if (mode==="conv") {return v/cf}
 	else {return v*cf}}
 function parset(t) {
-    if (t[0]==='"') {return t.slice(1,-1)}
+	if (t[0]==='"') {return t.slice(1,-1)}
 	let tl = t; t = t.split("_")
 	if (isFinite(t[0])) {
 		assert(t[1] !== "", "Missing unit after _")
@@ -441,7 +441,7 @@ function evaluate(ST, STK, ENV) {
 	} else if (typeof ST === "symbol") {
 		try {
 			if (ENV[Symbol.keyFor(ST)] === undefined) {
-	                        assertSym(ST, STDENV)
+				assertSym(ST, STDENV)
 				STDENV[Symbol.keyFor(ST)](STK, ENV)} 
 			else {
 				let ne = Object.create(ENV)
@@ -485,7 +485,7 @@ RUN(); inElem.focus();
 <script>
 // PWA SERVICE WORKER
 if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js', { scope: '/' });
+	navigator.serviceWorker.register('/sw.js', { scope: '/' });
 }
 </script>
 
