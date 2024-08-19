@@ -4,8 +4,6 @@
     "short_name": "STPD",
     "description": "Stupid programming language for scientific calculations",
     "start_url": "/stpd/index.html",
-    "background_color": "#2f3d58",
-    "theme_color": "#2f3d58",
     "orientation": "any",
     "display": "standalone",
     "screenshots": [
