@@ -12,8 +12,8 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 	<title>STPD</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" type="image/png" href="favico.png?">
-	<link rel="manifest" href="https://stpd1.github.io/stpd/manifest.json">
+	<link rel="shortcut icon" type="image/png" href="/stpd/favico.png?">
+	<link rel="manifest" href="/stpd/manifest.json">
 </head>
 <body>
 	<div><textarea id="in"></textarea></div>
@@ -485,7 +485,7 @@ RUN(); inElem.focus();
 <script>
 // PWA SERVICE WORKER
 if('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('https://stpd1.github.io/stpd/sw.js', { scope: '/stpd/' });
+	navigator.serviceWorker.register('/stpd/sw.js', { scope: '/stpd/' });
 }
 </script>
 </html>
