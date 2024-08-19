@@ -1,0 +1,17 @@
+{
+    "lang": "en-us",
+    "name": "STPD calc",
+    "short_name": "STPD calc",
+    "description": "STPD calc",
+    "start_url": "/",
+    "background_color": "#2f3d58",
+    "theme_color": "#2f3d58",
+    "orientation": "any",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/favico.png",
+            "sizes": "100x100"
+        }
+    ]
+}
