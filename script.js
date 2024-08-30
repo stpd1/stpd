@@ -246,7 +246,7 @@ const STDENV = {
 	"symb/tostring": (STK,ENV)=>{assertStkl(1,STK); assert(typeof(STK[STK.length-1])==="symbol","Argument must be symbol"); // symb -> str
 		STK.push(Symbol.keyFor(STK.pop()))},
 	// Programming
-	"#": (STK,ENV)=>{assertStkl(1,STK);
+	"//": (STK,ENV)=>{assertStkl(1,STK);
 		STK.pop()},
 	"typeof": (STK,ENV)=>{assertStkl(1,STK);
 		STK.push(typeof(STK.pop()))},
@@ -274,6 +274,14 @@ const STDENV = {
 		}
 	},
 	// User interface
+	"#": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
+		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<h1>", "</h1>"); STK.pop()},
+	"##": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
+		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<h2>", "</h2>"); STK.pop()},
+	"###": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
+		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<h3>", "</h3>"); STK.pop()},
+	"p": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
+		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<p>", "</p>"); STK.pop()},
 	"print": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
 		PRINT(stringify(STK[STK.length-1]), "", " "); STK.pop()},
 	"printn": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
