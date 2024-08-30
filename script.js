@@ -288,7 +288,7 @@ const STDENV = {
 		let s = "<table><tr>", a = STK[STK.length-1];
 		for (let e in a) {
 			if (Array.isArray(a[e])) {
-				s += "<table><tr>";
+				s += "<tr>";
 				for (let se in a[e]) {s += "<td>"+stringify(a[e][se])+"</td>"}
 				s += "</tr>";
 			} else {s += "<td>"+stringify(a[e])+"</td>"}
