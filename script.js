@@ -290,7 +290,7 @@ const STDENV = {
 			if (Array.isArray(e)) {
 				s += "<table><tr>";
 				for (let se in e) {s += "<td>"+stringify(e)+"</td>"}
-				s += </tr>;
+				s += "</tr>";
 			} else {s += "<td>"+stringify(e)+"</td>"}
 		}
 		s += "</tr></table>";
