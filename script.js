@@ -446,7 +446,7 @@ inElem.oninput = () => {
 	setTimeout(()=> {
 		editing -= waitTime;
 		if (editing === 0) {
-			initEnv(); outElem.innerHTML = ""; RUN();
+			initEnv(); outElem.innerHTML = ""; stkElem.innerHTML = ""; RUN();
 			localStorage.setItem('stpd_data', inElem.value);
 		}},waitTime)
 }
