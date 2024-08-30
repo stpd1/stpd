@@ -278,9 +278,9 @@ const STDENV = {
 		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<h1>", "</h1>"); STK.pop()},
 	"h2": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<h2>", "</h2>"); STK.pop()},
-	"###": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
-		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<h3>", "</h3>"); STK.pop()},
 	"h3": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
+		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<h3>", "</h3>"); STK.pop()},
+	"p": (STK,ENV)=> (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		PRINT(STK[STK.length-1].replace(/\\'/g,'"'), "<p>", "</p>"); STK.pop()},
 	"print": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
 		PRINT(stringify(STK[STK.length-1]), "", " "); STK.pop()},
