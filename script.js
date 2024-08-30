@@ -285,13 +285,13 @@ const STDENV = {
 	"code": (STK,ENV)=> {assertStkl(1,STK); 
 		PRINT(stringify(STK[STK.length-1]), "<pre>", "</pre>"); STK.pop()},
 	"table": (STK,ENV)=> {assertStkl(1,STK);
-		let s = "<table><tr>";
-		for (let e in STK[STK.length-1]) {
-			if (Array.isArray(e)) {
+		let s = "<table><tr>", a = STK[STK.length-1];
+		for (let e in a) {
+			if (Array.isArray(a[e])) {
 				s += "<table><tr>";
-				for (let se in e) {s += "<td>"+stringify(e)+"</td>"}
+				for (let se in a[e]) {s += "<td>"+stringify(a[e][se])+"</td>"}
 				s += "</tr>";
-			} else {s += "<td>"+stringify(e)+"</td>"}
+			} else {s += "<td>"+stringify(a[e])+"</td>"}
 		}
 		s += "</tr></table>";
 		PRINT(s, "", ""); STK.pop()},
