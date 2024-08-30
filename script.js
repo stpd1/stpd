@@ -282,8 +282,19 @@ const STDENV = {
 		PRINT(STK[STK.length-1], "<h3>", "</h3>"); STK.pop()},
 	"par": (STK,ENV)=> {assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		PRINT(STK[STK.length-1], "<p>", "</p>"); STK.pop()},
-	"code": (STK,ENV)=> {assertStkl(1,STK); assertStkl(1,STK);
+	"code": (STK,ENV)=> {assertStkl(1,STK); 
 		PRINT(stringify(STK[STK.length-1]), "<pre>", "</pre>"); STK.pop()},
+	"table": (STK,ENV)=> {assertStkl(1,STK);
+		let s = "<table><tr>";
+		for (let e in STK[STK.length-1]) {
+			if (Array.isArray(e)) {
+				s += "<table><tr>";
+				for (let se in e) {s += "<td>"+stringify(e)+"</td>"}
+				s += </tr>;
+			} else {s += "<td>"+stringify(e)+"</td>"}
+		}
+		s += "</tr></table>";
+		PRINT(s, "", ""); STK.pop()},
 	// Flags
 	"prec": (STK,ENV)=> {assertStkl(1,STK);
 		FLAGS["prec"] = STK.pop()}
