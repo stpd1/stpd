@@ -432,11 +432,14 @@ function evals(s, STK = []) {
 // USER INTERFACE
 let inElem = document.getElementById("in")
 let outElem = document.getElementById("out")
+let stkElem = document.getElementById("stk")
 let waitTime = 700; let editing = 0;
 function PRINT(o, pre, post) {
 	outElem.innerHTML += pre+o+post}
+function PRINTSTK(o, pre, post) {
+	stkElem.innerHTML += pre+o+post}
 function RUN() {
-	try {evals(inElem.value, STK); PRINT(stringify(STK), "<br>STACK: ", "")} 
+	try {evals(inElem.value, STK); PRINTSTK(stringify(STK), "<br>STACK: ", "")} 
 	catch (e) {PRINT(e, "", "")}}
 inElem.oninput = () => {
 	editing += waitTime
