@@ -165,6 +165,10 @@ err  ->  Error: Evaluation error. Symbol err. Generic error
 (5 2 +) 3 loop  ->  STACK: (7 7 7)
 ```
 
+## Markdown generation
+
+
+
 ## User interface
 
 The prec function sets the display digit precision of numbers.
