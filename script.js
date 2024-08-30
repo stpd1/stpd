@@ -273,7 +273,7 @@ const STDENV = {
 			STK.push(ex); STDENV["eval"](STK,ENV); n--
 		}
 	},
-	// User interface
+	// Document
 	"h1": (STK,ENV)=> {assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		PRINT(STK[STK.length-1], "<h1>", "</h1>"); STK.pop()},
 	"h2": (STK,ENV)=> {assertStkl(1,STK); assertStr(STK[STK.length-1]);
@@ -285,14 +285,23 @@ const STDENV = {
 	"code": (STK,ENV)=> {assertStkl(1,STK); 
 		PRINT(stringify(STK[STK.length-1]), "<pre>", "</pre>"); STK.pop()},
 	"table": (STK,ENV)=> {assertStkl(1,STK);
-		let s = "<table>", a = STK[STK.length-1];
+		let s = "<table>", a = STK[STK.length-1]; STK.pop();
 		for (let e in a) {
 			s += "<tr>";
 			for (let se in a[e]) {s += "<td>"+stringify(a[e][se])+"</td>"}
 			s += "</tr>";
 		}
 		s += "</table>";
-		PRINT(s, "", ""); STK.pop()},
+		PRINT(s, "", "")},
+	"htable": (STK,ENV)=> {assertStkl(2,STK);
+		let s = "<table>", a = STK[STK.length-1]; STK.pop(); let h = STK[STK.length-1]; STK.pop();
+		for (let e in a) {
+			s += "<tr><td>" + h[e] + "</td>";
+			for (let se in a[e]) {s += "<td>"+stringify(a[e][se])+"</td>"}
+			s += "</tr>";
+		}
+		s += "</table>";
+		PRINT(s, "", ""); },
 	// Flags
 	"prec": (STK,ENV)=> {assertStkl(1,STK);
 		FLAGS["prec"] = STK.pop()}
