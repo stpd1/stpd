@@ -27,7 +27,7 @@ body {background-color: #fffdf5;}
 }
 
 /* Screen_Portrait */
-@media screen and (orientation: landscape) {
+@media screen and (orientation: portrait) {
 #in {width: calc(100vw - 60px); height: calc(100vh - 140px); overflow: auto; margin: 10px 0px 10px 0px;}
 #out {width: calc(100vw - 60px); height: calc(100vh - 20px); overflow: auto;}
 #stk {width: calc(100vw - 60px); height: 16pt; overflow: auto; margin: 0px 0px 10px 0px;}
