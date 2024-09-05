@@ -20,7 +20,7 @@ body {background-color: ivory;}
 
 #in {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto;}
 #out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
-#stk {width: calc(100vw - 80px); height: calc(40px); overflow: auto;}
+#stk {width: calc(100vw - 80px); height: calc(16pt); overflow: auto;}
 
 /* Screen_Landscape */
 
