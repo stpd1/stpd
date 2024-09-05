@@ -13,6 +13,7 @@ h3 {font-size: 12pt;}
 p, ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
 #in, #stk {font-size: 9pt; padding: 10px;}
+#out {font-size: 9pt; padding: 10px;}
 pre {font-size: 9pt;}
 body {background-color: #fffdf5;}
 #in {background-color: #1d1d1d; color: #ffac1d;}
@@ -20,16 +21,16 @@ body {background-color: #fffdf5;}
 
 /* Screen_Landscape */
 @media screen and (orientation: landscape) {
-#in {width: calc(100vw - 40px); height: calc(50vh - 80px); overflow: auto; margin: 10px 0px 10px 0px;}
-#out {width: calc(100vw - 40px); height: calc(50vh - 80px); overflow: auto; border: 1px solid black;}
+#in {width: calc(100vw - 40px); height: calc(50vh - 120px); overflow: auto; margin: 10px 0px 10px 0px;}
+#out {width: calc(100vw - 40px); height: calc(50vh - 20px); overflow: auto; border: 1px solid black;}
 #stk {width: calc(100vw - 40px); height: 16pt; overflow: auto; margin: 0px 0px 10px 0px;}
 }
 
 /* Screen_Portrait */
 @media screen and (orientation: landscape) {
-#in {width: calc(100vw - 640px); height: calc(100vh - 80px); overflow: auto; margin: 10px 0px 10px 0px;}
-#out {width: calc(100vw - 40px); height: calc(100vh - 80px); overflow: auto;}
-#stk {width: calc(100vw - 40px); height: 16pt; overflow: auto;}
+#in {width: calc(100vw - 40px); height: calc(100vh - 120px); overflow: auto; margin: 10px 0px 10px 0px;}
+#out {width: calc(100vw - 40px); height: calc(100vh - 20px); overflow: auto;}
+#stk {width: calc(100vw - 40px); height: 16pt; overflow: auto; margin: 0px 0px 10px 0px;}
 }
 
 /* Print */
