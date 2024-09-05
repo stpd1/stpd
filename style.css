@@ -7,7 +7,7 @@ p, table, .table tr, .table th, .table td, ul, li, ol {font-family: "EB Garamond
 
 /* Screen */
 @media screen {
-h1,  {font-size: 16pt;}
+h1  {font-size: 16pt;}
 h2 {font-size: 14pt;}
 h3 {font-size: 12pt;}
 p, ul, li, ol {font-size: 12pt;}
@@ -19,17 +19,17 @@ body {background-color: #fffdf5;}
 }
 
 /* Screen_Landscape */
-@media screen && (orientation: landscape) {
+@media screen and (orientation: landscape) {
 #in {width: calc(100vw - 60px); height: calc(50vh - 100px); overflow: auto; margin: 20px 0px 20px 0px;}
 #out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
-#stk {width: calc(100vw - 80px); height: calc(16pt); overflow: auto;}
+#stk {width: calc(100vw - 80px); height: 16pt; overflow: auto;}
 }
 
 /* Screen_Portrait */
-@media screen && (orientation: landscape) {
+@media screen and (orientation: landscape) {
 #in {width: calc(100vw - 60px); height: calc(100vh - 100px); overflow: auto; margin: 20px 0px 20px 0px;}
 #out {width: calc(100vw - 60px); height: calc(100vh - 20px); overflow: auto;}
-#stk {width: calc(100vw - 80px); height: calc(16pt); overflow: auto;}
+#stk {width: calc(100vw - 80px); height: 16pt; overflow: auto;}
 }
 
 /* Print */
