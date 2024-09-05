@@ -16,7 +16,7 @@ table, .table tr, .table th, .table td {font-size: 11pt;}
 #out {font-size: 9pt; padding: 10px;}
 pre {font-size: 9pt;}
 body {background-color: #fffdf5;}
-/* #in {background-color: #1d1d1d; color: #ffac1d;} */
+#in {background-color: #e7e7e7; color: #1b1b1b;}
 }
 
 /* Screen_Landscape */
