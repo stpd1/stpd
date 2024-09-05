@@ -1,7 +1,7 @@
 /* General */
 #in, #stk {font-family: "Victor Mono", monospace;}
 pre, .table td, .table th, {font-family: "Victor Mono", monospace;}
-h1, h2, h3 {font-family: "Jost", sans-serif;}
+h1, h2, h3, #top {font-family: "Jost", sans-serif;}
 p {font-family: "EB Garamond", serif;}
 
 /* Screen */
