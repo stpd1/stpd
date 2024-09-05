@@ -1,6 +1,6 @@
 h1,h2,h3 {font-family: "Jost", sans-serif;}
 p {font-family: "EB Garamond", serif;}
-pre {font-family: "Victor Mono", monospace;}
+pre,* {font-family: "Victor Mono", monospace;}
 #in {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto;}
 #out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
 #stk {width: calc(100vw - 80px); height: calc(40px); overflow: auto;}
