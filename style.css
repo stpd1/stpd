@@ -2,29 +2,35 @@
 
 #in, #stk {font-family: "Victor Mono", monospace;}
 pre {font-family: "Victor Mono", monospace;}
-h1, h2, h3, #top {font-family: "Jost", sans-serif;}
+#top, h1, h2, h3 {font-family: "Jost", sans-serif;}
 p, table, .table tr, .table th, .table td, ul, li, ol {font-family: "EB Garamond", serif;}
 
 /* Screen */
-
+@media screen {
 h1,  {font-size: 16pt;}
 h2 {font-size: 14pt;}
-h3, {font-size: 12pt;}
+h3 {font-size: 12pt;}
 p, ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
 #in, #stk {font-size: 9pt;}
 pre {font-size: 9pt;}
-
 body {background-color: #fffdf5;}
 #in {background-color: #1d1d1d; color: #ffac1d;}
-
-#in {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto;}
-#out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
-#stk {width: calc(100vw - 80px); height: calc(16pt); overflow: auto;}
+}
 
 /* Screen_Landscape */
+@media screen && (orientation: landscape) {
+#in {width: calc(100vw - 60px); height: calc(50vh - 100px); overflow: auto; margin: 20px 0px 20px 0px;}
+#out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
+#stk {width: calc(100vw - 80px); height: calc(16pt); overflow: auto;}
+}
 
 /* Screen_Portrait */
+@media screen && (orientation: landscape) {
+#in {width: calc(100vw - 60px); height: calc(100vh - 100px); overflow: auto; margin: 20px 0px 20px 0px;}
+#out {width: calc(100vw - 60px); height: calc(100vh - 20px); overflow: auto;}
+#stk {width: calc(100vw - 80px); height: calc(16pt); overflow: auto;}
+}
 
 /* Print */
 
