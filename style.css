@@ -15,8 +15,8 @@ table, .table tr, .table th, .table td {font-size: 11pt;}
 #in, #stk {font-size: 9pt;}
 pre {font-size: 9pt;}
 
-body {background-color: ivory;}
-#in {background-color: black; color: orange;}
+body {background-color: #fffdf5;}
+#in {background-color: #1d1d1d; color: #ffac1d;}
 
 #in {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto;}
 #out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
