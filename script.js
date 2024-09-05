@@ -1,4 +1,4 @@
-"use strict"
+vic"use strict"
 // ENVIRONMENT
 let STK, ENV, FLAGS, UNITS = {
 	// WARNING: Unit dimensions are not checked!
@@ -476,5 +476,5 @@ RUN(); inElem.focus();
 
 // PWA SERVICE WORKER
 if('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('/stpd/sw.js', { scope: '/stpd/' });
+	navigator.serviceWorker.register('/stpd/servicew.js', { scope: '/stpd/' });
 }
