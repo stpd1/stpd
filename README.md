@@ -165,7 +165,7 @@ err  ->  Error: Evaluation error. Symbol err. Generic error
 (5 2 +) 3 loop  ->  STACK: (7 7 7)
 ```
 
-## Markdown generation
+## Document editing
 
 
 
