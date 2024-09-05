@@ -10,9 +10,9 @@ p, table, .table tr, .table th, .table td, ul, li, ol {font-family: "EB Garamond
 h1,  {font-size: 16pt;}
 h2 {font-size: 14pt;}
 h3, {font-size: 12pt;}
-p, ul, li, ol {font-size: 11pt;}
-table, .table tr, .table th, .table td {font-size: 10pt;}
-#in, #stk {font-size: 11pt;}
+p, ul, li, ol {font-size: 12pt;}
+table, .table tr, .table th, .table td {font-size: 11pt;}
+#in, #stk {font-size: 9pt;}
 pre {font-size: 10pt;}
 
 body {background-color: ivory;}
