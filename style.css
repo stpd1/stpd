@@ -19,18 +19,24 @@ body {background-color: #fffdf5;}
 }
 
 /* Screen_Landscape */
-@media screen and (orientation: landscape) {
-#in {width: calc(100vw - 60px); height: calc(50vh - 100px); overflow: auto; margin: 20px 0px 20px 0px;}
+@media (orientation: landscape) {
+#in {width: calc(100vw - 60px); height: calc(50vh - 100px); overflow: auto; margin: 10px 0px 10px 0px;}
 #out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border: 1px solid black;}
 #stk {width: calc(100vw - 80px); height: 16pt; overflow: auto;}
 }
 
 /* Screen_Portrait */
-@media screen and (orientation: landscape) {
-#in {width: calc(100vw - 60px); height: calc(100vh - 100px); overflow: auto; margin: 20px 0px 20px 0px;}
+@media (orientation: landscape) {
+#in {width: calc(100vw - 60px); height: calc(100vh - 100px); overflow: auto; margin: 10px 0px 10px 0px;}
 #out {width: calc(100vw - 60px); height: calc(100vh - 20px); overflow: auto;}
 #stk {width: calc(100vw - 80px); height: 16pt; overflow: auto;}
 }
 
 /* Print */
-
+@media print {
+h1  {font-size: 16pt;}
+h2 {font-size: 14pt;}
+h3 {font-size: 12pt;}
+p, ul, li, ol {font-size: 12pt;}
+table, .table tr, .table th, .table td {font-size: 11pt;}
+}
