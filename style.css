@@ -1,6 +1,6 @@
 // General
-pre, table {font-family: "Victor Mono", monospace;}
-h1,h2,h3 {font-family: "Jost", sans-serif;}
+pre, * {font-family: "Victor Mono", monospace;}
+h1, h2, h3 {font-family: "Jost", sans-serif;}
 p {font-family: "EB Garamond", serif;}
 
 // Screen
