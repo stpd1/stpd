@@ -34,6 +34,7 @@ body {background-color: #fffdf5;}
 
 /* Print */
 @media print {
+#in, #stk, #top {display: none;}
 h1  {font-size: 16pt;}
 h2 {font-size: 14pt;}
 h3 {font-size: 12pt;}
