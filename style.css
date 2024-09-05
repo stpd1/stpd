@@ -21,7 +21,7 @@ body {background-color: #fffdf5;}
 /* Screen_Landscape */
 @media screen and (orientation: landscape) {
 #in {width: calc(100vw - 60px); height: calc(50vh - 100px); overflow: auto; margin: 20px 0px 20px 0px;}
-#out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
+#out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border: 1px solid black;}
 #stk {width: calc(100vw - 80px); height: 16pt; overflow: auto;}
 }
 
