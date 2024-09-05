@@ -13,6 +13,7 @@ h2 {font-size: 14pt;}
 h3 {font-size: 12pt;}
 p, ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
+table {border-spacing: 5px 0px;}
 #in {font-size: 9pt; padding: 10px; resize: none; border-radius: 3px;}
 #stk {font-size: 9pt;}
 #out {font-size: 9pt; padding: 10px;}
