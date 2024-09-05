@@ -5,7 +5,8 @@ h1, h2, h3, #top {font-family: "Jost", sans-serif;}
 p, table, tr, th, td, ul, li, ol {font-family: "EB Garamond", serif;}
 
 /* Screen */
-body, #in {background-color: ivory;}
+body {background-color: ivory;}
+#in {background-color: black; color: orange;}
 #in {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto;}
 #out {width: calc(100vw - 80px); height: calc(50vh - 80px); overflow: auto; border-style: 1px solid black;}
 #stk {width: calc(100vw - 80px); height: calc(40px); overflow: auto;}
