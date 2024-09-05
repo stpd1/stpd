@@ -1,4 +1,4 @@
-vic"use strict"
+"use strict"
 // ENVIRONMENT
 let STK, ENV, FLAGS, UNITS = {
 	// WARNING: Unit dimensions are not checked!
