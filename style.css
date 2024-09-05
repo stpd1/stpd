@@ -23,7 +23,7 @@ body {background-color: #fffdf5;}
 @media screen and (orientation: landscape) {
 #in {width: calc(50vw - 60px); height: calc(100vh - 120px); overflow: auto; margin: 10px 0px 5px 0px;}
 #stk {width: calc(100vw - 60px); height: 16pt; overflow: auto; margin: 0px 0px 10px 0px;}
-#out {position: fixed; top: 20px; right: 20px; width: calc(50vw - 60px); height: calc(100vh - 20px); overflow: auto; border: 1px solid black;}
+#out {position: fixed; top: 20px; right: 20px; width: calc(50vw - 60px); height: calc(100vh - 20px); overflow: auto;}
 }
 
 /* Screen_Portrait */
