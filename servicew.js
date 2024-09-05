@@ -1,4 +1,4 @@
-const CACHE_NAME = `stpd-calc`;
+const CACHE_NAME = `stpd`;
 
 self.addEventListener('install', event => {
     event.waitUntil((async () => {
