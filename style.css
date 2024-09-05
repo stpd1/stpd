@@ -19,14 +19,14 @@ body {background-color: #fffdf5;}
 }
 
 /* Screen_Landscape */
-@media (orientation: landscape) {
+@media screen and (orientation: landscape) {
 #in {width: calc(100vw - 40px); height: calc(50vh - 80px); overflow: auto; margin: 10px 0px 10px 0px;}
 #out {width: calc(100vw - 40px); height: calc(50vh - 80px); overflow: auto; border: 1px solid black;}
 #stk {width: calc(100vw - 40px); height: 16pt; overflow: auto; margin: 0px 0px 10px 0px;}
 }
 
 /* Screen_Portrait */
-@media (orientation: landscape) {
+@media screen and (orientation: landscape) {
 #in {width: calc(100vw - 640px); height: calc(100vh - 80px); overflow: auto; margin: 10px 0px 10px 0px;}
 #out {width: calc(100vw - 40px); height: calc(100vh - 80px); overflow: auto;}
 #stk {width: calc(100vw - 40px); height: 16pt; overflow: auto;}
