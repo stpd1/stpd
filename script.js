@@ -283,6 +283,8 @@ const STDENV = {
 	"par": (STK,ENV)=> {assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		PRINT(STK[STK.length-1], "<p>", "</p>"); STK.pop()},
 	"code": (STK,ENV)=> {assertStkl(1,STK); 
+		PRINT(STK[STK.length-1], "<pre>", "</pre>"); STK.pop()},
+	"print": (STK,ENV)=> {assertStkl(1,STK); 
 		PRINT(stringify(STK[STK.length-1]), "<pre>", "</pre>"); STK.pop()},
 	"table": (STK,ENV)=> {assertStkl(1,STK);
 		let s = "<table>", a = STK[STK.length-1]; STK.pop();
