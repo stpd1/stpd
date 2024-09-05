@@ -12,7 +12,8 @@ h2 {font-size: 14pt;}
 h3 {font-size: 12pt;}
 p, ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
-#in, #stk {font-size: 9pt; padding: 10px; resize: none;}
+#in {font-size: 9pt; padding: 10px; resize: none;}
+#stk {font-size: 9pt;}
 #out {font-size: 9pt; padding: 10px;}
 pre {font-size: 9pt;}
 body {background-color: #fffdf5;}
