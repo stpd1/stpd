@@ -1,5 +1,5 @@
 // General
-pre, td, textarea {font-family: "Victor Mono", monospace;}
+pre, .table td, .table th, textarea {font-family: "Victor Mono", monospace;}
 h1, h2, h3 {font-family: "Jost", sans-serif;}
 p {font-family: "EB Garamond", serif;}
 
