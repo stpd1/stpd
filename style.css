@@ -33,7 +33,7 @@ body {background-color: white;}
 @media screen and (orientation: portrait) {
 #in {width: calc(100vw - 60px); height: calc(100dvh - 120px); overflow: auto; margin: 10px 0px 5px 0px;}
 #stk {width: calc(100vw - 60px); height: 16pt; overflow: auto; margin: 0px 0px 10px 0px;}
-#out {width: calc(100vw - 60px); height: calc(100dvh - 20px); overflow: auto; margin-top: 60px;}
+#out {width: calc(100vw - 60px); height: calc(100dvh - 80px); overflow: auto; margin-top: 60px;}
 }
 
 /* Print */
