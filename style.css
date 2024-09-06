@@ -34,7 +34,7 @@ body {background-color: white;}
 /* Screen_Portrait */
 @media screen and (orientation: portrait) {
 #top {height: 20px;}
-#in {width: calc(100dvw - 60px); height: calc(100dvh - 165px); margin: 10px 0px 5px 0px;}
+#in {width: calc(100dvw - 60px); height: calc(100dvh - 155px); margin: 10px 0px 5px 0px;}
 #stk {width: calc(100dvw - 60px); height: 25pt; margin: 0px 0px 10px 0px;}
 #out {width: calc(100dvw - 60px); height: calc(100dvh - 60px); margin-top: 40px;}
 }
