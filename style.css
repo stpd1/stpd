@@ -14,7 +14,7 @@ h3 {font-size: 12pt;}
 p {font-size: 12pt;}
 ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
-#top {font-size: 9pt; overflow: auto;}
+#top {font-size: 11pt; overflow: auto;}
 table {border-spacing: 10px 0px;}
 #in {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; resize: none; overflow: auto;}
 #stk {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; overflow: auto;}
