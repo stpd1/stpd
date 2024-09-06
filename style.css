@@ -3,6 +3,7 @@
 #in, #stk {font-family: "Victor Mono", monospace;}
 pre {font-family: "Victor Mono", monospace;}
 #top, h1, h2, h3 {font-family: "Jost", sans-serif;}
+#top {overflow-x: hidden; overflow-wrap: normal;}
 p, table, .table tr, .table th, .table td, ul, li, ol {font-family: "EB Garamond", serif;}
 
 /* Screen */
