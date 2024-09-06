@@ -8,10 +8,10 @@ p, table, .table tr, .table th, .table td, ul, li, ol {font-family: "EB Garamond
 /* Screen */
 @media screen {
 body {padding: 10px;}
-h1  {font-size: 16pt; margin-top: 0pt; margin-bottom: 10pt;}
-h2 {font-size: 14pt; margin-top: 0pt; margin-bottom: 10pt;}
-h3 {font-size: 12pt; margin-top: 0pt; margin-bottom: 10pt;}
-p {font-size: 12pt; margin-top: 0pt; margin-bottom: 10pt;}
+h1  {font-size: 16pt;}
+h2 {font-size: 14pt;}
+h3 {font-size: 12pt;}
+p {font-size: 12pt;}
 ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
 #top {font-size: 9pt;}
