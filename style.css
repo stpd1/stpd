@@ -3,7 +3,6 @@
 #in, #stk {font-family: "Victor Mono", monospace;}
 pre {font-family: "Victor Mono", monospace;}
 #top, h1, h2, h3 {font-family: "Jost", sans-serif;}
-#top {overflow-x: hidden; overflow-wrap: normal;}
 p, table, .table tr, .table th, .table td, ul, li, ol {font-family: "EB Garamond", serif;}
 
 /* Screen */
@@ -25,6 +24,7 @@ body {background-color: white;}
 
 /* Screen_Landscape */
 @media screen and (orientation: landscape) {
+#top {height: 20px;}
 #in {width: calc(50vw - 60px); height: calc(100dvh - 120px); overflow: auto; margin: 10px 0px 5px 0px;}
 #stk {width: calc(100vw - 60px); height: 16pt; overflow: auto; margin: 0px;}
 #out {position: fixed; top: 20px; right: 20px; width: calc(50vw - 60px); height: calc(100dvh - 60px); overflow: auto;}
@@ -32,6 +32,7 @@ body {background-color: white;}
 
 /* Screen_Portrait */
 @media screen and (orientation: portrait) {
+#top {height: 20px;}
 #in {width: calc(100vw - 60px); height: calc(100dvh - 120px); overflow: auto; margin: 10px 0px 5px 0px;}
 #stk {width: calc(100vw - 60px); height: 16pt; overflow: auto; margin: 0px 0px 10px 0px;}
 #out {width: calc(100vw - 60px); height: calc(100dvh - 60px); overflow: auto; margin-top: 40px;}
