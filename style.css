@@ -26,16 +26,16 @@ body {background-color: white;}
 @media screen and (orientation: landscape) {
 #top {height: 20px;}
 #in {width: calc(50vw - 55px); height: calc(100dvh - 130px); overflow: auto; margin: 10px 0px 5px 0px;}
-#stk {width: calc(100vw - 55px); height: 25pt; overflow: auto; margin: 0px;}
-#out {position: fixed; top: 20px; right: 20px; width: calc(50vw - 55px); height: calc(100dvh - 60px); overflow: auto;}
+#stk {width: calc(100vw - 55px); height: 25pt; margin: 0px;}
+#out {position: fixed; top: 20px; right: 20px; width: calc(50vw - 55px); height: calc(100dvh - 60px); }
 }
 
 /* Screen_Portrait */
 @media screen and (orientation: portrait) {
 #top {height: 20px;}
-#in {width: calc(100vw - 60px); height: calc(100dvh - 130px); overflow: auto; margin: 10px 0px 5px 0px;}
+#in {width: calc(100vw - 60px); height: calc(100dvh - 130px); margin: 10px 0px 5px 0px;}
 #stk {width: calc(100vw - 60px); height: 25pt; overflow: auto; margin: 0px 0px 10px 0px;}
-#out {width: calc(100vw - 60px); height: calc(100dvh - 60px); overflow: auto; margin-top: 40px;}
+#out {width: calc(100vw - 60px); height: calc(100dvh - 60px); margin-top: 40px;}
 }
 
 /* Print */
