@@ -18,7 +18,7 @@ table, .table tr, .table th, .table td {font-size: 11pt;}
 table {border-spacing: 10px 0px;}
 #in {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; resize: none; overflow: auto;}
 #stk {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; overflow: auto;}
-#out {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; overflow: auto;}
+#out {font-size: 9pt; padding: 20px; border: 1px solid dimgray; border-radius: 3px; overflow: auto;}
 pre {font-size: 9pt; margin-left: 10px;}
 body {background-color: #F5F5F5;}
 #in {background-color: white; color: black;}
