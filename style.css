@@ -20,8 +20,8 @@ table {border-spacing: 10px 0px;}
 #stk {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; overflow: auto;}
 #out {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; overflow: auto;}
 pre {font-size: 9pt; margin-left: 10px;}
-body {background-color: white;}
-#in {background-color: #f7f7f7; color: black;}
+body {background-color: #F5F5F5;}
+#in {background-color: #F7F7F7; color: black;}
 }
 
 /* Screen_Landscape */
