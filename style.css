@@ -25,7 +25,7 @@ body {background-color: white;}
 /* Screen_Landscape */
 @media screen and (orientation: landscape) {
 #top {height: 20px;}
-#in {width: calc(50dvw - 60px); height: calc(100dvh - 160px); margin: 10px 0px 5px 0px;}
+#in {width: calc(50dvw - 60px); height: calc(100dvh - 165px); margin: 10px 0px 10px 0px;}
 #stk {width: calc(50dvw - 60px); height: 30pt; margin: 0px 0px 0px 0px;}
 #out {position: fixed; top: 20px; right: 20px; width: calc(50dvw - 60px); height: calc(100dvh - 60px); }
 }
