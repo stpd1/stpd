@@ -21,7 +21,8 @@ table {border-spacing: 10px 0px;}
 #out {font-size: 9pt; padding: 10px; border: 1px solid dimgray; border-radius: 3px; overflow: auto;}
 pre {font-size: 9pt; margin-left: 10px;}
 body {background-color: #F5F5F5;}
-#in {background-color: #F7F7F7; color: black;}
+#in {background-color: white; color: black;}
+#out {background-color: #FFFBF3; color: black;}
 }
 
 /* Screen_Landscape */
