@@ -14,9 +14,9 @@ h3 {font-size: 12pt;}
 p, ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
 table {border-spacing: 10px 0px;}
-#in {font-size: 9pt; padding: 10px; resize: none; border-radius: 3px;}
-#stk {font-size: 9pt;}
-#out {font-size: 9pt; padding: 10px; border: 1px solid black; border-radius: 3px;}
+#in {font-size: 9pt; padding: 10px; resize: none; border-radius: 3px; overflow: scroll;}
+#stk {font-size: 9pt; overflow: scroll;}
+#out {font-size: 9pt; padding: 10px; border: 1px solid black; border-radius: 3px; overflow: scroll;}
 pre {font-size: 9pt; margin-left: 10px;}
 body {background-color: white;}
 #in {background-color: #f7f7f7; color: black;}
