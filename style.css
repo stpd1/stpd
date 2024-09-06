@@ -16,7 +16,7 @@ table, .table tr, .table th, .table td {font-size: 11pt;}
 table {border-spacing: 10px 0px;}
 #in {font-size: 9pt; padding: 10px; resize: none; border-radius: 3px;}
 #stk {font-size: 9pt;}
-#out {font-size: 9pt; padding: 10px; border: 1px solid black;}
+#out {font-size: 9pt; padding: 10px; border: 1px solid black; border-radius: 3px;}
 pre {font-size: 9pt; margin-left: 10px;}
 body {background-color: #fffdf5;}
 #in {background-color: #e7e7e7; color: #1b1b1b;}
