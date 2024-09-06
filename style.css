@@ -15,7 +15,7 @@ p, ul, li, ol {font-size: 12pt;}
 table, .table tr, .table th, .table td {font-size: 11pt;}
 table {border-spacing: 10px 0px;}
 #in {font-size: 9pt; padding: 10px; resize: none; border-radius: 3px; overflow: auto;}
-#stk {font-size: 9pt; overflow: auto;}
+#stk {font-size: 9pt; overflow: auto; border: 1px solid black; border-radius: 3px;}
 #out {font-size: 9pt; padding: 10px; border: 1px solid black; border-radius: 3px; overflow: auto;}
 pre {font-size: 9pt; margin-left: 10px;}
 body {background-color: white;}
