@@ -31,7 +31,7 @@ body {background-color: #F5F5F5;}
 #top {width: calc(50dvw - 50px); height: 25px;}
 #in {width: calc(50dvw - 50px); height: calc(100dvh - 170px); margin: 10px 0px 11px 0px;}
 #stk {width: calc(50dvw - 50px); height: 30pt; margin: 0px 0px 0px 0px;}
-#out {position: fixed; top: 20px; right: 20px; width: calc(50dvw - 50px); height: calc(100dvh - 60px); }
+#out {position: fixed; top: 20px; right: 20px; width: calc(50dvw - 70px); height: calc(100dvh - 80px); }
 }
 
 /* Screen_Portrait */
@@ -39,7 +39,7 @@ body {background-color: #F5F5F5;}
 #top {height: 25px;}
 #in {width: calc(100dvw - 60px); height: calc(100dvh - 160px); margin: 10px 0px 5px 0px;}
 #stk {width: calc(100dvw - 60px); height: 25pt; margin: 0px 0px 10px 0px;}
-#out {width: calc(100dvw - 60px); height: calc(100dvh - 60px); margin-top: 40px;}
+#out {width: calc(100dvw - 80px); height: calc(100dvh - 80px); margin-top: 40px;}
 }
 
 /* Print */
