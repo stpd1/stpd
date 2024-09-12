@@ -493,7 +493,8 @@ inElem.oninput = () => {
 		}},waitTime)
 }
 function PRINTLIST() {
-	try {let data = JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
+	let data = ""
+	try {data += JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
 	listElem.innerHTML = "";
 	for (let e in data) {
 		listElem.innerHTML += "<p>"+e+'</p><a href="">Rename</a><a href="">Delete</a>';
