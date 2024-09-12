@@ -492,20 +492,30 @@ inElem.oninput = () => {
 			localStorage.setItem('stpd_last', inElem.value);
 		}},waitTime)
 }
+let data = {}, currElem = ""
+function OPENLIST() {
+	listElem.style.display = "none";
+	inElem.style.display = "initial";
+	initEnv(); inElem.value=data[currElem]; RUN(); inElem.focus();
+}
+function LISTNEW() {
+	let name = prompt("Insert name"); currElem = name;
+	data[name] = ""; PRINTLIST();	
+}
 function PRINTLIST() {
-	let data = ""
-	try {data += JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
+	try {data = JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
 	listElem.innerHTML = "";
 	for (let e in data) {
-		listElem.innerHTML += "<p>"+e+'</p><a href="">Rename</a><a href="">Delete</a>';
+		listElem.innerHTML += '<a href="" onclick="OPENLIST(currElem)">'+e+'</p><a href="">Rename</a><a href="">Delete</a>';
 	}
-	listElem.innerHTML += '<br><a href="">New</a>'
+	listElem.innerHTML += '<br><a href="" onclick="LISTNEW()">New</a>'
 }
+// Startup
 PRINTLIST()
 // initEnv(); RUN(); inElem.focus();
 
 
-// PWA SERVICE WORKER
+// REGISTER PWA SERVICE WORKER
 if('serviceWorker' in navigator) {
 	navigator.serviceWorker.register('/stpd/servicew.js', { scope: '/stpd/' });
 }
