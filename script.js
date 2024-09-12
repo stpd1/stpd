@@ -493,7 +493,8 @@ inElem.oninput = () => {
 		}},waitTime)
 }
 let data = {}, currElem = ""
-function OPENLIST() {
+function OPENLIST(name) {
+	currElem = name;
 	listElem.style.display = "none";
 	inElem.style.display = "block";
 	initEnv(); inElem.value=data[currElem]; RUN(); inElem.focus();
@@ -506,7 +507,7 @@ function PRINTLIST() {
 	try {data = JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
 	listElem.innerHTML = "";
 	for (let e in data) {
-		listElem.innerHTML += '<a href="" onclick="OPENLIST()">'+e+' | <a href="">Rename</a> <a href="">Delete</a></p>';
+		listElem.innerHTML += '<a href="" onclick="OPENLIST("'+e+'")">'+e+' | <a href="">Rename</a> <a href="">Delete</a></p>';
 	}
 	listElem.innerHTML += '<br><a href="" onclick="LISTNEW()">New</a>'
 }
