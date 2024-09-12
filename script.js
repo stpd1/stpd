@@ -500,7 +500,7 @@ function OPENLIST() {
 }
 function LISTNEW() {
 	let name = prompt("Insert name"); currElem = name;
-	data[name] = ""; PRINTLIST();	
+	data[name] = ""; localStorage.setItem('stpd_data',JSON.stringify(data)); PRINTLIST();
 }
 function PRINTLIST() {
 	try {data = JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
