@@ -507,7 +507,7 @@ function PRINTLIST() {
 	try {data = JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
 	listElem.innerHTML = "";
 	for (let e in data) {
-		listElem.innerHTML += '<a href="" onclick="OPENLIST("'+e+'")">'+e+' | <a href="">Rename</a> <a href="">Delete</a></p>';
+		listElem.innerHTML += '<a href="" onclick="OPENLIST(\''+e+'\')">'+e+' | <a href="">Rename</a> <a href="">Delete</a></p>';
 	}
 	listElem.innerHTML += '<br><a href="" onclick="LISTNEW()">New</a>'
 }
