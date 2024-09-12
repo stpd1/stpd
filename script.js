@@ -495,7 +495,7 @@ inElem.oninput = () => {
 let data = {}, currElem = ""
 function OPENLIST() {
 	listElem.style.display = "none";
-	inElem.style.display = "initial";
+	inElem.style.display = "block";
 	initEnv(); inElem.value=data[currElem]; RUN(); inElem.focus();
 }
 function LISTNEW() {
