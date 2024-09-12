@@ -468,6 +468,13 @@ function evals(s, STK = []) {
 let inElem = document.getElementById("in")
 let outElem = document.getElementById("out")
 let stkElem = document.getElementById("stk")
+let listElem = document.getElementById("list")
+let listBtn = document.getElementById("listb")
+let importBtn = document.getElementById("import")
+let exportBtn = document.getElementById("export")
+let saveBtn = document.getElementById("save")
+let htmlBtn = document.getElementById("html")
+let printBtn = document.getElementById("print")
 let waitTime = 700; let editing = 0;
 function PRINT(o, pre, post) {
 	outElem.innerHTML += pre+o+post}
@@ -482,11 +489,19 @@ inElem.oninput = () => {
 		editing -= waitTime;
 		if (editing === 0) {
 			initEnv(); outElem.innerHTML = ""; stkElem.innerHTML = ""; RUN();
-			localStorage.setItem('stpd_data', inElem.value);
+			localStorage.setItem('stpd_last', inElem.value);
 		}},waitTime)
 }
-initEnv(); inElem.value = localStorage.getItem('stpd_data');
-RUN(); inElem.focus();
+let data = JSON.parse(localStorage.getItem('stpd_data'));
+function PRINTLIST() {
+	listElem.innerHTML = "";
+	for (let e in data) {
+		listElem.innerHTML += "<p>"+e+'</p><a href="">Rename</a><a href="">Delete</a>';
+	}
+	listElem.innerHTML += '<br><a href="">New</a>'
+}
+PRINTLIST()
+// initEnv(); RUN(); inElem.focus();
 
 
 // PWA SERVICE WORKER
