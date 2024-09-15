@@ -24,7 +24,7 @@
         {
             "src": "/stpd/favico.png",
             "type": "image/png",
-            "sizes": "100x100"
+            "sizes": "144x144"
         }
     ]
 }
