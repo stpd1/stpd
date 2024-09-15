@@ -288,7 +288,8 @@ const STDENV = {
 		PRINT(stringify(STK[STK.length-1]), "<pre>", "</pre>"); STK.pop()},
 	"eprint": (STK,ENV)=> {assertStkl(1,STK); 
 		let ex = STK.pop();
-		PRINT(stringify(ex) + ": " + stringify(evals(ex, STK)), "<pre>", "</pre>")},
+		PRINT(stringify(ex), "<pre>", ": "); 
+		PRINT(stringify(evals(ex, STK)), "", "</pre>");},
 	"list": (STK,ENV)=> {assertStkl(1,STK);
 		let s = "<ul>", a = STK[STK.length-1]; STK.pop();
 		for (let e in a) {s += "<li>"+(a[e])+"</li>"}
@@ -468,13 +469,6 @@ function evals(s, STK = []) {
 let inElem = document.getElementById("in")
 let outElem = document.getElementById("out")
 let stkElem = document.getElementById("stk")
-let listElem = document.getElementById("list")
-let listBtn = document.getElementById("listb")
-let importBtn = document.getElementById("import")
-let exportBtn = document.getElementById("export")
-let saveBtn = document.getElementById("save")
-let htmlBtn = document.getElementById("html")
-let printBtn = document.getElementById("print")
 let waitTime = 700; let editing = 0;
 function PRINT(o, pre, post) {
 	outElem.innerHTML += pre+o+post}
@@ -489,34 +483,14 @@ inElem.oninput = () => {
 		editing -= waitTime;
 		if (editing === 0) {
 			initEnv(); outElem.innerHTML = ""; stkElem.innerHTML = ""; RUN();
-			localStorage.setItem('stpd_last', inElem.value);
+			localStorage.setItem('stpd_data', inElem.value);
 		}},waitTime)
 }
-let data = {}, currElem = ""
-function OPENLIST(name) {
-	currElem = name;
-	listElem.style.display = "none";
-	inElem.style.display = "block";
-	initEnv(); inElem.value=data[currElem]; RUN(); inElem.focus();
-}
-function LISTNEW() {
-	let name = prompt("Insert name"); currElem = name;
-	data[name] = ""; localStorage.setItem('stpd_data',JSON.stringify(data)); PRINTLIST();
-}
-function PRINTLIST() {
-	try {data = JSON.parse(localStorage.getItem('stpd_data'));} catch (e) {console.log("Cannot parse saved data")};
-	listElem.innerHTML = "";
-	for (let e in data) {
-		listElem.innerHTML += '<a href="" onclick="OPENLIST(\''+e+'\')">'+e+' | <a href="">Rename</a> <a href="">Delete</a></p>';
-	}
-	listElem.innerHTML += '<br><a href="" onclick="LISTNEW()">New</a>'
-}
-// Startup
-PRINTLIST()
-// initEnv(); RUN(); inElem.focus();
+initEnv(); inElem.value = localStorage.getItem('stpd_data');
+RUN(); inElem.focus();
 
 
-// REGISTER PWA SERVICE WORKER
+// PWA SERVICE WORKER
 if('serviceWorker' in navigator) {
 	navigator.serviceWorker.register('/stpd/servicew.js', { scope: '/stpd/' });
 }
