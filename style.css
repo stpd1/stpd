@@ -31,7 +31,7 @@ body {background-color: #f2f2f2;}
 #top {width: calc(50dvw - 55px); height: 25px;}
 #in {width: calc(50dvw - 55px); height: calc(100dvh - 174px); margin: 10px 0px 15px 0px;}
 #stk {width: calc(50dvw - 55px); height: 30pt; margin: 0px 0px 0px 0px;}
-#out {position: fixed; top: 20px; right: 20px; width: calc(50dvw - 70px); height: calc(100dvh - 80px); }
+#out {position: fixed; top: 20px; right: 20px; width: calc(50dvw - 50px); height: calc(100dvh - 60px); }
 }
 
 /* Screen_Portrait */
