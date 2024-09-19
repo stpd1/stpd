@@ -428,6 +428,7 @@ function parse(ts) {
 	catch (e) {throw new Error("Parsing error. Token " + ts[ts.length-1]  + ". " + e)}
 	return ST[0];}
 function stringify(ex) {
+	console.log(ex);
 	if (typeof ex === "number") {
 		if (FLAGS["prec"]<0) {return ""+(ex)} 
 		else {return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
