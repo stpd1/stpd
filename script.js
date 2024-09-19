@@ -28,6 +28,7 @@ let STK, ENV, FLAGS, UNITS = {
 	"Gy": 1,"dGy": 1e-1,"cGy": 1e-2,"mGy": 1e-3,"uGy": 1e-6,"nGy": 1e-9,"daGy": 1e1,"hGy": 1e2,"kGy": 1e3,"MGy": 1e6,"GGy": 1e9, // absorbed dose
 	"Sv": 1,"dSv": 1e-1,"cSv": 1e-2,"mSv": 1e-3,"uSv": 1e-6,"nSv": 1e-9,"daSv": 1e1,"hSv": 1e2,"kSv": 1e3,"MSv": 1e6,"GSv": 1e9, // equivalente dose
 	"kat": 1,"dkat": 1e-1,"ckat": 1e-2,"mkat": 1e-3,"ukat": 1e-6,"nkat": 1e-9,"dakat": 1e1,"hkat": 1e2,"kkat": 1e3,"Mkat": 1e6,"Gkat": 1e9, // catalytic activity
+	"mol": 1,"dmol": 1e-1,"cmol": 1e-2,"mmol": 1e-3,"umol": 1e-6,"nmol": 1e-9,"damol": 1e1,"hmol": 1e2,"kmol": 1e3,"Mmol": 1e6,"Gmol": 1e9, // amount of substance
 }
 function initEnv() {
 	STK = []
@@ -140,17 +141,17 @@ const STDENV = {
 		assert(STK[STK.length-1].length === 1, "Unit array must have length = 1")
 		let u = Symbol.keyFor(STK.pop()[0]), val = STK.pop(); STK.push(map1(val, (val)=>parseu(u, val,"")))},
 	// Stack
-	"pop": (STK,ENV)=> {assertStkl(1,STK);
+	"pop": (STK,ENV)=> {assertStkl(1,STK); // ... e1 e2 -> ... e1
 		STK.pop()},
-	"swap": (STK,ENV)=> {assertStkl(2,STK);
+	"swap": (STK,ENV)=> {assertStkl(2,STK); // e1 e2 -> e2 e1
 		swap(STK)},
-	"dup": (STK,ENV)=> {assertStkl(1,STK);
+	"dup": (STK,ENV)=> {assertStkl(1,STK); // e1 -> e1 e1
 		STK.push(STK[STK.length-1])},
-	"over": (STK,ENV)=> {assertStkl(2,STK);
+	"over": (STK,ENV)=> {assertStkl(2,STK); // e1 e2 -> e1 e2 e1
 		STK.push(STK[STK.length-2])},
-	"rot": (STK,ENV)=> {assertStkl(2,STK);
+	"rot": (STK,ENV)=> {assertStkl(2,STK); // e1 e2 e3 -> e3 e1 e2
 		STK.push(STK.shift())},
-	"stack": (STK,ENV)=> {STK.push(STK)},
+	"stack": (STK,ENV)=> {STK.push(STK)}, // -> STACK
 	// Array
 	"iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... n)
 		STK.push([...Array(STK.pop()).keys()].map((x)=>x+1))},
@@ -246,13 +247,13 @@ const STDENV = {
 	"symb/tostring": (STK,ENV)=>{assertStkl(1,STK); assert(typeof(STK[STK.length-1])==="symbol","Argument must be symbol"); // symb -> str
 		STK.push(Symbol.keyFor(STK.pop()))},
 	// Programming
-	"//": (STK,ENV)=>{assertStkl(1,STK);
+	"//": (STK,ENV)=>{assertStkl(1,STK); // ... e1 -> ... (comment, same as pop)
 		STK.pop()},
-	"typeof": (STK,ENV)=>{assertStkl(1,STK);
+	"typeof": (STK,ENV)=>{assertStkl(1,STK); // e -> typeof(e)
 		STK.push(typeof(STK.pop()))},
-	"tostr": (STK,ENV)=>{assertStkl(1,STK);
+	"tostr": (STK,ENV)=>{assertStkl(1,STK); // e -> "e"
 		STK.push(stringify(STK.pop()))},
-	"err": (STK,ENV)=> {throw "Generic error"},
+	"err": (STK,ENV)=> {throw "Generic error"}, // -> ERROR
 	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be array")
 		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
 	"var": (STK, ENV)=> {assertStkl(2,STK);assert(Array.isArray(STK[STK.length-1]) && (STK[STK.length-1].length === 1) && ((typeof STK[STK.length-1][0]) === "symbol"), "Second arg must be array with 1 symbol")
