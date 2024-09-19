@@ -288,7 +288,7 @@ const STDENV = {
 		PRINT(stringify(STK[STK.length-1]), "<pre>", "</pre>"); STK.pop()},
 	".": (STK,ENV)=> {assertStkl(1,STK); 
 		let ex = STK.pop(), tmpstk = []; ex.evaluate = true;
-		PRINT(stringify(ex) + ": " + stringify(evaluate(ex, tmpstk, ENV)), "<pre>", "</pre>")},
+		PRINT(stringify(ex) + " -> " + stringify(evaluate(ex, tmpstk, ENV)), "<pre>", "</pre>")},
 	"list": (STK,ENV)=> {assertStkl(1,STK);
 		let s = "<ul>", a = STK[STK.length-1]; STK.pop();
 		for (let e in a) {s += "<li>"+(a[e])+"</li>"}
