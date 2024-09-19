@@ -433,10 +433,13 @@ function stringify(ex) {
 		else {return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
 	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
 	if (typeof ex === "string") {return '"'+ex.replace(/"/g,"\'")+'"'}
-	let s = "(", se = ex.evaluate?")!": ")"; delete ex["evaluate"];
+	let s = "(", se = ex.evaluate?")!": ")";
 	for (let ei in ex) {
-		if (Array.isArray(ex[ei])) {s += stringify(ex[ei]) + " "} 
-		else {s += stringify(ex[ei]) + " "}}
+		if (ei !== "evaluate") {
+			if (Array.isArray(ex[ei])) {s += stringify(ex[ei]) + " "} 
+			else {s += stringify(ex[ei]) + " "}
+		}
+	}
 	return s === "("?s+se: s.slice(0, -1)+se
 }
 function evaluate(ST, STK, ENV) {
