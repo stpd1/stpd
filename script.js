@@ -428,13 +428,12 @@ function parse(ts) {
 	catch (e) {throw new Error("Parsing error. Token " + ts[ts.length-1]  + ". " + e)}
 	return ST[0];}
 function stringify(ex) {
-	console.log(ex);
 	if (typeof ex === "number") {
 		if (FLAGS["prec"]<0) {return ""+(ex)} 
 		else {return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
 	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
 	if (typeof ex === "string") {return '"'+ex.replace(/"/g,"\'")+'"'}
-	let s = "(", se = ex.evaluate?")!": ")";
+	let s = "(", se = ex.evaluate?")!": ")"; delete ex["evaluate"];
 	for (let ei in ex) {
 		if (Array.isArray(ex[ei])) {s += stringify(ex[ei]) + " "} 
 		else {s += stringify(ex[ei]) + " "}}
