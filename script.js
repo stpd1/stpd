@@ -65,7 +65,7 @@ function initEnv() {
 		"sigma": 5.670374419e-8 // stefan-boltzmann constant
 	}
 	FLAGS = {
-		"prec": 4 // numbers display precision
+		"prec": 0 // numbers display precision
 	}
 }
 // STANDARD ENVIRONMENT
@@ -496,7 +496,7 @@ function parse(ts) {
 	return ST[0];}
 function stringify(ex) {
 	if (typeof ex === "number") {
-		if (FLAGS["prec"]<0) {return ""+(ex)} 
+		if (FLAGS["prec"]<=0) {return ""+(ex)} 
 		else {return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
 	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
 	if (typeof ex === "string") {return '"'+ex.replace(/"/g,"\'")+'"'}
