@@ -8,7 +8,7 @@ STPD is a toy programming language for scientific calculations. Its main charact
 - homoiconicity (language expressions are written as arrays data structures);
 - support for quick (and dumb!) units of measurement conversion.
 
-A STPD array literal is a list of tokens separated by whitespace and enclosed in parenthesis, ```(1 2 3 ...)```. Arrays can represent data (evaluate to themselves) or expressions (each token is evaluated with reference to the stack). Tokens can be numbers (```-5.696_m/s2```, quantities converted to SI magnitudes), strings (```"hello world"```) or symbols (i.e. references to data defined in environment). Expressions are evaluated with reference to the global environment (an object with symbol/data pairs). Functions, i.e. user defined expressions, are evaluated in a new child environment (these definitions are local to function env).
+A STPD array literal is a list of tokens separated by whitespace and enclosed in parenthesis, ```(1 2 3 ...)```. Arrays can represent data (evaluate to themselves) or expressions (each token is evaluated with reference to the stack). Tokens can be numbers (```-5.696_m/s2```, quantities converted to SI magnitudes), strings (```"hello world"```) or symbols (```myvar```, i.e. references to data defined in environment). Expressions are evaluated with reference to the global environment (an object with symbol/data pairs). Functions, i.e. user defined expressions, are evaluated in a new child environment (these definitions are local to function env).
 
 The STPD app is [here](https://stpd1.github.io/stpd/). STPD webpage is also a Progressive Web App, so you can install it on most devices ([see here for instructions](https://web.dev/learn/pwa/installation)).
 
