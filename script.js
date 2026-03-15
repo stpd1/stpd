@@ -1,6 +1,6 @@
 "use strict"
 // ENVIRONMENT
-let STK, ENV, FLAGS, const UNITS = {
+let STK, ENV, FLAGS; const UNITS = {
 	// Length (base: metre)
 	"m":1,"dm":1e-1,"cm":1e-2,"mm":1e-3,"um":1e-6,"nm":1e-9,"dam":1e1,"hm":1e2,"km":1e3,"Mm":1e6,"Gm":1e9,"in":0.0254,"ft":0.3048,"yd":0.9144,"mi":1609.344,"ly":9.4607304725808e15,"au":149597870700,"pc":3.08567758146719e16,
 	// Mass (base: kilogram)
@@ -496,7 +496,7 @@ function parse(ts) {
 	return ST[0];}
 function stringify(ex) {
 	if (typeof ex === "number") {
-		if (FLAGS["prec"]<=0) {return ""+(ex)} 
+		if (FLAGS["prec"] <= 0) {return ""+(ex)} 
 		else {return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
 	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
 	if (typeof ex === "string") {return '"'+ex.replace(/"/g,"\'")+'"'}
