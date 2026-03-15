@@ -389,12 +389,7 @@ function parseu(us,v,mode="") {
 	assert(a.length < 3, "Unexpected / in unit literal")
 	assert(a[0] !== "", "Missing units before /")
 	assert(a[1] !== "", "Missing units after /")
-	// let n = a[0].split("*").map((e)=>e.match(/(\D+)(\d*)/))
-	let n = a[0].split("*").map((e) => {
-    	let match = e.match(/^(\D+)([\-+]?\d*\.?\d*)$/);
-    	assert(match !== null, "Formato unità non valido: " + e);
-    	return match;
-	});
+	let n = a[0].split("*").map((e)=>e.match(/(\D+)(\d*)/))
 	for (let ei in n) {
 		assert(n[ei] !== null, "Missing unit after *")
 		assert(n[ei][0] !== "°C","°C unit not allowed in compound unit")
