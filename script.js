@@ -1,35 +1,59 @@
 "use strict"
 // ENVIRONMENT
-let STK, ENV, FLAGS, UNITS = {
-	// WARNING: Unit dimensions are not checked!
-	"m": 1,"dm": 1e-1,"cm": 1e-2,"mm": 1e-3,"um": 1e-6,"nm": 1e-9,"dam": 1e1,"hm": 1e2,"km": 1e3,"Mm": 1e6,"Gm": 1e9,"in": 0.0254,"ft": 0.3048,"yd": 0.9144,"mi": 1609.344,"ly": 9460730472580800,"au": 149597870700,"pc": 30856775814671900, // length
-	"g": 1e-3, "dg": 1e-4,"cg": 1e-5,"mg": 1e-6,"ug": 1e-9,"ng": 1e-12,"dag": 1e-2,"hg": 1e-1,"kg": 1,"Mg": 1e3,"Gg": 1e6,"q": 100,"t": 1000,"lb": 453.59/1000,"oz": 28.35/1000, // mass
-	"s": 1,"min": 60,"h": 60*60,"d": 60*60*24, "w":60*60*24*7, "mo":60*60*24*7*30, "y":60*60*24*7*30*12,  // time
-	"rad": 1, "deg": Math.PI/180, "grad": Math.PI/200, // plane angles
-	"sr": 1, // solid angles
-	"K": 1, // temperature (°C, K and °F builtin - see unit parser)
-	"Hz": 1,"dHz": 1e-1,"cHz": 1e-2,"mHz": 1e-3,"uHz": 1e-6,"nHz": 1e-9,"daHz": 1e1,"hHz": 1e2,"kHz": 1e3,"MHz": 1e6,"GHz": 1e9, // frequency
-	"l": 0.001, "dl": 0.001*1e-1,"cl": 0.001*1e-2,"ml": 0.001*1e-3,"ul": 0.001*1e-6,"nl": 0.001*1e-9,"dal": 0.001*1e1,"hl": 0.001*1e2,"kl": 0.001*1e3,"Ml": 0.001*1e6,"Gls": 0.001*1e9, "gal":3.785411784, "pint":0.56826125, // volume
-	"N": 1,"dN": 1e-1,"cN": 1e-2,"mN": 1e-3,"uN": 1e-6,"nN": 1e-9,"daN": 1e1,"hN": 1e2,"kN": 1e3,"MN": 1e6,"GN": 1e9,"kgf": 9.80665,"tf": 9.80665*1000,"qf": 9.80665*100,"dyn": 1e-5,"lbf": 4.448222,"pdl": 0.138255, // force
-	"Pa": 1,"dPa": 1e-1,"cPa": 1e-2,"mPa": 1e-3,"uPa": 1e-6,"nPa": 1e-9,"daPa": 1e1,"hPa": 1e2,"kPa": 1e3,"MPa": 1e6,"GPa": 1e9,"torr": 133.3223684,"bar": 1e5,"atm": 101.325e3, // pressure
-	"J": 1,"dJ": 1e-1,"cJ": 1e-2,"mJ": 1e-3,"uJ": 1e-6,"nJ": 1e-9,"daJ": 1e1,"hJ": 1e2,"kJ": 1e3,"MJ": 1e6,"GJ": 1e9,"cal": 4184,"BTU": 1.0551e3, // energy
-	"W": 1,"dW": 1e-1,"cW": 1e-2,"mW": 1e-3,"uW": 1e-6,"nW": 1e-9,"daW": 1e1,"hW": 1e2,"kW": 1e3,"MW": 1e6,"GW": 1e9,"hp": 735.5, // power
-	"C": 1,"dC": 1e-1,"cC": 1e-2,"mC": 1e-3,"uC": 1e-6,"nC": 1e-9,"daC": 1e1,"hC": 1e2,"kC": 1e3,"MC": 1e6,"GC": 1e9, // electric charge
-	"V": 1,"dV": 1e-1,"cV": 1e-2,"mV": 1e-3,"uV": 1e-6,"nV": 1e-9,"daV": 1e1,"hV": 1e2,"kV": 1e3,"MV": 1e6,"GV": 1e9, // voltage
-	"F": 1,"dF": 1e-1,"cF": 1e-2,"mF": 1e-3,"uF": 1e-6,"nF": 1e-9,"daF": 1e1,"hF": 1e2,"kF": 1e3,"MF": 1e6,"GF": 1e9, // electrical capacitance
-	"ohm": 1,"dohm": 1e-1,"cohm": 1e-2,"mohm": 1e-3,"uohm": 1e-6,"nohm": 1e-9,"daohm": 1e1,"hohm": 1e2,"kohm": 1e3,"Mohm": 1e6,"Gohm": 1e9, // electrical resistance
-	"S": 1,"dS": 1e-1,"cS": 1e-2,"mS": 1e-3,"uS": 1e-6,"nS": 1e-9,"daS": 1e1,"hS": 1e2,"kS": 1e3,"MS": 1e6,"GS": 1e9, // electric conductance
-	"Wb": 1,"dWb": 1e-1,"cWb": 1e-2,"mWb": 1e-3,"uWb": 1e-6,"nWb": 1e-9,"daWb": 1e1,"hWb": 1e2,"kWb": 1e3,"MWb": 1e6,"GWb": 1e9, // magnetic flux
-	"T": 1,"dT": 1e-1,"cT": 1e-2,"mT": 1e-3,"uT": 1e-6,"nT": 1e-9,"daT": 1e1,"hT": 1e2,"kT": 1e3,"MT": 1e6,"GT": 1e9, // magnetic induction
-	"H": 1,"dH": 1e-1,"cH": 1e-2,"mH": 1e-3,"uH": 1e-6,"nH": 1e-9,"daH": 1e1,"hH": 1e2,"kH": 1e3,"MH": 1e6,"GH": 1e9, // electrical inductance
-	"lm": 1,"dlm": 1e-1,"clm": 1e-2,"mlm": 1e-3,"ulm": 1e-6,"nlm": 1e-9,"dalm": 1e1,"hlm": 1e2,"klm": 1e3,"Mlm": 1e6,"Glm": 1e9, // luminous flux
-	"lx": 1,"dlx": 1e-1,"clx": 1e-2,"mlx": 1e-3,"ulx": 1e-6,"nlx": 1e-9,"dalx": 1e1,"hlx": 1e2,"klx": 1e3,"Mlx": 1e6,"Glx": 1e9, // illuminance
-	"Bq": 1,"dBq": 1e-1,"cBq": 1e-2,"mBq": 1e-3,"uBq": 1e-6,"nBq": 1e-9,"daBq": 1e1,"hBq": 1e2,"kBq": 1e3,"MBq": 1e6,"GBq": 1e9, // radiocativity
-	"Gy": 1,"dGy": 1e-1,"cGy": 1e-2,"mGy": 1e-3,"uGy": 1e-6,"nGy": 1e-9,"daGy": 1e1,"hGy": 1e2,"kGy": 1e3,"MGy": 1e6,"GGy": 1e9, // absorbed dose
-	"Sv": 1,"dSv": 1e-1,"cSv": 1e-2,"mSv": 1e-3,"uSv": 1e-6,"nSv": 1e-9,"daSv": 1e1,"hSv": 1e2,"kSv": 1e3,"MSv": 1e6,"GSv": 1e9, // equivalente dose
-	"kat": 1,"dkat": 1e-1,"ckat": 1e-2,"mkat": 1e-3,"ukat": 1e-6,"nkat": 1e-9,"dakat": 1e1,"hkat": 1e2,"kkat": 1e3,"Mkat": 1e6,"Gkat": 1e9, // catalytic activity
-	"mol": 1,"dmol": 1e-1,"cmol": 1e-2,"mmol": 1e-3,"umol": 1e-6,"nmol": 1e-9,"damol": 1e1,"hmol": 1e2,"kmol": 1e3,"Mmol": 1e6,"Gmol": 1e9, // amount of substance
-}
+let STK, ENV, FLAGS, const UNITS = {
+	// Length (base: metre)
+	"m":1,"dm":1e-1,"cm":1e-2,"mm":1e-3,"um":1e-6,"nm":1e-9,"dam":1e1,"hm":1e2,"km":1e3,"Mm":1e6,"Gm":1e9,"in":0.0254,"ft":0.3048,"yd":0.9144,"mi":1609.344,"ly":9.4607304725808e15,"au":149597870700,"pc":3.08567758146719e16,
+	// Mass (base: kilogram)
+	"g":1e-3,"dg":1e-4,"cg":1e-5,"mg":1e-6,"ug":1e-9,"ng":1e-12,"dag":1e-2,"hg":1e-1,"kg":1,"Mg":1e3,"Gg":1e6,"q":100,"t":1000,"lb":0.45359237,"oz":0.028349523125,
+	// Time (base: second)
+	"s":1,"min":60,"h":3600,"d":86400,"w":604800,"mo":2592000,"y":31536000,
+	// Angles
+	"rad":1,"deg":Math.PI/180,"grad":Math.PI/200,"sr":1,
+	// Temperature (scale placeholder; conversion handled dal parser)
+	"K":1,
+	// Frequency (base: Hz)
+	"Hz":1,"dHz":1e-1,"cHz":1e-2,"mHz":1e-3,"uHz":1e-6,"nHz":1e-9,"daHz":1e1,"hHz":1e2,"kHz":1e3,"MHz":1e6,"GHz":1e9,
+	// Volume (base: cubic metre; 1 l = 0.001 m^3) — tutti i simboli con 'l' minuscola
+	"l":0.001,"dl":0.0001,"cl":0.00001,"ml":0.000001,"ul":1e-9,"nl":1e-12,"dal":0.01,"hl":0.1,"kl":1.0,"Ml":1000.0,"Gl":1e6,"gal":0.003785411784,"pint":0.00056826125,
+	// Force (base: newton)
+	"N":1,"dN":1e-1,"cN":1e-2,"mN":1e-3,"uN":1e-6,"nN":1e-9,"daN":1e1,"hN":1e2,"kN":1e3,"MN":1e6,"GN":1e9,"kgf":9.80665,"tf":9.80665*1000,"qf":9.80665*100,"dyn":1e-5,"lbf":4.4482216152605,"pdl":0.138255,
+	// Pressure (base: pascal)
+	"Pa":1,"dPa":1e-1,"cPa":1e-2,"mPa":1e-3,"uPa":1e-6,"nPa":1e-9,"daPa":1e1,"hPa":1e2,"kPa":1e3,"MPa":1e6,"GPa":1e9,"torr":133.3223684,"bar":1e5,"atm":101325,
+	// Energy (base: joule)
+	"J":1,"dJ":1e-1,"cJ":1e-2,"mJ":1e-3,"uJ":1e-6,"nJ":1e-9,"daJ":1e1,"hJ":1e2,"kJ":1e3,"MJ":1e6,"GJ":1e9,"cal":4.184,"kcal":4184,"BTU":1055.05585262,
+	// Power (base: watt)
+	"W":1,"dW":1e-1,"cW":1e-2,"mW":1e-3,"uW":1e-6,"nW":1e-9,"daW":1e1,"hW":1e2,"kW":1e3,"MW":1e6,"GW":1e9,"hp":735.49875,
+	// Electric charge (base: coulomb)
+	"C":1,"dC":1e-1,"cC":1e-2,"mC":1e-3,"uC":1e-6,"nC":1e-9,"daC":1e1,"hC":1e2,"kC":1e3,"MC":1e6,"GC":1e9,
+	// Voltage (base: volt)
+	"V":1,"dV":1e-1,"cV":1e-2,"mV":1e-3,"uV":1e-6,"nV":1e-9,"daV":1e1,"hV":1e2,"kV":1e3,"MV":1e6,"GV":1e9,
+	// Capacitance (base: farad)
+	"F":1,"dF":1e-1,"cF":1e-2,"mF":1e-3,"uF":1e-6,"nF":1e-9,"daF":1e1,"hF":1e2,"kF":1e3,"MF":1e6,"GF":1e9,
+	// Resistance (base: ohm)
+	"ohm":1,"dohm":1e-1,"cohm":1e-2,"mohm":1e-3,"uohm":1e-6,"nohm":1e-9,"daohm":1e1,"hohm":1e2,"kohm":1e3,"Mohm":1e6,"Gohm":1e9,
+	// Conductance (base: siemens)
+	"S":1,"dS":1e-1,"cS":1e-2,"mS":1e-3,"uS":1e-6,"nS":1e-9,"daS":1e1,"hS":1e2,"kS":1e3,"MS":1e6,"GS":1e9,
+	// Magnetic flux (weber)
+	"Wb":1,"dWb":1e-1,"cWb":1e-2,"mWb":1e-3,"uWb":1e-6,"nWb":1e-9,"daWb":1e1,"hWb":1e2,"kWb":1e3,"MWb":1e6,"GWb":1e9,
+	// Magnetic induction (tesla)
+	"T":1,"dT":1e-1,"cT":1e-2,"mT":1e-3,"uT":1e-6,"nT":1e-9,"daT":1e1,"hT":1e2,"kT":1e3,"MT":1e6,"GT":1e9,
+	// Inductance (henry)
+	"H":1,"dH":1e-1,"cH":1e-2,"mH":1e-3,"uH":1e-6,"nH":1e-9,"daH":1e1,"hH":1e2,"kH":1e3,"MH":1e6,"GH":1e9,
+	// Luminous flux (lumen)
+	"lm":1,"dlm":1e-1,"clm":1e-2,"mlm":1e-3,"ulm":1e-6,"nlm":1e-9,"dalm":1e1,"hlm":1e2,"klm":1e3,"Mlm":1e6,"Glm":1e9,
+	// Illuminance (lux)
+	"lx":1,"dlx":1e-1,"clx":1e-2,"mlx":1e-3,"ulx":1e-6,"nlx":1e-9,"dalx":1e1,"hlx":1e2,"klx":1e3,"Mlx":1e6,"Glx":1e9,
+	// Radioactivity (becquerel)
+	"Bq":1,"dBq":1e-1,"cBq":1e-2,"mBq":1e-3,"uBq":1e-6,"nBq":1e-9,"daBq":1e1,"hBq":1e2,"kBq":1e3,"MBq":1e6,"GBq":1e9,
+	// Absorbed dose (gray)
+	"Gy":1,"dGy":1e-1,"cGy":1e-2,"mGy":1e-3,"uGy":1e-6,"nGy":1e-9,"daGy":1e1,"hGy":1e2,"kGy":1e3,"MGy":1e6,"GGy":1e9,
+	// Equivalent dose (sievert)
+	"Sv":1,"dSv":1e-1,"cSv":1e-2,"mSv":1e-3,"uSv":1e-6,"nSv":1e-9,"daSv":1e1,"hSv":1e2,"kSv":1e3,"MSv":1e6,"GSv":1e9,
+	// Catalytic activity (katal)
+	"kat":1,"dkat":1e-1,"ckat":1e-2,"mkat":1e-3,"ukat":1e-6,"nkat":1e-9,"dakat":1e1,"hkat":1e2,"kkat":1e3,"Mkat":1e6,"Gkat":1e9,
+	// Amount of substance (mole)
+	"mol":1,"dmol":1e-1,"cmol":1e-2,"mmol":1e-3,"umol":1e-6,"nmol":1e-9,"damol":1e1,"hmol":1e2,"kmol":1e3,"Mmol":1e6,"Gmol":1e9
+};
 function initEnv() {
 	STK = []
 	ENV = {
