@@ -380,6 +380,7 @@ function tokenize(s) {
 		} else {return '"'+e+'"'}
 	}).flat()
 	return ts;}
+/* 
 function parseu(us,v,mode="") {
 	if (us==="K") {return +v}
 	if (us==="°C") {return +v+273.15}
@@ -408,6 +409,44 @@ function parseu(us,v,mode="") {
 			cf = cf/(UNITS[d[ei][1]]**(+d[ei][2]))}}
 	if (mode==="conv") {return v/cf}
 	else {return v*cf}}
+*/
+function parseu(us, v, mode = "") {
+    if (us === "K") return +v;
+    if (us === "°C") return +v + 273.15;
+    if (us === "°F") return (+v - 32) / 1.8 + 273.15;
+    assert(isNaN(+us), "Invalid unit literal: unit cannot be a number");
+    let cf = 1;
+    let parts = us.split("/");
+    assert(parts.length <= 2, "Unexpected / in unit literal (max one allowed)");
+    const unitRegex = /^([a-zA-Z°]+)([\-+]?\d*\.?\d*)?$/;
+    const processPart = (partString, isDenominator = false) => {
+        if (!partString) return;
+        let elements = partString.split("*");
+        for (let e of elements) {
+            assert(e !== "", "Missing unit element around '*'");
+            let match = e.match(unitRegex);
+            assert(match !== null, "Invalid unit format or missing '*' separator: " + e);
+            let symbol = match[1];
+            let exponentStr = match[2];
+            assert(symbol !== "°C" && symbol !== "°F", "Temperature units (°C, °F) not allowed in compound units");
+            assert(UNITS[symbol] !== undefined, "Unknown unit symbol: " + symbol);
+            let exponent = (exponentStr === "" || exponentStr === undefined) ? 1 : parseFloat(exponentStr);
+            let factor = Math.pow(UNITS[symbol], exponent);
+            if (isDenominator) {
+                cf /= factor;
+            } else {
+                cf *= factor;
+            }
+        }
+    };
+    assert(parts[0] !== "", "Missing units before /");
+    processPart(parts[0], false);
+    if (parts.length === 2) {
+        assert(parts[1] !== "", "Missing units after /");
+        processPart(parts[1], true);
+    }
+    return (mode === "conv") ? v / cf : v * cf;
+}
 function parset(t) {
 	if (t[0]==='"') {return t.slice(1,-1)}
 	let tl = t; t = t.split("_")
