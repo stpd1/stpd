@@ -191,7 +191,7 @@ const STDENV = {
 		}
 		STK.push(na)
 	},
-	"filter": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> (expr(arr))
+	"filt": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> (expr(arr))
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an expression array");
 		let ex = STK.pop(),a = STK.pop(),na = []; ex.evaluate = true
 		for (let ei in a) {
@@ -201,7 +201,7 @@ const STDENV = {
 				na.push(a[ei])}}
 		STK.push(na)
 	},
-	"reduce": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> reduce(arr,expr)
+	"red": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array"); // arr (expr) -> red(arr,expr)
 		assert(Array.isArray(STK[STK.length-1]), "Second argument must be an expression array");
 		let ex = STK.pop(),a = STK.pop(); ex.evaluate = true
 		STK.push(a.shift());
