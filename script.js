@@ -35,8 +35,8 @@ function initEnv() {
 	ENV = {
 		"e": Math.E, "pi": Math.PI, "phi":1.618033988749, // euler's number, pi number, golden ratio
 		"c": 299792458, "G":6.6743e-11, "g":9.80665, // speed of light, gravitational constant, gravitational acceleration
-		"h":6.62607015e-34, "hfr":1.054571817e-34, "me":9.1093837015-31,  // plank constant, reduced plank constant, electron mass
-		"mp":1.6726218983-27, "NA":6.02214076*1023, "kb":1.3806490e-23, // proton mass, avogadro constant, boltzmann constant
+		"h":6.62607015e-34, "hfr":1.054571817e-34, "me":9.1093837015e-31,  // plank constant, reduced plank constant, electron mass
+		"mp":1.6726218983e-27, "NA":6.02214076*1023, "kb":1.3806490e-23, // proton mass, avogadro constant, boltzmann constant
 		"eps0":8.8541878176e-12, "mi0":4e-7*Math.PI, "F": 9.64853399e4, // vacuum permittivity, permeability of vacuum, faraday constant
 		"sigma": 5.670374419e-8 // stefan-boltzmann constant
 	}
@@ -50,7 +50,7 @@ const STDENV = {
 	"neg": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> -n
 		STK.push(map1(STK.pop(), (x)=>-x))},
 	"inv": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "not0"); // n -> 1/n
-		STK.push(map1(STK.pop(), (x)=>-x))},
+		STK.push(map1(STK.pop(), (x)=>1/x))},
 	"abs": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> |n|
 		STK.push(map1(STK.pop(), (x)=>Math.abs(x)))},
 	"ceil": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, ""); // n -> ceiling(n)
@@ -75,7 +75,7 @@ const STDENV = {
 	"^": (STK,ENV)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1^n2
 		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x**y))},
 	"rem": (STK)=> {assertStkl(2,STK); assertArr(STK[STK.length-1], assertNum, ""); assertArr(STK[STK.length-2], assertNum, ""); // n1 n2 -> n1%n2
-		swap(STK,ENV); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x%y))},
+		swap(STK); STK.push(map2(STK.pop(), STK.pop(), (x, y)=>x%y))},
 	// Scientific
 	"acos": (STK,ENV)=> {assertStkl(1,STK); assertArr(STK[STK.length-1], assertNum, "-1/1"); // n -> acos(n)
 		STK.push(map1(STK.pop(), (x)=>Math.acos(x)))},
@@ -151,7 +151,7 @@ const STDENV = {
 		STK.push(STK[STK.length-2])},
 	"rot": (STK,ENV)=> {assertStkl(2,STK); // e1 e2 e3 -> e3 e1 e2
 		STK.push(STK.shift())},
-	"stack": (STK,ENV)=> {STK.push(STK)}, // -> STACK
+	"stack": (STK,ENV)=> {STK.push([...STK])}, // -> STACK
 	// Array
 	"iota": (STK,ENV)=> {assertStkl(1,STK); assertNum(STK[STK.length-1], "int>0") // n -> (1 ... n)
 		STK.push([...Array(STK.pop()).keys()].map((x)=>x+1))},
@@ -183,7 +183,7 @@ const STDENV = {
 	},
 	"map2": (STK,ENV)=> {assertStkl(3,STK); assert(Array.isArray(STK[STK.length-3]), "First argument must be an array") // arr1 arr2 (expr) -> (expr(arr1,arr2))
 		assert(Array.isArray(STK[STK.length-2]), "Second argument must be an expression array"); 
-		assert(Array.isArray(STK[STK.length-2]), "Third argument must be an expression array");
+		assert(Array.isArray(STK[STK.length-1]), "Third argument must be an expression array");
 		let ex = STK.pop(), a2 = STK.pop(), a1 = STK.pop(), na = []; ex.evaluate = true
 		for (let ei in a1) {
 			STK.push(a1[ei]); STK.push(a2[ei]); STK.push(ex); STDENV["eval"](STK,ENV);
@@ -362,10 +362,10 @@ function assertNum(v, cond) {
 	else if (cond === ">=1") {if (v < 1) {throw "Arg must be >=1"}}
 	else if (cond === "-1/1") {if (!(v >= -1 && v <= 1)) {throw "Arg must be >=-1 and <=1"}}}
 function assertSym(v, env) {
-	if (! typeof v === "symbol") {throw "Arg must be symbol"}
+	if (typeof v !== "symbol") {throw "Arg must be symbol"}
 	if (env[Symbol.keyFor(v)] === undefined && STDENV[Symbol.keyFor(v)] === undefined) {throw "Unknown symbol "+Symbol.keyFor(v)}}
 function assertStr(v) {
-    if (! typeof v === "string") {throw "Arg must be string"}}
+    if (typeof v !== "string") {throw "Arg must be string"}}
 function assertStkl(n,STK) {
 	if (STK.length < n) {throw "Stack length <" + n}}
 
@@ -389,7 +389,12 @@ function parseu(us,v,mode="") {
 	assert(a.length < 3, "Unexpected / in unit literal")
 	assert(a[0] !== "", "Missing units before /")
 	assert(a[1] !== "", "Missing units after /")
-	let n = a[0].split("*").map((e)=>e.match(/(\D+)(\d*)/))
+	// let n = a[0].split("*").map((e)=>e.match(/(\D+)(\d*)/))
+	let n = a[0].split("*").map((e) => {
+    	let match = e.match(/^(\D+)([\-+]?\d*\.?\d*)$/);
+    	assert(match !== null, "Formato unità non valido: " + e);
+    	return match;
+	});
 	for (let ei in n) {
 		assert(n[ei] !== null, "Missing unit after *")
 		assert(n[ei][0] !== "°C","°C unit not allowed in compound unit")
@@ -411,7 +416,7 @@ function parseu(us,v,mode="") {
 function parset(t) {
 	if (t[0]==='"') {return t.slice(1,-1)}
 	let tl = t; t = t.split("_")
-	if (isFinite(t[0])) {
+	if (t[0] !== "" && isFinite(t[0])) {
 		assert(t[1] !== "", "Missing unit after _")
 		assert(t.length<=2, "Unexpected _ in number literal")
 		return (t.length === 1) ? +t[0] : parseu(t[1],t[0])} 
@@ -492,7 +497,7 @@ inElem.oninput = () => {
 			localStorage.setItem('stpd_data', inElem.value);
 		}},waitTime)
 }
-initEnv(); inElem.value = localStorage.getItem('stpd_data');
+initEnv(); inElem.value = localStorage.getItem('stpd_data') || "";
 RUN(); inElem.focus();
 
 
