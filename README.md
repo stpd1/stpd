@@ -50,7 +50,7 @@ pi sin  ->  STACK: (1.225e-16)  #WARNING 64BIT FLOAT NUMS
 
 ## Unit conversion
 
-Units are specified in number literals with a _xxx suffix. Number literals with units suffix are converted to corresponding SI value (unit is not preserved and dimensions are not checked!!!). Compound units, with numerator and denominator, are supported. Use the "units" function to get all the available units and corresponding conversion factors in an array.
+Units are specified in number literals with a ```_xxx``` suffix. Number literals with units suffix are converted to corresponding SI value (unit is not preserved and dimensions are not checked!!!). Compound units, with numerator and denominator, are supported. Use the "units" function to get all the available units and corresponding conversion factors in an array.
 
 These are all implemented functions: ```units, toUnit, toSI```.
 
