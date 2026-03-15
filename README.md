@@ -2,23 +2,24 @@
 
 ## Introduction
 
-STPD is a toy minimalistic programming language for scientific calculations. Its main characteristics are: 
+STPD is a toy programming language for scientific calculations. Its main characteristics are: 
 - stack RPN based (no PEMDAS and parenthesis needed);
 - array oriented (most functions automatically works on arrays);
-- homoiconicity (language expressions are written as arrays);
-- support for quick units of measurement conversion.
+- homoiconicity (language expressions are written as arrays data structures);
+- support for quick (and dumb!) units of measurement conversion.
 
-An STPD array literal is a list of tokens separated by whitespace and enclosed in parenthesis, (1 2 3 ...). Arrays can represent data (evaluate to themselves) or expressions (each token is evaluated with reference to the stack). Tokens can be numbers (-5.696_m/s2), strings ("hello world") or symbols (i.e. references to data defined in environment). Expressions are evaluated with reference to a global environment (an object with symbol/data pairs). Functions, i.e. user defined expressions, are evaluated in a new child environment (new definitions inside them are local to themselves).
+A STPD array literal is a list of tokens separated by whitespace and enclosed in parenthesis, (1 2 3 ...). Arrays can represent data (evaluate to themselves) or expressions (each token is evaluated with reference to the stack). Tokens can be numbers (-5.696_m/s2, quantities converted to SI magnitudes), strings ("hello world") or symbols (i.e. references to data defined in environment). Expressions are evaluated with reference to the global environment (an object with symbol/data pairs). Functions, i.e. user defined expressions, are evaluated in a new child environment (these definitions are local to function env).
 
-The STPD app is [here](https://stpd1.github.io/stpd/). STPD webpage is also a Progressive Web App, so you can install it on most of your devices ([see here for instructions](https://web.dev/learn/pwa/installation)).
+The STPD app is [here](https://stpd1.github.io/stpd/). STPD webpage is also a Progressive Web App, so you can install it on most devices ([see here for instructions](https://web.dev/learn/pwa/installation)).
 
 ## Data types
 
-Data types can be numbers, strings and symbols (each maps to the corresponding Javascript data type). Numbers and strings always evaluate to themselves and are pushed on the stack. Number literals with units suffix are converted to corresponding SI value (WARNING: unit is not preserved and dimensions are not checked!!!). Compound units, with numerator and denominator, are supported.
+STPD data types can be numbers, strings and symbols (each maps to the corresponding Javascript data type). Numbers and strings always evaluate to themselves and are pushed on the stack. Number literals with units suffix are converted to corresponding SI value (WARNING: unit is not preserved after conversions and thus dimensions are not checked!!!). Compound units, with numerator and denominator, are supported.
 
 Symbols evaluate:
 - in data arrays, to themselves and pushed on stack;
-- in expressions, to builtin function execution or user expression evaluation.
+- in expressions, to builtin function execution or user expressions defined in environment evaluation.
+Here are some examples:
 
 ```
 1  ->  STACK: (1)
@@ -36,7 +37,7 @@ rand  ->  STACK: (0.4308)
 
 Numbers uses Javascript number type (double precision 64bit float). WARNING: give attention to inexact representation and comparison errors. 
 
-These are all implemented functions: neg, inv, abs, ceil, floor, rand, round, sign, trunc, +, -, *, /, ^, rem, acos, acosh, asin, asinh, atan, atanh, cbrt, cos, cosh, exp, logn, log10, log2, sin, sinh, sqrt, tan, tanh.
+These are all the current implemented functions (names are mostly self-explanatory): ```neg, inv, abs, ceil, floor, rand, round, sign, trunc, +, -, *, /, ^, rem, acos, acosh, asin, asinh, atan, atanh, cbrt, cos, cosh, exp, logn, log10, log2, sin, sinh, sqrt, tan, tanh```.
 
 ```
 1 2 + 4 - 5 * 6 /  ->  STACK: (-0.8333)
@@ -51,7 +52,7 @@ pi sin  ->  STACK: (1.225e-16)  #WARNING 64BIT FLOAT NUMS
 
 Units are specified in number literals with a _xxx suffix. Number literals with units suffix are converted to corresponding SI value (unit is not preserved and dimensions are not checked!!!). Compound units, with numerator and denominator, are supported. Use the "units" function to get all the available units and corresponding conversion factors in an array.
 
-These are all implemented functions: units, toUnit, toSI.
+These are all implemented functions: ```units, toUnit, toSI```.
 
 ```
 10_mm2  ->  STACK: (0.00001000)
@@ -65,7 +66,7 @@ units "kN" assoc  ->  STACK: (1000)
 
 ## Booleans and comparison
 
-False value is represented by number 0, every other value is a True value. Boolean functions are and, or, not. Comparison functions are =, >, <, >=, <=.
+False value is represented by number 0, every other value is a True value. Boolean functions are ```and, or, not```. Comparison functions are ```=, >, <, >=, <=```.
 
 ```
 100 not  ->  STACK: (0)
@@ -78,9 +79,9 @@ False value is represented by number 0, every other value is a True value. Boole
 
 ## Strings
 
-Strings uses Javascript string type and are 1-indexed. String literals cannot contain the " character. Strings can be converte to STPD programs and symbols parsing them with the str/parse and str/tosymbol functions.
+Strings uses Javascript string type and are 1-indexed. String literals cannot contain the ```"``` character. Strings can be converted to STPD expressions and symbols by parsing them with the ```str/parse``` and ```str/tosymbol``` functions.
 
-These are all implemented functions: str/length, str/join, str/slice, str/uppercase, str/lowercase, str/findchar, str/parse, str/tosymbol.
+These are all implemented functions: ```str/length, str/join, str/slice, str/uppercase, str/lowercase, str/findchar, str/parse, str/tosymbol```.
 ```
 "123456789" 2 5 str/slice  ->  STACK: ("345")
 "hello " "world!" str/join  ->  STACK: ("hello world!")
@@ -89,29 +90,13 @@ These are all implemented functions: str/length, str/join, str/slice, str/upperc
 
 ## Symbols and environments
 
-Symbols uses Javascript symbol type. They represent references to builtin-functions/expressions in the global environment (inside top-level expression) or local environment (inside user defined expression evaluation). Symbols not found in local environment are searched in parent environment up to global environment.
+Symbols uses the Javascript symbol type. They represent references to builtin-functions/expressions in the global environment (inside top-level expression) or local environment (inside user defined expression evaluation). Symbols not found in local environment are searched in parent environment up to global environment.
 
-A symbol in an expression can be pushed on stack (without its evaluation) using the str/tosymbol function. Conversely a symbol can be converted into a string with the symb/tostring function.
+A symbol in an expression can be pushed on stack (without its evaluation) using the ```str/tosymbol``` function. Conversely a symbol can be converted into a string with the ```symb/tostring``` function.
 
 ```
 "hi" str/tosymbol  ->  STACK: (hi)
 "hi" str/tosymbol symb/tostring  ->  STACK: ("hi")
-```
-
-## Stack management
-
-Top level expressions and are evaluated on the stack. Nested expressions use the parent array as stack. 
-
-Stack elements can be manipulated using these functions: pop swap dup over rot stack. 
-
-```
-1 2 3 pop swap  ->  STACK: (2 1)
-1 2 dup  ->  STACK: (1 2 2)
-1 2 3 over  ->  STACK: (1 2 3 2)
-1 2 3 rot rot  ->  STACK: (3 1 2)
-(1 2 (3 4)! 5 6)  ->  STACK: ((1 2 3 4 5 6))
-(1 2 +)!  ->  STACK: (3)
-(1 2 3 (2 2 +)! 5)  ->  STACK: ((1 2 3 4 5))
 ```
 
 ## Arrays
@@ -120,9 +105,9 @@ Arrays can represent data (...) or expression (...)!. and are 1-indexed.
 
 Data arrays can be used to represent lists, dictionaries (list of key value pairs) and quoted (unevaluated) expressions.
 
-Expressions represent STPD programs. Top level expressions does not need parenthesis (i.e. 1 2 3 is equivalent to (1 2 3)!).
+Expressions also represents entire STPD programs. Top level expressions does not need parenthesis (i.e. ```1 2 3``` is equivalent to ```(1 2 3)!``` in a nested expression).
 
-These are all implemented functions: iota, ones, zeros, get, slice, join, map, map2, filt, reduce, length, sort, reverse, find, assoc, apush, apop.
+These are all implemented functions: ```iota, ones, zeros, get, slice, join, map, map2, filt, red, length, sort, reverse, find, assoc, apush, apop```.
 
 ```
 1 2 3  ->  STACK: (1 2 3)
@@ -135,22 +120,39 @@ These are all implemented functions: iota, ones, zeros, get, slice, join, map, m
 (1 2 3 4) (1 +) map  ->  STACK: ((2 3 4 5))
 (1 2 3) (10 10 10) (+) map2  ->  STACK: ((11 12 13))
 (1 4 6 8) (2 >=) filter  ->  STACK: ((4 6 8))
-(1 2 3) (+) reduce  ->  STACK: (6)
+(1 2 3) (+) red  ->  STACK: (6)
 ("a" 1 "b" 2 "c" 100) "c" assoc  ->  STACK: (100)
 ("a" 1 "b" 2 "c" 100) ("a" "c" ) assoc  ->  STACK: (1 100)
+```
+
+
+## Stack management
+
+Top level expressions and are evaluated on the stack. Nested expressions use the parent array as stack (result is pushed in the parent array at the nested expr position). 
+
+These are all implemented functions: ```pop swap dup over rot stack```. 
+
+```
+1 2 3 pop swap  ->  STACK: (2 1)
+1 2 dup  ->  STACK: (1 2 2)
+1 2 3 over  ->  STACK: (1 2 3 2)
+1 2 3 rot rot  ->  STACK: (3 1 2)
+(1 2 (3 4)! 5 6)  ->  STACK: ((1 2 3 4 5 6))
+(1 2 +)!  ->  STACK: (3)
+(1 2 3 (2 2 +)! 5)  ->  STACK: ((1 2 3 4 5))
 ```
 
 ## Programming
 
 STPD programs are evaluated at every expression modification (stack and environments are reset each time).
 
-Errors in parsing and evaluating the program are printed, stopping the evaluation. The function err throws a generic error (also stopping the evaluation).
+Errors in parsing and evaluating the program are printed, stopping the evaluation. The function ```err``` throws a generic error (also stopping the evaluation).
 
-Comments can be emulated using strings and the # function (same a pop function).
+Comments can be emulated using strings and the ```#``` function (same a ```pop``` function).
 
-To define new variables (returned unevaluated) and functions (returned as evaluated expression) the var and fun functions can be used.
+To define new variables (returned unevaluated) and functions (returned as evaluated expression) the ```var``` and ```fun``` functions can be used.
 
-Quoted expressions (data arrays) can be conditionally executed using the cond function and repeatedly executed using the loop function.
+Quoted expressions (data arrays) can be conditionally executed using the ```cond``` function and repeatedly executed using the ```loop``` function.
 
 ```
 err  ->  Error: Evaluation error. Symbol err. Generic error
@@ -167,13 +169,13 @@ err  ->  Error: Evaluation error. Symbol err. Generic error
 
 ## Document editing
 
-
+...todo...
 
 ## User interface
 
-The prec function sets the display digit precision of numbers.
+The ```prec``` function sets the display digit precision of numbers.
 
-Use the print and printn functions to print data literals. Use the prints and printsn functions to print a string (without quotes) also replacing the "/." sequence with the " char.
+Use the ```print``` and ```printn``` functions to print data literals. Use the ```prints``` and ```printsn``` functions to print a string (without quotes) also replacing the "/." sequence with the " char.
 
 ```
 15 prec pi  ->  STACK: (3.14159265358979)
