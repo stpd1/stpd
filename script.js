@@ -243,8 +243,8 @@ const STDENV = {
 		let k = STK.pop(); STK.push(STK.pop().findIndex((e)=>e === k)+1)},
 	"assoc": (STK,ENV)=> {assertStkl(2,STK); 
 		let ks = STK.pop(), a = STK.pop(); 
-		if (Array.isArray(ks)) {ks.map((k) => {if (a.findIndex((e)=>e === k)!==0) {STK.push(a[a.findIndex((e)=>e === k)+1])}})}
-		else {if (a.findIndex((e)=>e === ks)!==0) {STK.push(a[a.findIndex((e)=>e === ks)+1])}}},
+		if (Array.isArray(ks)) {ks.map((k) => {if (a.findIndex((e)=>e === k)!==-1) {STK.push(a[a.findIndex((e)=>e === k)+1])}})}
+		else {if (a.findIndex((e)=>e === ks)!==-1) {STK.push(a[a.findIndex((e)=>e === ks)+1])}}},
 	"apush": (STK,ENV)=> {
 		let e = STK.pop(),a = STK.pop(); a.push(e); STK.push(a)},
 	"apop": (STK,ENV)=> {
