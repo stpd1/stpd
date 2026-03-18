@@ -404,36 +404,6 @@ function tokenize(s) {
 		} else {return '"'+e+'"'}
 	}).flat()
 	return ts;}
-/* 
-function parseu(us,v,mode="") {
-	if (us==="K") {return +v}
-	if (us==="°C") {return +v+273.15}
-	if (us==="°F") {return (+v-32)/1.8+273.15}
-	assert(Number.isNaN(+us), "Invalid unit literal")
-	let cf = 1, a = us.split("/")
-	assert(a.length < 3, "Unexpected / in unit literal")
-	assert(a[0] !== "", "Missing units before /")
-	assert(a[1] !== "", "Missing units after /")
-	let n = a[0].split("*").map((e)=>e.match(/(\D+)(\d*)/))
-	for (let ei in n) {
-		assert(n[ei] !== null, "Missing unit after *")
-		assert(n[ei][0] !== "°C","°C unit not allowed in compound unit")
-		assert(n[ei][0] !== "°F","°F unit not allowed in compound unit")
-		assert(UNITS[n[ei][1]] !== undefined, "unknown unit "+n[ei][1])
-		if (n[ei][2] === "") {n[ei][2] = "1"}
-		cf = cf*(UNITS[n[ei][1]]**(+n[ei][2]))}
-	if (a.length === 2) {
-		let d = a[1].split("*").map((e)=>e.match(/(\D+)(\d*)/));
-		for (let ei in d) {
-			assert(d[ei] !== null, "Missing unit after *")
-			assert(d[ei][0] !== "°C","°C unit not allowed in compound unit")
-			assert(d[ei][0] !== "°F","°F unit not allowed in compound unit")
-			assert(UNITS[d[ei][1]] !== undefined, "Unknown unit "+d[ei][1])
-			if (d[ei][2] === "") {d[ei][2] = "1"}
-			cf = cf/(UNITS[d[ei][1]]**(+d[ei][2]))}}
-	if (mode==="conv") {return v/cf}
-	else {return v*cf}}
-*/
 function parseu(us, v, mode = "") {
     if (us === "K") return +v;
     if (us === "°C") return +v + 273.15;
@@ -472,7 +442,7 @@ function parseu(us, v, mode = "") {
     return (mode === "conv") ? v / cf : v * cf;
 }
 function parset(t) {
-	if (t[0]==='"') {return t.slice(1,-1)}
+	if (t[0]==='"') {if (t[-1]!=='"') {throw new Error("Parsing error. Token " + t  + ". Unbalanced '\"' in string.")} else {return t.slice(1,-1)}}
 	let tl = t; t = t.split("_")
 	if (t[0] !== "" && isFinite(t[0])) {
 		assert(t[1] !== "", "Missing unit after _")
