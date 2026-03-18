@@ -471,7 +471,8 @@ function stringify(ex) {
 		if (FLAGS["prec"] <= 0) {return ""+(ex)} 
 		else {return ""+(Number.isInteger(ex)?ex:ex.toPrecision(FLAGS["prec"]))}}
 	if (typeof ex === "symbol") {return ""+Symbol.keyFor(ex)}
-	if (typeof ex === "string") {return '"'+ex.replace(/"/g,"\'")+'"'}
+	if (typeof ex === "string") {return '"'+ex+'"'}
+	// if (typeof ex === "string") {return '"'+ex.replace(/"/g,"\'")+'"'}
 	let s = "(", se = ex.evaluate?")!": ")";
 	for (let ei in ex) {
 		if (ei !== "evaluate") {
