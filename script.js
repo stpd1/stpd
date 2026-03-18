@@ -395,7 +395,9 @@ function assertStkl(n,STK) {
 
 // INTERPRETER
 function tokenize(s) {
-	let ts = s.split('"').map((e,i)=>{
+	let ts = s.split('"');
+	if (ts.length%2 === 0) {throw new Error("Parsing error. Missing closing '\"' in string literal.")};
+	ts = ts.map((e,i)=>{
 		if (i%2===0) {
 			return e.replace(/\(/g, ' ( ')
 			.replace(/\)(?![!])/g, ' ) ')
@@ -442,7 +444,7 @@ function parseu(us, v, mode = "") {
     return (mode === "conv") ? v / cf : v * cf;
 }
 function parset(t) {
-	if (t[0]==='"') {if (t.slice(-1)!=='"') {throw new Error("Parsing error. Token " + t  + ". Unbalanced '\"' in string.")} else {return t.slice(1,-1)}}
+	if (t[0]==='"') {return t.slice(1,-1)}
 	let tl = t; t = t.split("_")
 	if (t[0] !== "" && isFinite(t[0])) {
 		assert(t[1] !== "", "Missing unit after _")
