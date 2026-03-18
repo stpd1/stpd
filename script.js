@@ -518,7 +518,7 @@ function PRINTSTK(o, pre, post) {
 	stkElem.innerHTML += pre+o+post}
 function RUN() {
 	try {evals(inElem.value, STK); PRINTSTK(stringify(STK), "STACK: ", "")} 
-	catch (e) {PRINTSTK(e, "", "")}}
+	catch (e) {PRINTSTK(e, "<pre>", "</pre>")}}
 inElem.oninput = () => {
 	editing += waitTime
 	setTimeout(()=> {
