@@ -271,7 +271,7 @@ const STDENV = {
 	"symb/tostring": (STK,ENV)=>{assertStkl(1,STK); assert(typeof(STK[STK.length-1])==="symbol","Argument must be symbol"); // symb -> str
 		STK.push(Symbol.keyFor(STK.pop()))},
 	// Programming
-	"//": (STK,ENV)=>{assertStkl(1,STK); // ... e1 -> ... (comment, same as pop)
+	"#": (STK,ENV)=>{assertStkl(1,STK); // ... e1 -> ... (comment, same as pop)
 		STK.pop()},
 	"typeof": (STK,ENV)=>{assertStkl(1,STK); // e -> typeof(e)
 		STK.push(typeof(STK.pop()))},
