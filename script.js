@@ -442,7 +442,7 @@ function parseu(us, v, mode = "") {
     return (mode === "conv") ? v / cf : v * cf;
 }
 function parset(t) {
-	if (t[0]==='"') {if (t[-1]!=='"') {throw new Error("Parsing error. Token " + t  + ". Unbalanced '\"' in string.")} else {return t.slice(1,-1)}}
+	if (t[0]==='"') {if (t.slice(-1)!=='"') {throw new Error("Parsing error. Token " + t  + ". Unbalanced '\"' in string.")} else {return t.slice(1,-1)}}
 	let tl = t; t = t.split("_")
 	if (t[0] !== "" && isFinite(t[0])) {
 		assert(t[1] !== "", "Missing unit after _")
