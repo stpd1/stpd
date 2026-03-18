@@ -1,4 +1,4 @@
-const CACHE_NAME = `stpd_v20260315_4`;
+const CACHE_NAME = `stpd_v20260318`;
 
 self.addEventListener('install', event => {
     event.waitUntil((async () => {
