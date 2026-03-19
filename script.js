@@ -262,15 +262,15 @@ const STDENV = {
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
 	"str/slice": (STK,ENV)=>{assertStkl(3,STK); assertNum(STK[STK.length-1]); // str n1 n2 -> str[n1:n2]
 		assertNum(STK[STK.length-2]); assertStr(STK[STK.length-3]); 
-		let n2=STK.pop(), n1=STK.pop(), s=STK.pop(); STK.push(s.slice(n1,n2))},
+		let n2=STK.pop(), n1=STK.pop(), s=STK.pop(); STK.push(s.slice(n1-1,n2-1))},
 	"str/uppercase": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> STR
 		STK.push(STK.pop().toUpperCase())},
 	"str/lowercase": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // STR -> str
 		STK.push(STK.pop().toLowerCase())},
 	"str/charat": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-1]); assertStr(STK[STK.length-2]); // str n -> str[n]
-		let s=STK.pop(), n=STK.pop(); STK.push(s.at(n))},
+		let s=STK.pop(), n=STK.pop(); STK.push(s.at(n-1))},
 	"str/indexof": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> num
-	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1.indexOf(s2))},
+	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1.indexOf(s2)+1)},
 	"str/parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
 		STK.push(parse(tokenize(STK.pop())))},
 	"str/tosymbol": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> symb
