@@ -237,6 +237,8 @@ const STDENV = {
 		STK.push(STK.pop().length)},
 	"sort": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (sorted)
 		STK.push(STK.pop().toSorted())},
+	"sortn": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (sorted by num value)
+		STK.push(STK.pop().toSorted((a,b)=>a-b))},
 	"reverse": (STK,ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be an array") // arr -> arr (reversed)
 		STK.push(STK.pop().toReversed())},
 	"find": (STK,ENV)=> {assertStkl(2,STK); assert(Array.isArray(STK[STK.length-2]), "First argument must be an array")  // arr -> arr (reversed)
