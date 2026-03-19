@@ -275,6 +275,8 @@ const STDENV = {
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1.indexOf(s2)+1)},
 	"str/parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
 		STK.push(parse(tokenize(STK.pop())))},
+	"str/parse": (STK,ENV)=>{assertStkl(1,STK); // obj -> str
+		STK.push(stringify(STK.pop()))},
 	"str/tosymbol": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> symb
 		STK.push(Symbol.for(STK.pop()))},
 	// Symbols
