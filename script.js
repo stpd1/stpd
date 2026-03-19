@@ -267,8 +267,8 @@ const STDENV = {
 		STK.push(STK.pop().toUpperCase())},
 	"str/lowercase": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // STR -> str
 		STK.push(STK.pop().toLowerCase())},
-	"str/charat": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-2]); assertStr(STK[STK.length-1]); // str n -> str[n]
-		let n=STK.pop(), s=STK.pop(); STK.push(s.at(n-1))},
+	"str/charat": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-1]); assertStr(STK[STK.length-2]); // str n -> str[n]
+		let s=STK.pop(), n=STK.pop(); STK.push(s.at(n-1))},
 	"str/indexof": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> num
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1.indexOf(s2)+1)},
 	"str/parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
