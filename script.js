@@ -252,6 +252,12 @@ const STDENV = {
 	// Strings
 	"str/length": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]);
 		STK.push(STK.pop().length)},
+	"str/<": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> 0/1
+	    let s2=STK.pop(), s1=STK.pop(); if (s1<s2) {STK.push(1)} else {STK.push(0)}},
+	"str/>": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> 0/1
+	    let s2=STK.pop(), s1=STK.pop(); if (s1>s2) {STK.push(1)} else {STK.push(0)}},
+	"str/includes": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> 0/1
+	    let s2=STK.pop(), s1=STK.pop(); if (s1.includes(s2)) {STK.push(1)} else {STK.push(0)}},
 	"str/join": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> str1+str2
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1+s2)},
 	"str/slice": (STK,ENV)=>{assertStkl(3,STK); assertNum(STK[STK.length-1]); // str n1 n2 -> str[n1:n2]
@@ -261,8 +267,10 @@ const STDENV = {
 		STK.push(STK.pop().toUpperCase())},
 	"str/lowercase": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // STR -> str
 		STK.push(STK.pop().toLowerCase())},
-	"str/findchar": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-1]); assertStr(STK[STK.length-2]); // str n -> str[n]
+	"str/charat": (STK,ENV)=>{assertStkl(2,STK); assertNum(STK[STK.length-1]); assertStr(STK[STK.length-2]); // str n -> str[n]
 		let s=STK.pop(), n=STK.pop(); STK.push(s.at(n))},
+	"str/indexof": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> num
+	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1.indexOf(s2))},
 	"str/parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
 		STK.push(parse(tokenize(STK.pop())))},
 	"str/tosymbol": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> symb
