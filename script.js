@@ -516,7 +516,7 @@ function evaluate(ST, STK, ENV) {
 		for (let ei in ST) {
 			let e = ST[ei]; Array.isArray(e)?evaluate(e, a, ENV): a.push(e)}
 		STK.push(a)}
-	return STK;}
+	return STK[0];}
 function evals(s, STK = []) {
 	let ST = parse(tokenize(s));
 	return evaluate(ST, STK, ENV)}
