@@ -273,8 +273,6 @@ const STDENV = {
 		let n=STK.pop(), s=STK.pop(); STK.push(s.at(n-1))},
 	"str/indexof": (STK,ENV)=>{assertStkl(2,STK); assertStr(STK[STK.length-1]); assertStr(STK[STK.length-2]) // str1 str2 -> num
 	    let s2=STK.pop(), s1=STK.pop(); STK.push(s1.indexOf(s2)+1)},
-	"str/parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
-		STK.push(parse(tokenize(STK.pop())))},
 	"str/stringify": (STK,ENV)=>{assertStkl(1,STK); // obj -> str
 		STK.push(stringify(STK.pop()))},
 	"str/tosymbol": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> symb
@@ -290,6 +288,8 @@ const STDENV = {
 	"tostr": (STK,ENV)=>{assertStkl(1,STK); // e -> "e"
 		STK.push(stringify(STK.pop()))},
 	"err": (STK,ENV)=> {throw "Generic error"}, // -> ERROR
+	"parse": (STK,ENV)=>{assertStkl(1,STK); assertStr(STK[STK.length-1]); // str -> value
+		STK.push(parse(tokenize(STK.pop()))[0])},
 	"eval": (STK, ENV)=> {assertStkl(1,STK); assert(Array.isArray(STK[STK.length-1]), "Argument must be array")
 		let ex = STK.pop(); ex.evaluate = true; evaluate(ex, STK, ENV)},
 	"var": (STK, ENV)=> {assertStkl(2,STK);assert(Array.isArray(STK[STK.length-1]) && (STK[STK.length-1].length === 1) && ((typeof STK[STK.length-1][0]) === "symbol"), "Second arg must be array with 1 symbol")
