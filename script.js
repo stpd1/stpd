@@ -477,7 +477,8 @@ function parse(ts) {
 		} catch (e) {throw new Error("Parsing error. Token " + ti + ". " + e)}}
 	try {assert(ST.length === 1, "Missing )")} 
 	catch (e) {throw new Error("Parsing error. Token " + ts[ts.length-1]  + ". " + e)}
-	return ST[0];}
+	assert(ST[0].length <= 1,"Parsing error. Unexpected token after end of expression");
+	return ST[0][0];}
 function stringify(ex) {
 	if (typeof ex === "number") {
 		if (FLAGS["prec"] <= 0) {return ""+(ex)} 
