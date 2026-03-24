@@ -518,7 +518,7 @@ function evaluate(ST, STK, ENV) {
 		STK.push(a)}
 	return STK;}
 function evals(s, STK = []) {
-	let ST = parse(tokenize(s)); ST.evaluate = true
+	let ST = parse(tokenize(s));
 	return evaluate(ST, STK, ENV)}
 // USER INTERFACE
 let inElem = document.getElementById("in")
